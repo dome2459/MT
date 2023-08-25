@@ -10,8 +10,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>frontend</artifactId>
-    <!-- �ndere zu backend oder database entsprechend -->
+    <artifactId>database</artifactId> <!-- �ndere zu backend oder database entsprechend -->
     <!-- Weitere Konfigurationen f�r das Modul -->
 
 </project>
