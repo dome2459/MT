@@ -1,16 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
+import * as React from 'react'
+
+// 1. import `ChakraProvider` component
+import { ChakraProvider } from '@chakra-ui/react'
+import Startrampe from './views/Startrampe';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Ich bin die Root Page :)
-        </p>
-      </header>
-    </div>
-  );
+    <ChakraProvider>
+      <Startrampe />
+    </ChakraProvider>
+  )
 }
 
 export default App;
