@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="untitled" />
         <module name="backend" />
+        <module name="database" />
         <module name="frontend" />
       </profile>
     </annotationProcessing>
