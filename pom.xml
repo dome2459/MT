@@ -13,6 +13,7 @@
         <module>frontend</module>
         <module>backend</module>
         <module>database</module>
+        <module>server</module>
     </modules>
 
 </project>
