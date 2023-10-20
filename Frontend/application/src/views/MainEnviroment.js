@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Flex,Tabs, TabList, TabPanels, Tab, TabPanel, Button, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react'
+import Moveable from "react-moveable";
 import DragArea from './DragArea';
+
 
 
 export default class MainEnviroment extends Component {
@@ -22,9 +24,9 @@ export default class MainEnviroment extends Component {
             </Menu>
             </Flex>
 
-            <Flex flex={3} bg='#fff'>
+            <Flex flex={3} margin={10} borderWidth={2} borderColor={'#ddd'}>
 
-                <DragArea/>
+            <DragArea />
 
             </Flex>
 
