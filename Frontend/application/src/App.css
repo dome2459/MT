@@ -36,3 +36,16 @@
     transform: rotate(360deg);
   }
 }
+
+.Router
+{
+width:10px;
+height: 10px;
+}
+
+.Navigation
+{
+  width: 10px;
+  height: 10px;
+  color: black;
+}

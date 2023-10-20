@@ -1,63 +1,56 @@
-import React, { Component } from 'react';
-import { Flex,Tabs, TabList, TabPanels, Tab, TabPanel, Button, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react'
+import { Center, Text } from "@chakra-ui/react";
+import * as React from "react";
+import { useState } from "react";
+import Moveable from "react-moveable";
+
+export default function DragArea() {
+
+    const [Moveables, setMoveables] = useState([{itemID: 1},{itemID: 2},{itemID: 3}]);
+
+    const targetRef = React.useRef([]);
+
+    const MoveObject = (itemID,index) => {
+
+        return(
+            <>
+            <Center className="target" 
+            ref={ref => { targetRef.current[index] = ref  }} 
+            bgColor='skyblue' borderRadius={10} height={70} width={120}>
+                <Text >Network Object</Text>
+            </Center>
 
 
-import { HTML5Backend } from 'react-dnd-html5-backend'
-import { DndProvider } from 'react-dnd'
-import { useDrag, useDrop } from 'react-dnd'
+            <Moveable //moveAble Refs to Target and trannsformes target
+                origin={false}
+                hideDefaultLines={true}
+                target={targetRef[index]}
+                draggable={true}
+                throttleDrag={1}
+                edgeDraggable={false}
+                startDragRotate={0}
+                throttleDragRotate={0}
+                onDrag={e => {
+                    e.target.style.transform = e.transform;
+                }}
+            />
+            </>
+        )
 
-export default class DragArea extends Component {
-  render() {
-    //this is not working yet
+    }
+
+
     return (
-      <DndProvider display='flex' flex={1} backend={HTML5Backend}>
-
-        <Bucket/>
-
-
-        <Box/>
-
-      </DndProvider>
-    )
-  }
-}
-
-function Box() {
-  const [{ isDragging }, drag, dragPreview] = useDrag(() => ({
-		// "type" is required. It is used by the "accept" specification of drop targets.
-    type: 'BOX',
-		// The collect function utilizes a "monitor" instance (see the Overview for what this is)
-		// to pull important pieces of state from the DnD system.
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging()
-    })
-  }))
-
-  return(
-    <div ref={dragPreview} style={{ opacity: isDragging ? 0.5 : 1, height: '50px', width: '50px', backgroundColor: '#ddd'}}>
-        {/* The drag ref marks this node as being the "pick-up" node */}
-        <div role="Handle" ref={drag} />
-    </div>
-  )
-}
-function Bucket() {
-  const [{ canDrop, isOver }, drop] = useDrop(() => ({
-    // The type (or types) to accept - strings or symbols
-    accept: 'BOX',
-    // Props to collect
-    collect: (monitor) => ({
-      isOver: monitor.isOver(),
-      canDrop: monitor.canDrop()
-    })
-  }))
-
-  return (
-    <div
-      ref={drop}
-      role={'Dustbin'}
-      style={{ backgroundColor: isOver ? 'red' : 'white' }}
-    >
-      {canDrop ? 'Release to drop' : 'Drag a box here'}
-    </div>
-  )
+        <div className="root">
+            <div className="container">
+                
+                {
+                    Moveables.map((item, i) => {     
+                     
+                        return MoveObject(item.itemID, i)
+                     })
+                } 
+                
+            </div>
+        </div>
+    );
 }
