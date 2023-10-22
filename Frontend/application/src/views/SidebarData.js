@@ -18,6 +18,7 @@ export const SidebarData = [
         title: 'Router',
         path: '/router',
         icon: <BsFill.BsFillRouterFill/>,
+        image: './Router.png',
         cName: 'nav-text'
 
     },
