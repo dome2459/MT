@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-
+import { Image } from '@chakra-ui/react'
+import source from "./Router.png";
 
 const SidebarLink = styled(Link)`
   display: flex;
@@ -67,6 +68,7 @@ const SubMenu = ({ item }) => {
                             ? item.iconClosed
                             : null}
                 </div>
+
             </SidebarLink>
             {subnav &&
                 item.subNav.map((item, index) => {
@@ -81,7 +83,9 @@ const SubMenu = ({ item }) => {
                                     </Inputfield>
                                 </div>
                             </SidebarLabel>
-                            
+                            {item.title == "Name" ? (
+                                  <Image src={source} alt='Router' />
+                            ):(console.log(item.title))}
                         </DropdownLink>
                     );
                 })}

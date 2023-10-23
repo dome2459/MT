@@ -19,10 +19,8 @@ export const SidebarData = [
       },
       {
         title: 'IP',
-      },
-      {
-        picture: '../views/Router.png',
       }
+
     ]
   },
   {
