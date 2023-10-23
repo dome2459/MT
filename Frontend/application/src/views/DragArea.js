@@ -1,90 +1,62 @@
-import { Center, Text } from "@chakra-ui/react";
-import * as React from "react";
-import { useState, useEffect, useRef } from "react";
-import Moveable from "react-moveable";
+import React from 'react';
+import { useState } from 'react';
+import Draggable from 'react-draggable';
+import { Box, Text, Center } from "@chakra-ui/react";
 
 export default function DragArea() {
 
-    const [Moveables, setMoveables] = useState([{itemID: 1, ref: useRef(null)},{itemID: 2, ref: useRef(null)},{itemID: 3, ref: useRef(null)}]);
-    const [RefArray, setRefArray] = useState([]);
 
-    //const targetRef = React.useRef(null);
+    const [RouterArray, setRouterArray] = useState([
+        {name: 'Ali', x: 0, y: 0 },
+        {name: 'Bob', x: 10, y: 10 },
+        {name: 'CHAD', x: 20, y: 20 },
+        {name: 'Dic', x: 30, y: 30 }
+    ])
 
-    
+    const parentWidth = 1800;
+    const parentHeight = 600;
 
-    useEffect(() => {
-    //    targetRef.current = targetRef.current.slice(0,Moveables.length);
+    const maxX = parentWidth - 121; // Assuming draggable elements are 100x100
+    const maxY = parentHeight - 121;
 
-        CreateRefs();
+    const handleDrag = (index) => (e, data) => {
 
+        const { x, y } = data;
+        var RouterArr = [...RouterArray]
 
-    }, []);
+        RouterArr[index].x = x
+        RouterArr[index].y = y
 
-    const CreateRefs = () => {
-
-        /*Moveables.forEach((item, index) => {
-            const newMoveableRef = useRef(null);
-
-            var Refs = [...Moveables]
-
-            Refs[index].ref = newMoveableRef;
-            setMoveables(Refs)
-        
-            // You can also do other initialization here if needed
-        
-            return newMoveableRef;
-        });*/
-
-    }
-
-    const MoveObject = (itemID, index) => {
+        setRouterArray(RouterArr);
+      };
+    const RouterObj = (item, index) => {
         return(
-            <>
-            <Center className="target" 
-            //ref={ref => { targetRef.current[index] = ref  }} 
-            ref={itemID.ref}
-            bgColor='skyblue' borderRadius={10} height={70} width={120} transform={Moveables[index].pos} >
-                <Text >Network Object</Text>
-            </Center>
+            <Draggable bounds={{ left: 0, top: 0, right: maxX, bottom: maxY }} position={{x: item.x, y:item.y}} onDrag={handleDrag(index)} 
+                    style={theme}>
+            <Center width={100} className="draggable"  borderWidth={1} borderColor='#000'  position="absolute"
 
+            cursor="grab" w="100px" h="100px" bg="skyblue" borderRadius={5}
 
-            <Moveable //moveAble Refs to Target and trannsformes target
-                origin={false}
-                hideDefaultLines={true}
-                //target={ref => { targetRef.current[index] = ref}}
-                ref={itemID.ref}
-                draggable={true}
-                throttleDrag={1}
-                edgeDraggable={false}
-                startDragRotate={0}
-                throttleDragRotate={0}
-                onDrag={e => {
-                    //e.target.style.transform = e.transform;
-                    
-                    var Arr = [...Moveables]
-                    Arr[index].pos = e.transform;
-                    setMoveables(Arr);
-
-                }}
-            />
-            </>
+            >{item.name}</Center>
+            </Draggable>
         )
-
     }
 
+  return (
+    <Box className="target" h={parentHeight} w={parentWidth} borderWidth={1} borderColor='#000' position="relative" padding={2.5}>
 
-    return (
-        <div className="root">
-            <div className="container">
-                
-                {
-                    Moveables.map((item, i) => {     
+        { RouterArray.map((item, i) => {     
                      
-                        return MoveObject(item.itemID, i)
-                     })
-                } 
-                
-            </div>
-        </div>
-    );
+                     return RouterObj(item, i)
+
+        })}
+    </Box>
+  );
 }
+
+
+const theme = {
+    position: "absolute", 
+    top: "100px", 
+    left: "100px",
+  }
