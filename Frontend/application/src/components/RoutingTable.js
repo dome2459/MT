@@ -9,7 +9,6 @@ class RoutingTable extends Component {
         desrtination: '',
         gateway: '',
         networkMask: '',
-        flags: '',
         interface : '',
         metrik: ''
       };
