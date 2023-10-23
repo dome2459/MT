@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Flex, Tabs, TabList, TabPanels, Tab, TabPanel, Button, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react'
-import Moveable from "react-moveable";
 import DragArea from './DragArea';
 
 import Navbar from './Navbar';
