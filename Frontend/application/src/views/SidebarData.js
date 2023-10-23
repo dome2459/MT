@@ -1,34 +1,48 @@
-import React from 'react'
-import * as FaIcons from "react-icons/fa";
-import * as AiIcons from "react-icons/ai";
-import * as IoIcons from "react-icons/io";
+import React from 'react';
+import * as FaIcons from 'react-icons/fa';
+import * as AiIcons from 'react-icons/ai';
+import * as IoIcons from 'react-icons/io';
+import * as RiIcons from 'react-icons/ri';
 import * as BsFill from "react-icons/bs";
 
-
 export const SidebarData = [
+  {
+    title: 'Router',
+    path: '/router',
+    icon: <BsFill.BsFillRouterFill/>,
+    iconClosed: <RiIcons.RiArrowDownSFill />,
+    iconOpened: <RiIcons.RiArrowUpSFill />,
 
-    {
-        title: 'Home',
-        path: '/',
-        icon: <AiIcons.AiFillHome/>,
-        cName: 'nav-text'
+    subNav: [
+      {
+        title: 'Name',
+      },
+      {
+        title: 'IP',
+      }
 
-    },
-    {
-        title: 'Router',
-        path: '/router',
-        icon: <BsFill.BsFillRouterFill/>,
-        image: './Router.png',
-        cName: 'nav-text'
+    ]
+  },
+  {
+    title: 'Netzwerk',
+    path: '/network',
+    icon: <FaIcons.FaNetworkWired/>,
+    iconClosed: <RiIcons.RiArrowDownSFill />,
+    iconOpened: <RiIcons.RiArrowUpSFill />,
 
-    },
-    {
-        title: 'Netzwerk',
-        path: '/network',
-        icon: <FaIcons.FaNetworkWired/>,
-        cName: 'nav-text'
-
-    },
-   
-
-]
+    subNav: [
+      {
+        title: 'Router 1',
+        cName: 'sub-nav'
+      },
+      {
+        title: 'Router 2',
+        cName: 'sub-nav'
+      },
+      {
+        title: 'Router 3',
+        cName: 'sub-nav'
+      }
+    ]
+  } 
+];
