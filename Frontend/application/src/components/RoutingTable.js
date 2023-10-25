@@ -4,7 +4,7 @@ export default class RoutingTable extends Component {
     // Hier erstellen Sie Ihr Objekt
     const RoutingTable = {
       routingTableID: "",
-      desrtination: "",
+      destination: "",
       gateway: "",
       networkMask: "",
       interface: "",
