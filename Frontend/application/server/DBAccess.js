@@ -1,13 +1,12 @@
-import {useState} from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
-import './App.css';
 
 function App(){
 
     const [Name, setName] = useState('')
     const [ConnectionId, setConnection] = useState('')
 
-    const submitHanlder = e => {
+    const submitHandler = e => {
         axios.post('http://localhost:3005/signup', {Name: Name, ConnectionId: ConnectionId})
         .then((data) => {
             console.log(data)

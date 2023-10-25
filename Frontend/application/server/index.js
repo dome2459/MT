@@ -1,8 +1,8 @@
-const express = require('express');
+import express from 'express';
 const app = express();
-const mysql = require('mysql2');
-const cors = require('cors');
-const bodyParser = require('body-parser');
+import mysql from 'mysql2';
+import cors from 'cors';
+import bodyParser from 'body-parser';
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
