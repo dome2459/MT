@@ -85,29 +85,3 @@ height: 10px;
   height: 10px;
   color: black;
 }
-
-.tableHeader
-{
-  padding: 8px;
-  background-color: black;
-  color: white;
-}
-
-.tableRow
-{
-  text-align: center;
-}
-
-.table
-{
-  border-style: solid;
-  border-color: black;
-  border-width: 5px;
-  margin-left: 2%;
-  width: 96%;
-}
-
-.test{
-  width: 90%;
-
-}

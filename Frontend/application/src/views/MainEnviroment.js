@@ -3,7 +3,7 @@ import { Flex, Tabs, TabList, TabPanels, Tab, TabPanel, Button, Menu, MenuButton
 import DragArea from './DragArea';
 
 import Navbar from './Navbar';
-import RoutingTable from '../components/RoutingTable';
+
 
 
 export default class MainEnviroment extends Component {
@@ -17,17 +17,13 @@ export default class MainEnviroment extends Component {
 
         <Navbar />
 
-        <div className='test'>
         <Flex flex={3} margin={10} borderWidth={2} borderColor={'#ddd'}>
 
           <DragArea />
-          
 
 
         </Flex>
-        <RoutingTable/>
-        </div>
-          
+
         <Flex flex={1} bg='#eee'></Flex>
 
       </Flex>
