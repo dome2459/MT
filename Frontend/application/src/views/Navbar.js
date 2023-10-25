@@ -28,9 +28,10 @@ const SidebarNav = styled.nav`
   z-index: 10;
 `;
 const NavIconMenu = styled(Link)`
-  margin-left: 2rem;
-  // margin-right: 2rem;
-  font-size: 2rem;
+  margin-left: 3rem;
+  position: relative; /* Änderung: Tippfehler behoben */
+  color: white;
+  font-size: 20px;
   height: 80px;
   display: flex;
   justify-content: flex-start;
@@ -38,10 +39,10 @@ const NavIconMenu = styled(Link)`
 `;
 
 const NavIcon = styled(Link)`
-  margin-left: 2rem;
-  positiom: relative;
+  margin-left: 3rem;
+  position: relative;
   color: white;
-  font-size: 2rem;
+  font-size: 20px;
   height: 80px;
   display: flex;
   justify-content: flex-start;
@@ -51,11 +52,25 @@ const NavIcon = styled(Link)`
 
 const Nav = styled.div`
   background: #15171c;
-  height: 80px;
+  height: 90px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
+
   `;
+
+const NavDiv = styled.div`
+
+padding: 10px;
+margin: 20px;
+
+
+
+  // :hover {
+  //   background: skyblue;
+  //   cursor: pointer;
+  }
+`;
 
 
 export default function NavBar() {
@@ -71,22 +86,30 @@ export default function NavBar() {
 
         <Nav>
           <NavIconMenu to='#'>
-
             <FaIcons.FaBars onClick={showSidebar} />
-
           </NavIconMenu>
 
           <NavIcon>
 
-            <SlControl.SlControlStart /><span> = Start  |</span>
+            <NavDiv >
 
-            <MdOutline.MdOutlineDeleteForever /><span> = Löschen  |</span>
+              <SlControl.SlControlStart />
+              <p>Start</p>
+
+            </NavDiv>
+
+            <NavDiv>
+
+              <MdOutline.MdOutlineDeleteForever />
+              <p>Löschen</p>
+
+            </NavDiv>
 
             <div className="App">
               <Timer />
             </div>
 
-            <p style={{ right: '-450px', position: 'relative', fontWeight: 'bold',textDecoration: 'underline' }}>Monitoring-Tool</p>
+            <p style={{ right: '-450px', position: 'relative', fontWeight: 'bold', textDecoration: 'underline' }}>Monitoring-Tool</p>
 
           </NavIcon>
 
