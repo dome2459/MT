@@ -19,10 +19,24 @@ export default class RoutingTable extends Component {
       { Number: 4, Destination: '123.456.789.111', Gateway: 29, Interface: 'fa/02', Metric: 2, Networkmask: '255.255.255.192' },
       { Number: 4, Destination: '123.456.789.111', Gateway: 29, Interface: 'fa/02', Metric: 2, Networkmask: '255.255.255.192' },
       { Number: 4, Destination: '123.456.789.111', Gateway: 29, Interface: 'fa/02', Metric: 2, Networkmask: '255.255.255.192' },
+      { Number: 4, Destination: '123.456.789.111', Gateway: 29, Interface: 'fa/02', Metric: 2, Networkmask: '255.255.255.192' },
+      { Number: 4, Destination: '123.456.789.111', Gateway: 29, Interface: 'fa/02', Metric: 2, Networkmask: '255.255.255.192' },
+      { Number: 4, Destination: '123.456.789.111', Gateway: 29, Interface: 'fa/02', Metric: 2, Networkmask: '255.255.255.192' },
+      { Number: 4, Destination: '123.456.789.111', Gateway: 29, Interface: 'fa/02', Metric: 2, Networkmask: '255.255.255.192' },
+      { Number: 4, Destination: '123.456.789.111', Gateway: 29, Interface: 'fa/02', Metric: 2, Networkmask: '255.255.255.192' },
+      { Number: 4, Destination: '123.456.789.111', Gateway: 29, Interface: 'fa/02', Metric: 2, Networkmask: '255.255.255.192' },
+      { Number: 4, Destination: '123.456.789.111', Gateway: 29, Interface: 'fa/02', Metric: 2, Networkmask: '255.255.255.192' },
+      { Number: 4, Destination: '123.456.789.111', Gateway: 29, Interface: 'fa/02', Metric: 2, Networkmask: '255.255.255.192' },
+      { Number: 4, Destination: '123.456.789.111', Gateway: 29, Interface: 'fa/02', Metric: 2, Networkmask: '255.255.255.192' },
+      { Number: 4, Destination: '123.456.789.111', Gateway: 29, Interface: 'fa/02', Metric: 2, Networkmask: '255.255.255.192' },
+      { Number: 4, Destination: '123.456.789.111', Gateway: 29, Interface: 'fa/02', Metric: 2, Networkmask: '255.255.255.192' },
+      { Number: 4, Destination: '123.456.789.111', Gateway: 29, Interface: 'fa/02', Metric: 2, Networkmask: '255.255.255.192' },
+      { Number: 4, Destination: '123.456.789.111', Gateway: 29, Interface: 'fa/02', Metric: 2, Networkmask: '255.255.255.192' },
+      { Number: 4, Destination: '123.456.789.111', Gateway: 29, Interface: 'fa/02', Metric: 2, Networkmask: '255.255.255.192' },
   ];
 
     return (
-      <div>
+      <div className="tableDiv">
         {/* Verwenden Sie Ihr Objekt in JSX */}
         {/* <p>Name: {RoutingTable.name}</p>
         <p>Aktiv: {RoutingTable.isActiv}</p>

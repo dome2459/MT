@@ -91,6 +91,9 @@ height: 10px;
   padding: 8px;
   background-color: black;
   color: white;
+  position: sticky;
+  top: 0;
+  z-index: 2;
 }
 
 .tableRow
@@ -107,7 +110,11 @@ height: 10px;
   width: 96%;
 }
 
-.test{
+.dragAndTableArea{
   width: 90%;
 
+}
+.tableDiv{
+    height: 200px;
+    overflow-y: scroll;
 }

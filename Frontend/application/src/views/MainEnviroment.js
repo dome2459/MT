@@ -17,7 +17,7 @@ export default class MainEnviroment extends Component {
 
         <Navbar />
 
-        <div className='test'>
+        <div className='dragAndTableArea'>
         <Flex flex={3} margin={10} borderWidth={2} borderColor={'#ddd'}>
 
           <DragArea />
