@@ -103,9 +103,6 @@ height: 10px;
 
 .table
 {
-  /* border-style: solid; */
-  border-color: black;
-  border-width: 5px;
   margin-left: 2%;
   width: 96%;
 }
