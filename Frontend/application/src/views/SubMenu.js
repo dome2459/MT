@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Image } from '@chakra-ui/react'
 import source from "./Router.png";
+import { Switch } from '@chakra-ui/react'
 
 const SidebarLink = styled(Link)`
   display: flex;
@@ -25,17 +26,19 @@ const SidebarLink = styled(Link)`
 const SidebarLabel = styled.span`
   margin-left: 0px;
   margin-right: 0px;
+  height: 90px;
 `;
 
 const DropdownLink = styled(Link)`
   background: #414757;
-  height: 60px;
+  height: 90px;
   padding-left: 35px;
   display: flex;
   align-items: center;
   text-decoration: none;
   color: #f5f5f5;
   font-size: 18px;
+  flex-direction: column;
 
   &:hover {
     background: skyblue;
@@ -73,8 +76,8 @@ const SubMenu = ({ item }) => {
             {subnav &&
                 item.subNav.map((item, index) => {
                     return (
-                        <DropdownLink  key={index}>
-                            {/* {item.icon} */}
+                        <DropdownLink key={index}>
+
                             <SidebarLabel>
                                 {item.title}
                                 <div>
@@ -82,10 +85,16 @@ const SubMenu = ({ item }) => {
                                         <input />
                                     </Inputfield>
                                 </div>
+
+                                {item.title === 'IP' ? (
+                                    <>
+                                        <Switch colorScheme='red' />
+                                        <Switch colorScheme='teal' />
+                                        <Image src={source} alt='Router' />
+                                    </>
+                                ) : (console.log())
+                                }
                             </SidebarLabel>
-                            {item.title == "Name" ? (
-                                  <Image src={source} alt='Router' />
-                            ):(console.log(item.title))}
                         </DropdownLink>
                     );
                 })}

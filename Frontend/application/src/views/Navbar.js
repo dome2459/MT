@@ -66,9 +66,9 @@ margin: 20px;
 
 
 
-  // :hover {
-  //   background: skyblue;
-  //   cursor: pointer;
+    :hover {
+      background: skyblue;
+      cursor: pointer;
   }
 `;
 
