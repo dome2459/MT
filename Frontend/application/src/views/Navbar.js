@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
@@ -77,6 +77,15 @@ export default function NavBar() {
 
   const [sidebar, setSidebar] = useState(false)
 
+  const TimerRef = useRef();
+
+  const callTimerStart = () => {
+
+      console.log(TimerRef)
+
+      //TimerRef.current.startTimer();
+  }
+
   const showSidebar = () => setSidebar(!sidebar)
 
   return (
@@ -91,7 +100,8 @@ export default function NavBar() {
 
           <NavIcon>
 
-            <NavDiv >
+            <NavDiv //onClick={()=> callTimerStart()}
+            >
 
               <SlControl.SlControlStart />
               <p>Start</p>
@@ -106,7 +116,7 @@ export default function NavBar() {
             </NavDiv>
 
             <div className="App">
-              <Timer />
+              <Timer ref={TimerRef}/>
             </div>
 
             <p style={{ right: '-450px', position: 'relative', fontWeight: 'bold', textDecoration: 'underline' }}>Monitoring-Tool</p>
