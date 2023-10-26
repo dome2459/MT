@@ -83,7 +83,7 @@ const SubMenu = ({ item }) => {
                                     </Inputfield>
                                 </div>
                             </SidebarLabel>
-                            {item.title == "Name" ? (
+                            {item.title === "Name" ? (
                                   <Image src={source} alt='Router' />
                             ):(console.log(item.title))}
                         </DropdownLink>
