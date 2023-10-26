@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 26. Okt 2023 um 13:54
+-- Erstellungszeit: 26. Okt 2023 um 14:18
 -- Server-Version: 10.4.28-MariaDB
 -- PHP-Version: 8.2.4
 
@@ -32,7 +32,9 @@ CREATE TABLE `connection` (
   `RouterA` int(11) NOT NULL,
   `RouterB` int(11) NOT NULL,
   `OSPF` tinyint(1) NOT NULL,
-  `RIP` tinyint(1) NOT NULL
+  `RIP` tinyint(1) NOT NULL,
+  `RouterAInterface` int(11) NOT NULL,
+  `RouterBInterface` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -60,7 +62,7 @@ CREATE TABLE `routingtable` (
   `Destination` varchar(45) NOT NULL,
   `Gateway` varchar(45) NOT NULL,
   `Networkmask` varchar(45) NOT NULL,
-  `Interface` varchar(45) NOT NULL,
+  `Interface` int(11) NOT NULL,
   `Metric` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -108,7 +110,8 @@ ALTER TABLE `router`
 -- Indizes für die Tabelle `routingtable`
 --
 ALTER TABLE `routingtable`
-  ADD PRIMARY KEY (`RoutingTableId`);
+  ADD PRIMARY KEY (`RoutingTableId`),
+  ADD UNIQUE KEY `Interface` (`Interface`);
 
 --
 -- Indizes für die Tabelle `session`
