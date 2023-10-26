@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 25. Okt 2023 um 10:56
+-- Erstellungszeit: 26. Okt 2023 um 13:54
 -- Server-Version: 10.4.28-MariaDB
 -- PHP-Version: 8.2.4
 
@@ -45,7 +45,6 @@ CREATE TABLE `router` (
   `RouterId` int(11) NOT NULL,
   `IsActive` tinyint(1) NOT NULL,
   `Name` varchar(45) NOT NULL,
-  `ConnectionId` int(11) NOT NULL,
   `RoutingTableId` int(11) NOT NULL,
   `IP` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -103,8 +102,7 @@ ALTER TABLE `connection`
 --
 ALTER TABLE `router`
   ADD PRIMARY KEY (`RouterId`),
-  ADD KEY `RoutingTable_Router_FK` (`RoutingTableId`),
-  ADD KEY `ConnectionId` (`ConnectionId`) USING BTREE;
+  ADD KEY `RoutingTable_Router_FK` (`RoutingTableId`);
 
 --
 -- Indizes für die Tabelle `routingtable`
@@ -132,15 +130,8 @@ ALTER TABLE `user`
 -- Constraints der Tabelle `connection`
 --
 ALTER TABLE `connection`
-  ADD CONSTRAINT `connection_ibfk_1` FOREIGN KEY (`ConnectionId`) REFERENCES `router` (`ConnectionId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `connection_routerA` FOREIGN KEY (`RouterA`) REFERENCES `router` (`RouterId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `connection_routerB` FOREIGN KEY (`RouterB`) REFERENCES `router` (`RouterId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints der Tabelle `router`
---
-ALTER TABLE `router`
-  ADD CONSTRAINT `RoutingTable_Router_FK` FOREIGN KEY (`RoutingTableId`) REFERENCES `router` (`RouterId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints der Tabelle `routingtable`
