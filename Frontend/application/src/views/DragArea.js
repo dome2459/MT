@@ -9,11 +9,11 @@ export default function DragArea() {
 
 
     const [RouterArray, setRouterArray] = useState([
-        {name: 'Ali', x: 0, y: 0 },
-        {name: 'Bob', x: 10, y: 10 },
-        {name: 'CHAD', x: 20, y: 20 },
-        {name: 'Dic', x: 30, y: 30 },
-        {name: 'Eric', x: 400, y: 100 },
+        {name: 'R1', x: 0, y: 0 },
+        {name: 'R2', x: 10, y: 10 },
+        {name: 'R3', x: 20, y: 20 },
+        {name: 'R4', x: 30, y: 30 },
+        {name: 'R5', x: 400, y: 100 },
     ])
     const [CableArray, setCableArray] = useState([
 
