@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Image } from '@chakra-ui/react'
 import source from "./Router.png";
-import { Switch } from '@chakra-ui/react'
+import { Switch, Stack, FormLabel } from '@chakra-ui/react'
 
 const SidebarLink = styled(Link)`
   display: flex;
@@ -26,12 +26,14 @@ const SidebarLink = styled(Link)`
 const SidebarLabel = styled.span`
   margin-left: 0px;
   margin-right: 0px;
-  height: 90px;
+  flex-direction: column;
+
+  
 `;
 
 const DropdownLink = styled(Link)`
   background: #414757;
-  height: 90px;
+  height: 80px;
   padding-left: 35px;
   display: flex;
   align-items: center;
@@ -48,7 +50,6 @@ const DropdownLink = styled(Link)`
 
 const Inputfield = styled(Link)`
   color: black;
-  
 `;
 
 
@@ -87,13 +88,14 @@ const SubMenu = ({ item }) => {
                                 </div>
 
                                 {item.title === 'IP' ? (
-                                    <>
-                                        <Switch colorScheme='red' />
-                                        <Switch colorScheme='teal' />
-                                        <Image src={source} alt='Router' />
-                                    </>
-                                ) : (console.log())
-                                }
+                                    <Stack direction='column'>
+                                        <FormLabel >OSPF:</FormLabel>
+                                        <Switch colorScheme='skyblue'  size='md'/>
+                                        <FormLabel>RIP:</FormLabel>
+                                        <Switch colorScheme='skyblue'  size='md' />
+                                        {/* <Image src={source} alt='Router' /> */}
+                                    </Stack>
+                                ) : (console.log())}
                             </SidebarLabel>
                         </DropdownLink>
                     );

@@ -8,7 +8,7 @@ import RoutingTable from '../components/RoutingTable';
 
 export default class MainEnviroment extends Component {
 
-  
+
   render() {
     return (
 
@@ -18,16 +18,14 @@ export default class MainEnviroment extends Component {
         <Navbar />
 
         <div className='dragAndTableArea'>
-        <Flex flex={3} margin={10} borderWidth={2} borderColor={'#ddd'}>
+          <Flex flex={3} margin={10} borderWidth={2} borderColor={'#ddd'}>
 
-          <DragArea />
-          
+            <DragArea />
 
-
-        </Flex>
-        <RoutingTable/>
+          </Flex>
+          <RoutingTable />
         </div>
-          
+
         <Flex flex={1} bg='#eee'></Flex>
 
       </Flex>
