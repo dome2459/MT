@@ -21,6 +21,15 @@ export const SidebarData = [
       {
         title: 'IP',
       },
+      {
+        title: 'OSPF',
+      },
+      {
+        title: 'RIP',
+      },
+      {
+        title: 'PIC',
+      }
     ],
 
   },

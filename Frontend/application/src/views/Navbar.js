@@ -59,18 +59,29 @@ const Nav = styled.div`
 
   `;
 
-const NavDiv = styled.div`
+// const NavDiv = styled.div`
+// display: flex;
+// align-items: center;
+// padding: 10px;
+// margin: 20px;
+// `;
 
-padding: 10px;
-margin: 20px;
+const DivBut = styled.div`
+  padding: 10px;
+  margin: 20px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 
+  :hover {
+    background: skyblue;
 
-
-    :hover {
+    > * {
       background: skyblue;
-      cursor: pointer;
+    }
   }
 `;
+
 
 
 export default function NavBar() {
@@ -81,9 +92,9 @@ export default function NavBar() {
 
   const callTimerStart = () => {
 
-      console.log(TimerRef)
+    console.log(TimerRef)
 
-      //TimerRef.current.startTimer();
+    //TimerRef.current.startTimer();
   }
 
   const showSidebar = () => setSidebar(!sidebar)
@@ -100,23 +111,25 @@ export default function NavBar() {
 
           <NavIcon>
 
-            <NavDiv //onClick={()=> callTimerStart()}
-            >
+            {/* <NavDiv //onClick={()=> callTimerStart()} */}
+            {/* > */}
 
-              <SlControl.SlControlStart />
-              <p>Start</p>
+              <DivBut>
+                {/* <SlControl.SlControlStart /> */}
+                <p>Start</p>
+              </DivBut>
 
-            </NavDiv>
 
-            <NavDiv>
+              <DivBut>
+                {/* <MdOutline.MdOutlineDeleteForever /> */}
+                <p>Löschen</p>
+              </DivBut>
 
-              <MdOutline.MdOutlineDeleteForever />
-              <p>Löschen</p>
 
-            </NavDiv>
+            {/* </NavDiv> */}
 
             <div className="App">
-              <Timer ref={TimerRef}/>
+              <Timer ref={TimerRef} />
             </div>
 
             <p style={{ right: '-450px', position: 'relative', fontWeight: 'bold', textDecoration: 'underline' }}>Monitoring-Tool</p>
