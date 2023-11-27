@@ -51,6 +51,7 @@ const DropdownLink = styled(Link)`
 
 const Inputfield = styled(Link)`
   color: black;
+  padding-right: 15px;
 `;
 
 
@@ -87,7 +88,6 @@ const SubMenu = ({ item }) => {
 
                     return (
                         <DropdownLink key={index}>
-
                             <SidebarLabel>
 
                                 {item.title === 'OSPF' ? (
@@ -96,18 +96,10 @@ const SubMenu = ({ item }) => {
                                         <Switch
                                             colorScheme='skyblue'
                                             size='md'
-                                            isChecked={switchOn} // Binden Sie den Schalter an den Zustand
-                                            onChange={toggleSwitch} // Fügen Sie den Klick-Handler hinzu
+                                            onChange={toggleSwitch} 
                                         />
                                     </Stack>
                                 ) : (console.log())}
-
-                                {/* {item.title === 'OSPF' ? (
-                                    <Stack direction='column'>
-                                        <FormLabel >OSPF:</FormLabel>
-                                        <Switch colorScheme='skyblue' size='md' />
-                                    </Stack>
-                                ) : (console.log())} */}
 
                                 {item.title === 'RIP' ? (
                                     <Stack direction='column'>
@@ -166,10 +158,6 @@ const SubMenu = ({ item }) => {
                                         </Inputfield>
                                     </div>
                                 ) : (console.log())}
-
-
-
-
                             </SidebarLabel>
                         </DropdownLink>
                     );

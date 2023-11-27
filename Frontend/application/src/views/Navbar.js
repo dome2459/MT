@@ -1,9 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
-import * as SlControl from "react-icons/sl";
-import * as MdOutline from "react-icons/md";
 import { SidebarData } from "./SidebarData";
 import './Navbar.css';
 import { IconContext } from 'react-icons';
@@ -59,13 +57,6 @@ const Nav = styled.div`
 
   `;
 
-// const NavDiv = styled.div`
-// display: flex;
-// align-items: center;
-// padding: 10px;
-// margin: 20px;
-// `;
-
 const DivBut = styled.div`
   padding: 10px;
   margin: 20px;
@@ -82,20 +73,54 @@ const DivBut = styled.div`
   }
 `;
 
-
-
 export default function NavBar() {
-
   const [sidebar, setSidebar] = useState(false)
-
   const TimerRef = useRef();
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
 
-  const callTimerStart = () => {
 
-    console.log(TimerRef)
+  const startTimer = useCallback(() => {
+    try {
+      console.log(TimerRef.current);
+      if (TimerRef.current && !isTimerRunning) {
+        console.log('Timer gestartet');
+        setIsTimerRunning(true);
+        TimerRef.current.startTimer();
+      }
+    } catch (error) {
+      console.error('Fehler beim Starten des Timers in der NavBar:', error);
+    }
+  }, [TimerRef, isTimerRunning]);
 
-    //TimerRef.current.startTimer();
-  }
+
+  const stopTimer = useCallback(() => {
+    try {
+      console.log(TimerRef.current);
+      if (TimerRef.current) {
+        console.log('Timer gestoppt');
+        setIsTimerRunning(false);
+        TimerRef.current.stopTimer();
+      }
+    } catch (error) {
+      console.error('Fehler beim Stoppen des Timers in der NavBar:', error);
+    }
+  }, [TimerRef]);
+
+
+  const resetTimer = useCallback(() => {
+    try {
+      console.log(TimerRef.current);
+      if (TimerRef.current) {
+        console.log('Timer zurückgesetzt');
+        setIsTimerRunning(false);
+        TimerRef.current.resetTimer();
+      }
+    } catch (error) {
+      console.error('Fehler beim Zurücksetzen des Timers in der NavBar:', error);
+    }
+  }, [TimerRef]);
+
+
 
   const showSidebar = () => setSidebar(!sidebar)
 
@@ -111,25 +136,26 @@ export default function NavBar() {
 
           <NavIcon>
 
-            {/* <NavDiv //onClick={()=> callTimerStart()} */}
-            {/* > */}
+            <DivBut >
+              <button onClick={() => startTimer()} disabled={isTimerRunning}>
+                Start
+              </button>
+            </DivBut>
 
-              <DivBut>
-                {/* <SlControl.SlControlStart /> */}
-                <p>Start</p>
-              </DivBut>
+            <DivBut onClick={() => stopTimer()}>
+              <p>Stop</p>
+            </DivBut>
 
+            <DivBut onClick={() => resetTimer()}>
+              <p>Reset</p>
+            </DivBut>
 
-              <DivBut>
-                {/* <MdOutline.MdOutlineDeleteForever /> */}
-                <p>Löschen</p>
-              </DivBut>
+            <DivBut>
+              <p>Löschen</p>
+            </DivBut>
 
-
-            {/* </NavDiv> */}
-
-            <div className="App">
-              <Timer ref={TimerRef} />
+            <div >
+              <Timer TimerRef={TimerRef} isTimerRunning={isTimerRunning} startTimer={startTimer} stopTimer={stopTimer} />
             </div>
 
             <p style={{ right: '-450px', position: 'relative', fontWeight: 'bold', textDecoration: 'underline' }}>Monitoring-Tool</p>
