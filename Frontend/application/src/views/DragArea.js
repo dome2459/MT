@@ -19,9 +19,6 @@ export default function DragArea() {
     
   //}, [RouterArray]);
 
-  const [parentWidth, setParentWidth] = useState(window.innerWidth);
-  const [parentHeight, setParentHeight] = useState(window.innerHeight);
-
   // die bounds -Werte hätte man locker durch 1min probieren anpassen können !!! 
   const maxX = parentWidth - 350; // Assuming draggable elements are 100x100 okay
   const maxY = parentHeight - 140;
