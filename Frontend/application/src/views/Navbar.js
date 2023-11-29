@@ -91,33 +91,37 @@ export default function NavBar() {
     }
   }, [TimerRef]);
 
- const stopTimer = useCallback(() => {
+  const stopTimer = useCallback(() => {
     try {
       console.log(TimerRef.current);
       if (TimerRef.current) {
         console.log('Timer gestoppt');
-        setIsTimerRunning(true);
+        setIsTimerRunning(false);  // Korrektur: setIsTimerRunning auf false setzen
         TimerRef.current.stopTimer();
       }
     } catch (error) {
       console.error('Fehler beim Stoppen des Timers in der NavBar:', error);
     }
   }, [TimerRef]);
+  
 
 
- const resetTimer = useCallback(() => {
+  const resetTimer = useCallback(() => {
     try {
       console.log(TimerRef.current);
       if (TimerRef.current) {
         console.log('Timer zurückgesetzt');
-        setIsTimerRunning(true);
-        TimerRef.current.resetTimer();
+        setIsTimerRunning(true);  // Setzen Sie den Timer zunächst auf "true"
+        setTimeout(() => {
+          setIsTimerRunning(false);  // Nach einer kurzen Verzögerung auf "false" setzen
+          TimerRef.current.resetTimer();
+        }, 0);
       }
     } catch (error) {
       console.error('Fehler beim Zurücksetzen des Timers in der NavBar:', error);
     }
   }, [TimerRef]);
-
+  
 
 
   const showSidebar = () => setSidebar(!sidebar)
