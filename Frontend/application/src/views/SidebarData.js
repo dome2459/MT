@@ -27,6 +27,11 @@ export const SidebarData = [
       },
       {
         title: 'PIC',
+      },{
+        title: 'Hinzufügen',
+      },
+      {
+        title: 'Löschen',
       }
     ],
 

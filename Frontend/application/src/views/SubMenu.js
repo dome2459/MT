@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Image } from '@chakra-ui/react'
 import source from "./Router2.svg";
-import { Switch, Stack, FormLabel } from '@chakra-ui/react'
+import DragArea from "./DragArea";
+import Switch from "react-switch";
 
 
 const SidebarLink = styled(Link)`
@@ -16,7 +17,7 @@ const SidebarLink = styled(Link)`
   height: 60px;
   text-decoration: none;
   font-size: 18px;
-
+    margin: auto;
   &:hover {
     background: skyblue;
     border-left: 4px solid white;
@@ -25,11 +26,11 @@ const SidebarLink = styled(Link)`
 `;
 
 const SidebarLabel = styled.span`
-  margin-left: 0px;
-  margin-right: 0px;
-  flex-direction: column;
-
   
+  margin: auto;
+  margin-right: 30px;
+  margin-left: 20px;
+  display: block;
 `;
 
 const DropdownLink = styled(Link)`
@@ -54,21 +55,45 @@ const Inputfield = styled(Link)`
   padding-right: 15px;
 `;
 
-
-const SubMenu = ({ item }) => {
+const SubMenu = ({ item, updateRouter }) => {
     const [subnav, setSubnav] = useState(false);
-
-    const [switchOn, setSwitchOn] = useState(false); 
-
+    const [newRouterData, setNewRouterData] = useState({ name: '', x: 200, y: 200 });
     const showSubnav = () => setSubnav(!subnav);
-
-    const toggleSwitch = () => {
-        setSwitchOn(!switchOn); // Ändern Sie den Zustand beim Klicken auf den Schalter
+    const [switchOnOspf, setSwitchOnOspf] = useState(false);
+    const [switchOnRip, setSwitchOnRip] = useState(false);
+    const handleChangeOspf = (checked) => {
+        setSwitchOnOspf(checked);
+        // Wenn OSPF eingeschaltet wird, schalte RIP aus
+        if (checked) {
+            setSwitchOnRip(false);
+        }
     };
+    const handleChangeRip = (checked) => {
+        setSwitchOnRip(checked);
+        // Wenn RIP eingeschaltet wird, schalte OSPF aus
+        if (checked) {
+            setSwitchOnOspf(false);
+        }
+    };
+    const addRouter = () => {
+        console.log("first addRouter");
+        // Füge neue Router-Daten zum RouterArray hinzu
+        updateRouter(newRouterData);
+        console.log("addRouter");
+        // Setze die Eingabefelder zurück
+        setNewRouterData({ name: '', x: 500, y: 500 });
+    };
+
+    const handleDeleteRouter = () => {
+        // Hier den Code für das Löschen des Routers einfügen
+        console.log('Router löschen');
+    };
+    
+
 
     return (
         <>
-            <SidebarLink to={item.path} onClick={item.subNav && showSubnav}>
+            <SidebarLink to={item.path} onClick={() => item.subNav && showSubnav()}>
                 <div>
                     {item.icon}
                     <SidebarLabel>{item.title}</SidebarLabel>
@@ -80,45 +105,36 @@ const SubMenu = ({ item }) => {
                             ? item.iconClosed
                             : null}
                 </div>
-
             </SidebarLink>
             {subnav &&
                 item.subNav.map((item, index) => {
-
-
                     return (
                         <DropdownLink key={index}>
                             <SidebarLabel>
-
                                 {item.title === 'OSPF' ? (
-                                    <Stack direction='column'>
-                                        <FormLabel >OSPF:</FormLabel>
-                                        <Switch
-                                            colorScheme='skyblue'
-                                            size='md'
-                                            onChange={toggleSwitch} 
-                                        />
-                                    </Stack>
+                                    <label >
+                                        <span style={{ display: 'block' }}>OSPF</span>
+                                        <Switch onChange={handleChangeOspf} checked={switchOnOspf} />
+                                    </label>
                                 ) : (console.log())}
-
                                 {item.title === 'RIP' ? (
-                                    <Stack direction='column'>
-                                        <FormLabel >RIP:</FormLabel>
-                                        <Switch colorScheme='skyblue' size='md' />
-                                    </Stack>
+                                    <label >
+                                        <span  style={{ display: 'block' }} >RIP</span>
+                                        <Switch onChange={handleChangeRip} checked={switchOnRip} />
+                                    </label>
                                 ) : null}
-
-
                                 {item.title === 'Name' ? (
                                     <div>
                                         {item.title}
                                         <Inputfield>
-                                            <input />
+                                            <input
+                                                type="text"
+                                                value={newRouterData.name}
+                                                onChange={(e) => setNewRouterData({ ...newRouterData, name: e.target.value })}
+                                            />
                                         </Inputfield>
                                     </div>
                                 ) : null}
-
-
                                 {item.title === 'IP' ? (
                                     <div>
                                         {item.title}
@@ -127,13 +143,44 @@ const SubMenu = ({ item }) => {
                                         </Inputfield>
                                     </div>
                                 ) : null}
-
                                 {item.title === 'PIC' ? (
                                     <div>
                                         <Image src={source} alt='Router' style={{ height: '80px', width: '80px' }} />
                                     </div>
                                 ) : null}
+                                {item.title === 'Hinzufügen' ? (
+                                    <button
+                                        style={{
+                                            color: 'darkgrey',
+                                            margin: '40px auto 0',
+                                            display: 'block',
+                                            margin: '0 auto',
+                                            backgroundColor: 'white',
+                                            padding: '8px 16px',
+                                            borderRadius: '4px',
+                                            cursor: 'pointer',
+                                        }}
+                                        onClick={addRouter}>
+                                        Hinzufügen
+                                    </button>
+                                ) : null}
 
+                                {item.title === 'Löschen' ? (
+                                    <button
+                                        style={{
+                                            color: 'darkgrey',
+                                            margin: '40px auto 0',
+                                            display: 'block',
+                                            margin: '0 auto',
+                                            backgroundColor: 'white',
+                                            padding: '8px 16px',
+                                            borderRadius: '4px',
+                                            cursor: 'pointer',
+                                        }}
+                                        onClick={handleDeleteRouter}>
+                                        Löschen
+                                    </button>
+                                ) : null}
                                 {item.title === 'Router 1' ? (
                                     <div>
                                         {item.title}
@@ -164,6 +211,5 @@ const SubMenu = ({ item }) => {
                 })}
         </>
     )
-
 }
 export default SubMenu;

@@ -54,7 +54,6 @@ const Nav = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-
   `;
 
 const DivBut = styled.div`
@@ -74,15 +73,15 @@ const DivBut = styled.div`
 `;
 
 export default function NavBar() {
+
   const [sidebar, setSidebar] = useState(false)
   const TimerRef = useRef();
   const [isTimerRunning, setIsTimerRunning] = useState(false);
 
-
   const startTimer = useCallback(() => {
     try {
       console.log(TimerRef.current);
-      if (TimerRef.current && !isTimerRunning) {
+      if (TimerRef.current) {
         console.log('Timer gestartet');
         setIsTimerRunning(true);
         TimerRef.current.startTimer();
@@ -90,15 +89,14 @@ export default function NavBar() {
     } catch (error) {
       console.error('Fehler beim Starten des Timers in der NavBar:', error);
     }
-  }, [TimerRef, isTimerRunning]);
+  }, [TimerRef]);
 
-
-  const stopTimer = useCallback(() => {
+ const stopTimer = useCallback(() => {
     try {
       console.log(TimerRef.current);
       if (TimerRef.current) {
         console.log('Timer gestoppt');
-        setIsTimerRunning(false);
+        setIsTimerRunning(true);
         TimerRef.current.stopTimer();
       }
     } catch (error) {
@@ -107,12 +105,12 @@ export default function NavBar() {
   }, [TimerRef]);
 
 
-  const resetTimer = useCallback(() => {
+ const resetTimer = useCallback(() => {
     try {
       console.log(TimerRef.current);
       if (TimerRef.current) {
         console.log('Timer zurückgesetzt');
-        setIsTimerRunning(false);
+        setIsTimerRunning(true);
         TimerRef.current.resetTimer();
       }
     } catch (error) {
@@ -136,10 +134,8 @@ export default function NavBar() {
 
           <NavIcon>
 
-            <DivBut >
-              <button onClick={() => startTimer()} disabled={isTimerRunning}>
-                Start
-              </button>
+            <DivBut onClick={() => startTimer()}>
+              <p>Start</p>
             </DivBut>
 
             <DivBut onClick={() => stopTimer()}>
@@ -148,10 +144,6 @@ export default function NavBar() {
 
             <DivBut onClick={() => resetTimer()}>
               <p>Reset</p>
-            </DivBut>
-
-            <DivBut>
-              <p>Löschen</p>
             </DivBut>
 
             <div >
