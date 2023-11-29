@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react'; // Fügen Sie useEffect hinzu
 import Draggable from 'react-draggable';
 import { Box, Text, Center, Image } from "@chakra-ui/react";
-import { PathLine } from 'react-svg-pathline'
-import RouterSvg from './Router2.svg'
+import { PathLine } from 'react-svg-pathline';
+import RouterSvg from './Router2.svg';
+import RouterEditSvg from './Router2edit.svg';
 import GlobalContext from '../components/InitStateContext';
 
 export default function DragArea() {
@@ -24,6 +25,7 @@ export default function DragArea() {
   const maxY = parentHeight - 140;
 
   const {RouterArray, updateRouterArray} = useContext(GlobalContext);
+  const {EditRouter, updateEditRouter} = useContext(GlobalContext);
 
   const [CableArray, setCableArray] = useState([
 
@@ -48,6 +50,10 @@ export default function DragArea() {
     updateRouterArray(RouterArr);
   };
 
+  const handleClick = (item) => {
+    updateEditRouter(item)
+    
+  };
 
   const RouterObj = (item, index) => {
     return (
@@ -56,12 +62,13 @@ export default function DragArea() {
         position={{ x: item.x, y: item.y }}
         onDrag={handleDrag(index)}
         style={theme}  >
-
-
+        
+        
         <Center flexDirection={'column'} width={100} className="draggable" //borderWidth={1} borderColor='#000' 
           position="absolute" cursor="grab" w="100px" h="100px"
-
+          onClick={handleClick(item)}
         >
+          
           <Image src={RouterSvg} height={100} width={100} draggable={false} onmousedown={false} />
 
           <Text marginBottom={-6} backgroundColor='#fff' borderRadius='3' paddingX={2} >{item.name}</Text>
