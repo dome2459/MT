@@ -81,7 +81,7 @@ const SubMenu = ({ item, updateRouter }) => {
         updateRouter(newRouterData);
         console.log("addRouter");
         // Setze die Eingabefelder zurück
-        setNewRouterData({ name: '', x: 500, y: 500 });
+        setNewRouterData({ name: '', x: 100, y: 100 });
     };
 
     const handleDeleteRouter = () => {
