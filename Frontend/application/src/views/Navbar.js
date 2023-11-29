@@ -77,32 +77,35 @@ export default function NavBar() {
   const [sidebar, setSidebar] = useState(false)
   const TimerRef = useRef();
   const [isTimerRunning, setIsTimerRunning] = useState(false);
+  const [timerButtonClicked, setTimerButtonClicked] = useState(false);
 
   const startTimer = useCallback(() => {
     try {
       console.log(TimerRef.current);
-      if (TimerRef.current) {
+      if (TimerRef.current && !timerButtonClicked) {
         console.log('Timer gestartet');
         setIsTimerRunning(true);
+        setTimerButtonClicked(true);
         TimerRef.current.startTimer();
       }
     } catch (error) {
       console.error('Fehler beim Starten des Timers in der NavBar:', error);
     }
-  }, [TimerRef]);
+  }, [TimerRef,timerButtonClicked]);
 
   const stopTimer = useCallback(() => {
     try {
       console.log(TimerRef.current);
-      if (TimerRef.current) {
+      if (TimerRef.current && timerButtonClicked) {
         console.log('Timer gestoppt');
+        setTimerButtonClicked(false);
         setIsTimerRunning(false);  // Korrektur: setIsTimerRunning auf false setzen
         TimerRef.current.stopTimer();
       }
     } catch (error) {
       console.error('Fehler beim Stoppen des Timers in der NavBar:', error);
     }
-  }, [TimerRef]);
+  }, [TimerRef, timerButtonClicked]);
   
 
 
@@ -112,6 +115,7 @@ export default function NavBar() {
       if (TimerRef.current) {
         console.log('Timer zurückgesetzt');
         setIsTimerRunning(true);  // Setzen Sie den Timer zunächst auf "true"
+        setTimerButtonClicked(false);
         setTimeout(() => {
           setIsTimerRunning(false);  // Nach einer kurzen Verzögerung auf "false" setzen
           TimerRef.current.resetTimer();
