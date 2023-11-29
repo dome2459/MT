@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Image } from '@chakra-ui/react'
 import source from "./Router2.svg";
 import DragArea from "./DragArea";
 import Switch from "react-switch";
+import GlobalContext from "../components/InitStateContext";
 
 
 const SidebarLink = styled(Link)`
@@ -61,6 +62,9 @@ const SubMenu = ({ item, updateRouter }) => {
     const showSubnav = () => setSubnav(!subnav);
     const [switchOnOspf, setSwitchOnOspf] = useState(false);
     const [switchOnRip, setSwitchOnRip] = useState(false);
+
+    const {RouterArray, updateRouterArray} = useContext(GlobalContext);
+
     const handleChangeOspf = (checked) => {
         setSwitchOnOspf(checked);
         // Wenn OSPF eingeschaltet wird, schalte RIP aus
@@ -77,11 +81,17 @@ const SubMenu = ({ item, updateRouter }) => {
     };
     const addRouter = () => {
         console.log("first addRouter");
+
+
+        var newArray = [...RouterArray]; 
+        newArray.push({ name: '', x: 500, y: 500 })
+        updateRouterArray(newArray);
+
         // Füge neue Router-Daten zum RouterArray hinzu
-        updateRouter(newRouterData);
-        console.log("addRouter");
+        //updateRouter(newRouterData);
+        //console.log("addRouter");
         // Setze die Eingabefelder zurück
-        setNewRouterData({ name: '', x: 100, y: 100 });
+        //setNewRouterData({ name: '', x: 500, y: 500 });
     };
 
     const handleDeleteRouter = () => {
@@ -160,7 +170,7 @@ const SubMenu = ({ item, updateRouter }) => {
                                             borderRadius: '4px',
                                             cursor: 'pointer',
                                         }}
-                                        onClick={addRouter}>
+                                        onClick={() => addRouter()}>
                                         Hinzufügen
                                     </button>
                                 ) : null}
