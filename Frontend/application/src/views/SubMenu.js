@@ -83,7 +83,7 @@ const SubMenu = ({ item, updateRouter }) => {
     const addRouter = () => {
         console.log("first addRouter");
         var newArray = [...RouterArray]; 
-        newArray.push({ name: '', x: 100, y: 100 })
+        newArray.push(newRouterData)
         updateRouterArray(newArray);
 
         // Füge neue Router-Daten zum RouterArray hinzu

@@ -62,7 +62,6 @@ export default function DragArea() {
           position="absolute" cursor="grab" w="100px" h="100px"
 
         >
-
           <Image src={RouterSvg} height={100} width={100} draggable={false} onmousedown={false} />
 
           <Text marginBottom={-6} backgroundColor='#fff' borderRadius='3' paddingX={2} >{item.name}</Text>
