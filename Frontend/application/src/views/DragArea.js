@@ -9,19 +9,19 @@ export default function DragArea() {
   // statische Werte im Code zu schreiben ist immer schlecht!!! 
   // const parentWidth = 1800;
   // const parentHeight = 600;
-  const [parentWidth, setParentWidth] = useState(window.innerWidth);
-  const [parentHeight, setParentHeight] = useState(window.innerHeight);
+  const [parentWidth, setParentWidth] = useState(window.innerWidth );
+  const [parentHeight, setParentHeight] = useState(window.innerHeight/2);
 
   // die bounds -Werte hätte man locker durch 1min probieren anpassen können !!! 
-  const maxX = parentWidth - 220; // Assuming draggable elements are 100x100 okay
+  const maxX = parentWidth - 350; // Assuming draggable elements are 100x100 okay
   const maxY = parentHeight - 140;
 
   const [RouterArray, setRouterArray] = useState([
     { name: 'R1', x: 100, y: 100 },
-    { name: 'R2', x: 200, y: 200 },
-    { name: 'R3', x: 300, y: 300 },
-    { name: 'R4', x: 400, y: 400 },
-    { name: 'R5', x: 600, y: 600 },
+    { name: 'R2', x: 150 , y: 150 },
+    { name: 'R3', x: 200, y: 200 },
+    { name: 'R4', x: 250, y: 250 },
+    { name: 'R5', x: 300, y: 300 },
   ])
   const [CableArray, setCableArray] = useState([
     { connectionId: '1', routerA: 1, routerB: 2, ospf: '', rip: '' },
