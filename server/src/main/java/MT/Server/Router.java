@@ -1,22 +1,25 @@
 package MT.Server;
 
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.*;
 import org.springframework.data.annotation.Id;
 
+
+@Entity
+@Table(name="router")
 public class Router {
 
+  @Column(name = "name")
+  private String name;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO) private Long id;
+  @Column(name = "isActive")
+  private Boolean isActive;
+  @Column(name = "RoutingTableId")
+  private Integer RoutingTableId;
+  @Column(name = "ip")
+  private String ip;
 
-  public String name;
-
-  public @EmbeddedId
-  @GeneratedValue Integer id;
-  public Boolean isActive;
-  public Integer RoutingTableId;
-  public String ip;
-
-  public Router(String name, Integer id, Boolean isActive, Integer routingTableId, String ip) {
+  public Router(String name, Long id, Boolean isActive, Integer routingTableId, String ip) {
     this.name = name;
     this.id = id;
     this.isActive = isActive;
@@ -31,11 +34,11 @@ public class Router {
   public void setName(String name) {
     this.name = name;
   }
-  public Integer getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(Long id) {
     this.id = id;
   }
 

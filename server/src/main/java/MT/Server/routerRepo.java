@@ -1,7 +1,11 @@
 package MT.Server;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface routerRepo extends CrudRepository<Router, Long> {
+import java.util.List;
+
+public interface routerRepo extends JpaRepository<Router, Long> {
+  List<Router> findByName(String name);
+  List<Router> findByisActive(Boolean isActive);
 
 }

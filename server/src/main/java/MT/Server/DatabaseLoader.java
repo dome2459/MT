@@ -14,7 +14,7 @@ public class DatabaseLoader implements CommandLineRunner {
 
   @Override
   public void run(String... args) throws Exception {
-    this.routerRepository.save(new Router("test", 1,true,1,"000.000.000.001"));
+    this.routerRepository.save(new Router("test", 1L,true,1,"000.000.000.001"));
 
   }
 }
