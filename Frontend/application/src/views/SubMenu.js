@@ -58,7 +58,7 @@ const Inputfield = styled(Link)`
 
 const SubMenu = ({ item, updateRouter }) => {
     const [subnav, setSubnav] = useState(false);
-    const [EditRouter, setEditRouter] = useState(false);
+    const [EditScreen, setEditScreen] = useState(false);
     const [newRouterData, setNewRouterData] = useState({ name: '', x: 200, y: 200 });
     const showSubnav = () => setSubnav(!subnav);
     const [switchOnOspf, setSwitchOnOspf] = useState(false);
@@ -83,6 +83,8 @@ const SubMenu = ({ item, updateRouter }) => {
     const addRouter = () => {
         console.log("first addRouter");
         var newArray = [...RouterArray]; 
+        newRouterData.id = newArray.length + 1;
+
         newArray.push(newRouterData)
         updateRouterArray(newArray);
 

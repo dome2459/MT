@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
@@ -8,6 +8,7 @@ import { IconContext } from 'react-icons';
 import styled from 'styled-components';
 import SubMenu from './SubMenu';
 import Timer from './Timer';
+import GlobalContext from '../components/InitStateContext';
 
 const SidebarWrap = styled.div`
   width: 100%;
@@ -79,6 +80,23 @@ export default function NavBar() {
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [timerButtonClicked, setTimerButtonClicked] = useState(false);
 
+  const {EditRouter, updateEditRouter} = useContext(GlobalContext);
+
+  useEffect(() => {
+    
+    setEditMode();
+
+  }, [EditRouter]);
+
+  const setEditMode = () =>{
+
+    if (EditRouter.id !== undefined) {
+      setSidebar(true);
+    } else {
+      setSidebar(false);
+    }
+  }
+
   const startTimer = useCallback(() => {
     try {
       console.log(TimerRef.current);
@@ -137,7 +155,10 @@ export default function NavBar() {
 
         <Nav>
           <NavIconMenu to='#'>
+
+          {/*
             <FaIcons.FaBars onClick={showSidebar} />
+          */}
           </NavIconMenu>
 
           <NavIcon>
@@ -169,9 +190,7 @@ export default function NavBar() {
             <NavIcon to='#'>
               <AiIcons.AiOutlineClose onClick={showSidebar} />
             </NavIcon>
-            {SidebarData.map((item, index) => {
-              return <SubMenu item={item} key={index} />;
-            })}
+           
           </SidebarWrap>
 
         </SidebarNav>
