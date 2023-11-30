@@ -26,7 +26,7 @@ export default function DragArea() {
 
   const {RouterArray, updateRouterArray} = useContext(GlobalContext);
   const {EditRouter, updateEditRouter} = useContext(GlobalContext);
-
+  const [CurrendDrag, setCurrendDrag] = useState(false);
   const [CableArray, setCableArray] = useState([
 
     { connectionId: '1', routerA: 1, routerB: 2, ospf: '', rip: '' },
@@ -51,7 +51,16 @@ export default function DragArea() {
   };
 
   const handleClick = (item) => {
-    updateEditRouter(item)
+    if(CurrendDrag === false){
+     
+      if(EditRouter.id === item.id)
+      {
+        updateEditRouter({});
+      }
+      else{
+        updateEditRouter(item);
+      }
+    }
     
   };
 
@@ -61,15 +70,18 @@ export default function DragArea() {
         bounds={{ left: 0, top: 0, right: maxX, bottom: maxY }}
         position={{ x: item.x, y: item.y }}
         onDrag={handleDrag(index)}
-        style={theme}  >
-        
+        style={theme}  
+        IsEdit={false}
+        onStart={() => setCurrendDrag(true)} 
+        onStop={() => setCurrendDrag(false)}
+        >
         
         <Center flexDirection={'column'} width={100} className="draggable" //borderWidth={1} borderColor='#000' 
           position="absolute" cursor="grab" w="100px" h="100px"
-          onClick={handleClick(item)}
+          onClick={() =>handleClick(item)}
         >
           
-          <Image src={RouterSvg} height={100} width={100} draggable={false} onmousedown={false} />
+          <Image src={((EditRouter.id === item.id ) ? RouterEditSvg : RouterSvg)} height={100} width={100} draggable={false} onmousedown={false} />
 
           <Text marginBottom={-6} backgroundColor='#fff' borderRadius='3' paddingX={2} >{item.name}</Text>
 
