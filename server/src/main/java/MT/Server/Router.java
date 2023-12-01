@@ -10,12 +10,17 @@ public class Router {
 
   @Column(name = "name")
   private String name;
+
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO) private Long id;
+  @GeneratedValue(strategy = GenerationType.AUTO) 
+  private Long id;
+
   @Column(name = "isActive")
   private Boolean isActive;
+
   @Column(name = "RoutingTableId")
   private Integer RoutingTableId;
+  
   @Column(name = "ip")
   private String ip;
 
