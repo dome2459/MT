@@ -78,7 +78,7 @@ export default function DragArea() {
         
         <Center flexDirection={'column'} width={100} className="draggable" //borderWidth={1} borderColor='#000' 
           position="absolute" cursor="grab" w="100px" h="100px"
-          onClick={() =>handleClick(item)}
+          onDoubleClick={() => handleClick(item)}
         >
           
           <Image src={((EditRouter.id === item.id ) ? RouterEditSvg : RouterSvg)} height={100} width={100} draggable={false} onmousedown={false} />
