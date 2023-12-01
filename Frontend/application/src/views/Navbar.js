@@ -156,9 +156,9 @@ export default function NavBar() {
         <Nav>
           <NavIconMenu to='#'>
 
-          {/*
-            <FaIcons.FaBars onClick={showSidebar} />
-          */}
+          
+          <FaIcons.FaBars onClick={showSidebar} />
+          
           </NavIconMenu>
 
           <NavIcon>
@@ -190,7 +190,9 @@ export default function NavBar() {
             <NavIcon to='#'>
               <AiIcons.AiOutlineClose onClick={showSidebar} />
             </NavIcon>
-           
+            {SidebarData.map((item, index) => {
+              return <SubMenu item={item} key={index} />;
+            })}
           </SidebarWrap>
 
         </SidebarNav>
