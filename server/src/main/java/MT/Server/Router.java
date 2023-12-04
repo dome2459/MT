@@ -1,20 +1,19 @@
 package MT.Server;
 
-import jakarta.persistence.*;
-import org.springframework.data.annotation.Id;
 
+import jakarta.persistence.*;
 
 @Entity
 @Table(name="router")
 public class Router {
 
-  @Column(name = "name")
-  private String name;
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO) 
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
+  @Column(name = "name")
+  private String name;
   @Column(name = "isActive")
   private Boolean isActive;
 
@@ -23,7 +22,8 @@ public class Router {
   
   @Column(name = "ip")
   private String ip;
-
+  public Router(){
+  }
   public Router(String name, Long id, Boolean isActive, Integer routingTableId, String ip) {
     this.name = name;
     this.id = id;
