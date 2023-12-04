@@ -1,5 +1,7 @@
 package MT.Server;
 
+import MT.Server.Repos.routerRepo;
+import MT.Server.Tables.Router;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
