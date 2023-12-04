@@ -19,14 +19,6 @@ public class RouterController {
 
   @Autowired
   private routerRepo routerRepo;
-  @Autowired
-  private connectionRepo connectionRepo;
-  @Autowired
-  private routingTableRepo routingTableRepo;
-  @Autowired
-  private sessionRepo sessionRepo;
-  @Autowired
-  private userRepo userRepo;
 
   @GetMapping("/router")
   public List<Router> getAllRouter() {
