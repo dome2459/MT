@@ -6,8 +6,8 @@ const GlobalProvider = ({ children }) => {
 
 //RouterArray
 const [RouterArray, setRouterArray] = useState([
-    { id: 1, name: 'R1', x: 100, y: 100 , ip: '255.255.255.0', rip: false, ospf: false},
-    { id: 2, name: 'R2', x: 200, y: 200 , ip: '255.255.0.255', rip: false, ospf: false},
+    { id: 1, name: 'R1', x: 100, y: 100 , ip: '255.255.255.0', rip: false, ospf: true},
+    { id: 2, name: 'R2', x: 200, y: 200 , ip: '255.255.0.255', rip: true, ospf: false},
     { id: 3, name: 'R3', x: 300, y: 300 , ip: '255.0.255.255', rip: false, ospf: false},
     { id: 4, name: 'R4', x: 400, y: 400 , ip: '0.255.0.255', rip: false, ospf: false},
     { id: 5, name: 'R5', x: 600, y: 600 ,ip: '255.255.0.0', rip: false, ospf: false},

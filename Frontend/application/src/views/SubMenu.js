@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Image } from '@chakra-ui/react'
+import { Button, Image } from '@chakra-ui/react'
 import source from "./Router2.svg";
 import DragArea from "./DragArea";
 import Switch from "react-switch";
@@ -57,8 +57,8 @@ const Inputfield = styled(Link)`
 `;
 
 const SubMenu = ({ item, updateRouter }) => {
-    const [subnav, setSubnav] = useState(false);
-    const [EditScreen, setEditScreen] = useState(false);
+    const [subnav, setSubnav] = useState(true);
+    //const [EditScreen, setEditScreen] = useState(false);
     const [newRouterData, setNewRouterData] = useState({ name: '', x: 200, y: 200 });
     const showSubnav = () => setSubnav(!subnav);
     const [switchOnOspf, setSwitchOnOspf] = useState(false);
@@ -82,6 +82,9 @@ const SubMenu = ({ item, updateRouter }) => {
         }
     };
     const addRouter = () => {
+
+        if ( EditRouter.id === undefined ) {
+
         console.log("first addRouter");
         var newArray = [...RouterArray]; 
         newRouterData.id = newArray.length + 1;
@@ -94,6 +97,7 @@ const SubMenu = ({ item, updateRouter }) => {
         //console.log("addRouter");
         // Setze die Eingabefelder zurück
         //setNewRouterData({ name: '', x: 500, y: 500 });
+        }
     };
 
     const handleDeleteRouter = () => {
@@ -139,13 +143,13 @@ const SubMenu = ({ item, updateRouter }) => {
                                 {item.title === 'OSPF' ? (
                                     <label >
                                         <span style={{ display: 'block' }}>OSPF</span>
-                                        <Switch onChange={handleChangeOspf} checked={switchOnOspf} />
+                                        <Switch onChange={handleChangeOspf} checked={switchOnOspf} defaultChecked={EditRouter.id !== undefined ? (EditRouter.ospf) : (false)} />
                                     </label>
                                 ) : (console.log())}
                                 {item.title === 'RIP' ? (
                                     <label >
                                         <span  style={{ display: 'block' }} >RIP</span>
-                                        <Switch onChange={handleChangeRip} checked={switchOnRip} />
+                                        <Switch onChange={handleChangeRip} checked={switchOnRip} defaultChecked={EditRouter.id !== undefined ? (EditRouter.rip) : (false)} />
                                     </label>
                                 ) : null}
                                 {item.title === 'Name' ? (
@@ -154,7 +158,8 @@ const SubMenu = ({ item, updateRouter }) => {
                                         <Inputfield>
                                             <input
                                                 type="text"
-                                                value={newRouterData.name}
+                                                //value={newRouterData.name}
+                                                defaultValue={EditRouter.id !== undefined ? (EditRouter.name) : ('')}
                                                 onChange={(e) => setNewRouterData({ ...newRouterData, name: e.target.value })}
                                             />
                                         </Inputfield>
@@ -164,7 +169,8 @@ const SubMenu = ({ item, updateRouter }) => {
                                     <div>
                                         {item.title}
                                         <Inputfield>
-                                            <input />
+                                            <input  defaultValue={EditRouter.id !== undefined ? (EditRouter.ip) : ('')} defaul
+                                            />
                                         </Inputfield>
                                     </div>
                                 ) : null}
@@ -174,20 +180,20 @@ const SubMenu = ({ item, updateRouter }) => {
                                     </div>
                                 ) : null}
                                 {item.title === 'Hinzufügen' ? (
-                                    <button
+                                    <Button bgColor={EditRouter.id != undefined ? '#666666' : 'white'}
                                         style={{
                                             color: 'darkgrey',
                                             margin: '40px auto 0',
                                             display: 'block',
                                             margin: '0 auto',
-                                            backgroundColor: 'white',
+                                            //backgroundColor: 'white',
                                             padding: '8px 16px',
                                             borderRadius: '4px',
-                                            cursor: 'pointer',
-                                        }}
+                                            cursor: 'pointer'}
+                                        }
                                         onClick={() => addRouter()}>
                                         Hinzufügen
-                                    </button>
+                                    </Button>
                                 ) : null}
 
                                 {item.title === 'Löschen' ? (
