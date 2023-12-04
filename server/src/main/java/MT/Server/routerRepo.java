@@ -7,7 +7,5 @@ import java.util.List;
 
 @Repository
 public interface routerRepo extends JpaRepository<Router, Long> {
-  List<Router> getRouterName(String name);
-  List<Router> getRouterId(Integer id);
 
 }

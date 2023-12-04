@@ -1,8 +1,7 @@
 package MT.Server;
 
-import jakarta.persistence.*;
-import org.springframework.data.annotation.Id;
 
+import jakarta.persistence.*;
 
 @Entity
 @Table(name="router")
@@ -10,7 +9,7 @@ public class Router {
 
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO) 
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
   @Column(name = "name")
@@ -24,7 +23,6 @@ public class Router {
   @Column(name = "ip")
   private String ip;
   public Router(){
-
   }
   public Router(String name, Long id, Boolean isActive, Integer routingTableId, String ip) {
     this.name = name;
