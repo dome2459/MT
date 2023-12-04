@@ -65,6 +65,7 @@ const SubMenu = ({ item, updateRouter }) => {
     const [switchOnRip, setSwitchOnRip] = useState(false);
 
     const {RouterArray, updateRouterArray} = useContext(GlobalContext);
+    const {EditRouter, updateEditRouter} = useContext(GlobalContext);
 
     const handleChangeOspf = (checked) => {
         setSwitchOnOspf(checked);
@@ -97,7 +98,20 @@ const SubMenu = ({ item, updateRouter }) => {
 
     const handleDeleteRouter = () => {
         // Hier den Code für das Löschen des Routers einfügen
-        console.log('Router löschen');
+        if(EditRouter.id !== undefined)
+        {
+         var i = RouterArray.findIndex((item) => item.id == EditRouter.id);
+
+         if(i >= 0) 
+         {
+            var RouterArr = [...RouterArray];
+            
+            RouterArr.splice(i,1);
+            updateRouterArray(RouterArr);
+            updateEditRouter({});
+        }
+
+        }
     };
     
 
