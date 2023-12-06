@@ -1,0 +1,60 @@
+package MT.Server.Controller;
+
+import MT.Server.Repos.userRepo;
+import MT.Server.ResourceNotFoundException;
+import MT.Server.Tables.Connection;
+import MT.Server.Tables.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@CrossOrigin(origins = "https://localhost:3000")
+@RestController
+@RequestMapping("/api/v1")
+public class UserController {
+
+
+  @Autowired
+  private userRepo userRepo;
+
+  @GetMapping("/user")
+  public List<User> getAllUser() {
+    return userRepo.findAll();
+  }
+
+  @PostMapping("/user")
+  public User createUser(@RequestBody User user){
+    return userRepo.save(user);
+  }
+
+  @GetMapping("/user/{id}")
+  public ResponseEntity<User> getConnectionID(@PathVariable Long id){
+    User user = userRepo.findById(id).orElseThrow( () -> new ResourceNotFoundException("routingTable mit Id: "+ id+" existiert nicht"));
+    return ResponseEntity.ok(user);
+  }
+
+  @PutMapping("/user/{id}")
+  public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User userDetails){
+    User user = userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("user mit Id: "+ id+" existiert nicht"));
+
+    user.setUserId(userDetails.getUserId());
+    user.setUserName(userDetails.getUserName());
+
+    User updatedConnection = userRepo.save(user);
+    return ResponseEntity.ok(updatedConnection);
+  }
+
+  @DeleteMapping("/user/{id}")
+  public ResponseEntity<Map<String, Boolean>> deleteUser(@PathVariable Long id){
+    User user = userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("connection mit Id: "+ id+" existiert nicht"));
+
+    userRepo.delete(user);
+    Map<String, Boolean> response = new HashMap<>();
+    response.put("deleted", Boolean.TRUE);
+    return  ResponseEntity.ok(response);
+  }
+}
