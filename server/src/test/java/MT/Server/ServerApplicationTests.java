@@ -1,5 +1,7 @@
 package MT.Server;
 
+import MT.Server.Repos.routerRepo;
+import MT.Server.Tables.Router;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -48,7 +50,17 @@ class ServerApplicationTests {
 		// hat der gespeicherte Router den Namen "test"
 		Assertions.assertEquals("test", savedRouter.getName());
 
+		// Vergleichen wir doch mal die ID´s beider Router ob es der gleiche ist
+		Assertions.assertEquals(testRouter.getId(),savedRouter.getId());
 
+	}
+
+
+
+	@Test
+	void deleteRouterFromDB(){
+
+		this.routerRepository.delete(testRouter);
 
 
 	}
@@ -56,14 +68,6 @@ class ServerApplicationTests {
 
 	@Test
 	void bringMeTheRouter(){
-
-
-	}
-
-	@Test
-	void deleteRouterFromDB(){
-
-		this.routerRepository.delete(testRouter);
 
 
 	}
