@@ -12,8 +12,8 @@ export default function DragArea() {
   // statische Werte im Code zu schreiben ist immer schlecht!!! 
   // const parentWidth = 1800;
   // const parentHeight = 600;
-  const [parentWidth, setParentWidth] = useState(window.innerWidth );
-  const [parentHeight, setParentHeight] = useState(window.innerHeight/2);
+  const [parentWidth, setParentWidth] = useState(1900);
+  const [parentHeight, setParentHeight] = useState(600);
 
 
   //useEffect(() => {
@@ -105,7 +105,7 @@ export default function DragArea() {
     * Das ganze Geraffel hier unten auch noch automatisch an die Fenstergöße anpassen  
     * gerade was die X und Y Werte betrifft !!!
     */
-    <Box className="target" h={parentHeight} w={parentWidth} borderWidth={1} borderColor='#000' position="relative" padding={2.5}>
+    <Box className="target" h={parentHeight} w={parentWidth} flex={1} borderWidth={1} borderColor='#000' position="relative" padding={2.5} overflow='auto'>
 
       {RouterArray.map((item, i) => {
 

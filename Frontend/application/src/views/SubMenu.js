@@ -1,7 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Button, Image } from '@chakra-ui/react'
+import { Button, Image, Input
+} from '@chakra-ui/react'
 import source from "./Router2.svg";
 import DragArea from "./DragArea";
 import Switch from "react-switch";
@@ -61,7 +62,6 @@ const Inputfield = styled(Link)`
 const SubMenu = ({ item, updateRouter }) => {
     const [subnav, setSubnav] = useState(true);
     //const [EditScreen, setEditScreen] = useState(false);
-    const [newRouterData, setNewRouterData] = useState({ name: '', x: 200, y: 200 });
     const showSubnav = () => setSubnav(!subnav);
     const [switchOnOspf, setSwitchOnOspf] = useState(false);
     const [switchOnRip, setSwitchOnRip] = useState(false);
@@ -69,6 +69,32 @@ const SubMenu = ({ item, updateRouter }) => {
     const {RouterArray, updateRouterArray} = useContext(GlobalContext);
     const {EditRouter, updateEditRouter} = useContext(GlobalContext);
     const {CableArray, setCableArray} = useContext(GlobalContext);
+
+    const NameRef = useRef(null);
+    const IpRef = useRef(null);
+
+
+    useEffect(() => {   
+        
+            if (NameRef.current !== null) {
+
+            if (EditRouter.id !== undefined ) {
+
+                    NameRef.current.value = EditRouter.name
+                    IpRef.current.value = EditRouter.ip
+                    setSwitchOnOspf(EditRouter.ospf)
+                    setSwitchOnRip(EditRouter.rip)
+
+                } else {
+                
+                    NameRef.current.value = ''
+                    IpRef.current.value = ''
+                    setSwitchOnOspf(false)
+                    setSwitchOnRip(false)
+                } 
+            }
+           //console.log('submenu mounted')
+    }, [EditRouter]);
 
     const handleChangeOspf = (checked) => {
         setSwitchOnOspf(checked);
@@ -78,22 +104,28 @@ const SubMenu = ({ item, updateRouter }) => {
         }
     };
     const handleChangeRip = (checked) => {
+        
         setSwitchOnRip(checked);
         // Wenn RIP eingeschaltet wird, schalte OSPF aus
         if (checked) {
             setSwitchOnOspf(false);
         }
+        
     };
     const addRouter = () => {
 
         if ( EditRouter.id === undefined ) {
 
-        console.log("first addRouter");
-        var newArray = [...RouterArray]; 
-        newRouterData.id = newArray.length + 1;
-
-        newArray.push(newRouterData)
-        updateRouterArray(newArray);
+            console.log("first addRouter");
+            var newArray = [...RouterArray]; 
+            var Name = NameRef.current.value;
+            var Ip = IpRef.current.value;
+            var newRouter = { name: Name, ip: Ip, ospf: switchOnOspf, rip: switchOnRip, x: 500, y: 500, id: (newArray.length + 1 ) + '_' + Name };
+    
+                
+    
+            newArray.push(newRouter)
+            updateRouterArray(newArray);
 
         // Füge neue Router-Daten zum RouterArray hinzu
         //updateRouter(newRouterData);
@@ -102,6 +134,22 @@ const SubMenu = ({ item, updateRouter }) => {
         //setNewRouterData({ name: '', x: 500, y: 500 });
         }
     };
+    const saveEditSettings = () => {
+
+        //var newEditRouter = EditRouter; 
+        var Name = NameRef.current.value;
+
+        var Ip = IpRef.current.value;
+    
+        var Ospf = switchOnOspf;
+
+        var Rip = switchOnRip;
+
+
+
+        console.log('Name: ' + Name + ' IP: ' + Ip + Ospf + Rip)
+
+    }
 
     const handleDeleteRouter = () => {
         // Hier den Code für das Löschen des Routers einfügen
@@ -146,24 +194,27 @@ const SubMenu = ({ item, updateRouter }) => {
                                 {item.title === 'OSPF' ? (
                                     <label >
                                         <span style={{ display: 'block' }}>OSPF</span>
-                                        <Switch onChange={handleChangeOspf} checked={switchOnOspf} defaultChecked={EditRouter.id !== undefined ? (EditRouter.ospf) : (false)} />
+                                        <Switch onChange={handleChangeOspf} checked={switchOnOspf} 
+                                         />
                                     </label>
-                                ) : (console.log())}
+                                ) : (null)}
                                 {item.title === 'RIP' ? (
-                                    <label >
-                                        <span  style={{ display: 'block' }} >RIP</span>
-                                        <Switch onChange={handleChangeRip} checked={switchOnRip} defaultChecked={EditRouter.id !== undefined ? (EditRouter.rip) : (false)} />
+                                    <label>
+                                        <span style={{ display: 'block' }} >RIP</span>
+                                        <Switch onChange={handleChangeRip} checked={switchOnRip} 
+                                        />
                                     </label>
                                 ) : null}
                                 {item.title === 'Name' ? (
                                     <div>
                                         {item.title}
                                         <Inputfield>
-                                            <input
-                                                type="text"
-                                                //value={newRouterData.name}
-                                                defaultValue={EditRouter.id !== undefined ? (EditRouter.name) : ('')}
-                                                onChange={(e) => setNewRouterData({ ...newRouterData, name: e.target.value })}
+                                            <Input
+                                                type="text" 
+                                                ref={NameRef}
+                                                bgColor={'white'}
+                                                defaultValue={''}
+                                                //onChange={(e) => setNewRouterData({ ...newRouterData, name: e.target.value })}
                                             />
                                         </Inputfield>
                                     </div>
@@ -172,7 +223,7 @@ const SubMenu = ({ item, updateRouter }) => {
                                     <div>
                                         {item.title}
                                         <Inputfield>
-                                            <input  defaultValue={EditRouter.id !== undefined ? (EditRouter.ip) : ('')} defaul
+                                            <Input ref={IpRef} type='text' bgColor={'white'} defaultValue={EditRouter.id !== undefined ? (EditRouter.ip) : ('')}
                                             />
                                         </Inputfield>
                                     </div>
@@ -183,24 +234,24 @@ const SubMenu = ({ item, updateRouter }) => {
                                     </div>
                                 ) : null}
                                 {item.title === 'Hinzufügen' ? (
-                                    <Button bgColor={EditRouter.id != undefined ? '#666666' : 'white'}
+                                    <Button 
                                         style={{
                                             color: 'darkgrey',
                                             margin: '40px auto 0',
                                             display: 'block',
                                             margin: '0 auto',
-                                            //backgroundColor: 'white',
+                                            backgroundColor: 'white',
                                             padding: '8px 16px',
                                             borderRadius: '4px',
                                             cursor: 'pointer'}
                                         }
-                                        onClick={() => addRouter()}>
-                                        Hinzufügen
+                                        onClick={EditRouter.id != undefined ? () => saveEditSettings() : () => addRouter()}>
+                                        {EditRouter.id != undefined ? 'Speichern' : 'Hinzufügen'}
                                     </Button>
                                 ) : null}
 
-                                {item.title === 'Löschen' ? (
-                                    <button
+                                {item.title === 'Löschen' &&  EditRouter.id != undefined ?(
+                                    <Button
                                         style={{
                                             color: 'darkgrey',
                                             margin: '40px auto 0',
@@ -213,8 +264,9 @@ const SubMenu = ({ item, updateRouter }) => {
                                         }}
                                         onClick={handleDeleteRouter}>
                                         Löschen
-                                    </button>
+                                    </Button>
                                 ) : null}
+
                                {item.title === 'Verbinden' ? (
                                     <button
                                         style={{
@@ -238,7 +290,7 @@ const SubMenu = ({ item, updateRouter }) => {
                                             <input />
                                         </Inputfield>
                                     </div>
-                                ) : (console.log())}
+                                ) : (null)}
 
                                 {item.title === 'Verbundener-Router' ? (
                                     <div>
@@ -259,8 +311,7 @@ const SubMenu = ({ item, updateRouter }) => {
                                         X
                                     </button>
                                     </div>
-                                ) : (console.log())}
-
+                                ) : (null)}
                             </SidebarLabel>
                         </DropdownLink>
                     );

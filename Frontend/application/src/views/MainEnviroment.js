@@ -13,21 +13,19 @@ export default class MainEnviroment extends Component {
     return (
 
 
-      <Flex flex={1} height='100vh' flexDirection='column'>
+      <Flex flex={1} height='100%' flexDirection='column'>
 
         <Navbar />
           	
 
-        <div className='dragAndTableArea'>
-          <Flex flex={3} margin={10} borderWidth={2} borderColor={'#ddd'}>
+        <div className='dragAndTableArea' flex={1}>
+          <Flex flex={1} margin={10} borderWidth={2} borderColor={'#ddd'}>
 
             <DragArea />
 
           </Flex>
-          <RoutingTable />
+          <RoutingTable flex={1}/>
         </div>
-
-        <Flex flex={1} bg='#eee'></Flex>
 
       </Flex>
 
