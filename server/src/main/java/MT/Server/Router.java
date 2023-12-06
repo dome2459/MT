@@ -3,6 +3,8 @@ package MT.Server;
 
 import jakarta.persistence.*;
 
+
+
 @Entity
 @Table(name="router")
 public class Router {
