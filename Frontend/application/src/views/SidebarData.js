@@ -45,7 +45,7 @@ export const SidebarData = [
 
     subNav: [
       {
-        title: 'Router 1',
+        title: 'Verbinden',
         cName: 'sub-nav'
       },
       {
@@ -53,9 +53,11 @@ export const SidebarData = [
         cName: 'sub-nav'
       },
       {
-        title: 'Router 3',
-        cName: 'sub-nav'
-      }
+        title: 'Verbundener-Router',
+       },
+       {
+        title: 'Verbundener-Router',
+       }
     ]
   } 
 ];
