@@ -2,7 +2,6 @@ package MT.Server;
 
 import MT.Server.Repos.routerRepo;
 import MT.Server.Tables.Router;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ServerApplicationTests {
+class RouterTests {
 
 	private Router testRouter = new Router("test", 1L,true,1,"000.000.000.001");
 
@@ -18,7 +17,7 @@ class ServerApplicationTests {
 
 	private DatabaseLoader loader;
 
-	ServerApplicationTests(@Autowired routerRepo routerRepository) {
+	RouterTests(@Autowired routerRepo routerRepository) {
 		this.routerRepository = routerRepository;
 	}
 
@@ -53,15 +52,8 @@ class ServerApplicationTests {
 		// Vergleichen wir doch mal die ID´s beider Router ob es der gleiche ist
 		Assertions.assertEquals(testRouter.getId(),savedRouter.getId());
 
-	}
-
-
-
-	@Test
-	void deleteRouterFromDB(){
-
+		// den Router wieder aus der DB kicken
 		this.routerRepository.delete(testRouter);
-
 
 	}
 
