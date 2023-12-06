@@ -10,7 +10,8 @@ public class Session {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long sessionId;
-
+  public Session(){
+  }
   public Session(Long sessionId) {
     this.sessionId = sessionId;
   }

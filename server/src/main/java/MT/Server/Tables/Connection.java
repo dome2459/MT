@@ -26,7 +26,8 @@ public class Connection {
 
   @Column(name = "ip")
   private String ip;
-
+  public Connection(){
+  }
   public Connection(Long connectionId, Integer routerA, Integer routerB, Integer routerAInterface, Integer routerBInterface, Boolean isOSPF, Boolean isRIP, String ip) {
     this.connectionId = connectionId;
     this.routerAId = routerA;
