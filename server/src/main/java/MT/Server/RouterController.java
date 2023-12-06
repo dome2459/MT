@@ -7,31 +7,56 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-@CrossOrigin(origins = "https://localhost:8081")
+@CrossOrigin(origins = "https://localhost:3000")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 public class RouterController {
 
   @Autowired
-  routerRepo repo;
+  private routerRepo repo;
 
   @GetMapping("/router")
-  public ResponseEntity<List<Router>> getAllRouter(@RequestParam(required = false)String name, Boolean isActive){
-    try{
-      List<Router> router = new ArrayList<Router>();
-      if( name== null){
-        repo.findByName(name).forEach(router::add);
-      }else{
-        repo.findByisActive(isActive).forEach(router::add);
-      }if(router.isEmpty()){
-        return  new ResponseEntity<>(HttpStatus.NO_CONTENT);
-      }
-      return  new ResponseEntity<>(router, HttpStatus.OK);
-
-    }catch (Exception e) {
-      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+  public List<Router> getAllRouter() {
+    return repo.findAll();
   }
+
+  @PostMapping("/router")
+  public Router createRouter(@RequestBody Router router){
+    return repo.save(router);
+  }
+
+  @GetMapping("/router/{id}")
+  public  ResponseEntity<Router> getRouterID(@PathVariable Long id){
+    Router router = repo.findById(id).orElseThrow( () -> new ResourceNotFoundException("Router mit Id: "+ id+" existiert nicht"));
+    return  ResponseEntity.ok(router);
+  }
+
+  @PutMapping("/router/{id}")
+  public ResponseEntity<Router> updateRouter(@PathVariable Long id, @RequestBody Router routerDetails){
+    Router router = repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Router mit Id: "+ id+" existiert nicht"));
+
+    router.setName(routerDetails.getName());
+    router.setId(routerDetails.getId());
+    router.setActive(routerDetails.getActive());
+    router.setRoutingTableId(routerDetails.getRoutingTableId());
+    router.setIp(routerDetails.getIp());
+
+    Router updatedRouter = repo.save(router);
+    return ResponseEntity.ok(updatedRouter);
+  }
+
+  @DeleteMapping("/router/{id}")
+  public ResponseEntity<Map<String, Boolean>> deleteRouter(@PathVariable Long id){
+    Router router = repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Router mit Id: "+ id+" existiert nicht"));
+
+    repo.delete(router);
+    Map<String, Boolean> response = new HashMap<>();
+    response.put("deleted", Boolean.TRUE);
+    return  ResponseEntity.ok(response);
+  }
+
 }
