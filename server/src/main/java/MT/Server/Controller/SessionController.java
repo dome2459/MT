@@ -22,23 +22,23 @@ public class SessionController {
   @Autowired
   private sessionRepo sessionRepo;
 
-  @GetMapping("/session")
+  @GetMapping("/getSession")
   public List<Session> getAllSession() {
     return sessionRepo.findAll();
   }
 
-  @PostMapping("/session")
+  @PostMapping("/postSession")
   public Session createSession(@RequestBody Session session){
     return sessionRepo.save(session);
   }
 
-  @GetMapping("/session/{id}")
+  @GetMapping("/getSession/{id}")
   public ResponseEntity<Session> getSessionID(@PathVariable Long id){
     Session session = sessionRepo.findById(id).orElseThrow( () -> new ResourceNotFoundException("session mit Id: "+ id+" existiert nicht"));
     return ResponseEntity.ok(session);
   }
 
-  @PutMapping("/session/{id}")
+  @PutMapping("/putSession/{id}")
   public ResponseEntity<Session> updateConnection(@PathVariable Long id, @RequestBody Session sessionTableDetails){
     Session session = sessionRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("session mit Id: "+ id+" existiert nicht"));
 
@@ -48,7 +48,7 @@ public class SessionController {
     return ResponseEntity.ok(updatedSession);
   }
 
-  @DeleteMapping("/session/{id}")
+  @DeleteMapping("/delSession/{id}")
   public ResponseEntity<Map<String, Boolean>> deleteSession(@PathVariable Long id){
     Session session = sessionRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("session mit Id: "+ id+" existiert nicht"));
 

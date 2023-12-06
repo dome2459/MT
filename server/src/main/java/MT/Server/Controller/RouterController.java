@@ -20,23 +20,23 @@ public class RouterController {
   @Autowired
   private routerRepo routerRepo;
 
-  @GetMapping("/router")
+  @GetMapping("/getRouter")
   public List<Router> getAllRouter() {
     return routerRepo.findAll();
   }
 
-  @PostMapping("/router")
+  @PostMapping("/postRouter")
   public Router createRouter(@RequestBody Router router){
     return routerRepo.save(router);
   }
 
-  @GetMapping("/router/{id}")
+  @GetMapping("/getRouter/{id}")
   public  ResponseEntity<Router> getRouterID(@PathVariable Long id){
     Router router = routerRepo.findById(id).orElseThrow( () -> new ResourceNotFoundException("Router mit Id: "+ id+" existiert nicht"));
     return  ResponseEntity.ok(router);
   }
 
-  @PutMapping("/router/{id}")
+  @PutMapping("/putRouter/{id}")
   public ResponseEntity<Router> updateRouter(@PathVariable Long id, @RequestBody Router routerDetails){
     Router router = routerRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Router mit Id: "+ id+" existiert nicht"));
 
@@ -50,7 +50,7 @@ public class RouterController {
     return ResponseEntity.ok(updatedRouter);
   }
 
-  @DeleteMapping("/router/{id}")
+  @DeleteMapping("/delRouter/{id}")
   public ResponseEntity<Map<String, Boolean>> deleteRouter(@PathVariable Long id){
     Router router = routerRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Router mit Id: "+ id+" existiert nicht"));
 

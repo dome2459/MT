@@ -21,23 +21,23 @@ public class ConnectionController {
   @Autowired
   private connectionRepo connectionRepo;
 
-  @GetMapping("/connection")
+  @GetMapping("/getConnection")
   public List<Connection> getAllConnection() {
     return connectionRepo.findAll();
   }
 
-  @PostMapping("/connection")
+  @PostMapping("/postConnection")
   public Connection createConnection(@RequestBody Connection connection){
     return connectionRepo.save(connection);
   }
 
-  @GetMapping("/connection/{id}")
+  @GetMapping("/getConnection/{id}")
   public ResponseEntity<Connection> getConnectionID(@PathVariable Long id){
     Connection connection = connectionRepo.findById(id).orElseThrow( () -> new ResourceNotFoundException("routingTable mit Id: "+ id+" existiert nicht"));
     return ResponseEntity.ok(connection);
   }
 
-  @PutMapping("/connection/{id}")
+  @PutMapping("/putConnection/{id}")
   public ResponseEntity<Connection> updateConnection(@PathVariable Long id, @RequestBody Connection connectionDetails){
     Connection connection = connectionRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("routingTable mit Id: "+ id+" existiert nicht"));
 
@@ -54,7 +54,7 @@ public class ConnectionController {
     return ResponseEntity.ok(updatedConnection);
   }
 
-  @DeleteMapping("/connection/{id}")
+  @DeleteMapping("/delConnection/{id}")
   public ResponseEntity<Map<String, Boolean>> deleteConnection(@PathVariable Long id){
     Connection connection = connectionRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("connection mit Id: "+ id+" existiert nicht"));
 

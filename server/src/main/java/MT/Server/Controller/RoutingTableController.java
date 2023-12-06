@@ -20,23 +20,23 @@ public class RoutingTableController {
   @Autowired
   private routingTableRepo routingTableRepo;
 
-  @GetMapping("/routingTable")
+  @GetMapping("/getRoutingTable")
   public List<RoutingTable> getAllRoutingTable() {
     return routingTableRepo.findAll();
   }
 
-  @PostMapping("/routingTable")
+  @PostMapping("/postRoutingTable")
   public RoutingTable createRoutingTable(@RequestBody RoutingTable routingTable){
     return routingTableRepo.save(routingTable);
   }
 
-  @GetMapping("/routingTable/{id}")
+  @GetMapping("/getRoutingTable/{id}")
   public ResponseEntity<RoutingTable> getRoutingTableID(@PathVariable Long id){
     RoutingTable routingTable = routingTableRepo.findById(id).orElseThrow( () -> new ResourceNotFoundException("routingTable mit Id: "+ id+" existiert nicht"));
     return ResponseEntity.ok(routingTable);
   }
 
-  @PutMapping("/routingTable/{id}")
+  @PutMapping("/putRoutingTable/{id}")
   public ResponseEntity<RoutingTable> updateRoutingTable(@PathVariable Long id, @RequestBody RoutingTable routingTableDetails){
     RoutingTable routingTable = routingTableRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("routingTable mit Id: "+ id+" existiert nicht"));
 
@@ -51,7 +51,7 @@ public class RoutingTableController {
     return ResponseEntity.ok(updatedRoutingTable);
   }
 
-  @DeleteMapping("/routingTable/{id}")
+  @DeleteMapping("/delRoutingTable/{id}")
   public ResponseEntity<Map<String, Boolean>> deleteRoutingTable(@PathVariable Long id){
     RoutingTable routingTable = routingTableRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("routingTable mit Id: "+ id+" existiert nicht"));
 

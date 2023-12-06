@@ -21,23 +21,23 @@ public class UserController {
   @Autowired
   private userRepo userRepo;
 
-  @GetMapping("/user")
+  @GetMapping("/getUser")
   public List<User> getAllUser() {
     return userRepo.findAll();
   }
 
-  @PostMapping("/user")
+  @PostMapping("/postUser")
   public User createUser(@RequestBody User user){
     return userRepo.save(user);
   }
 
-  @GetMapping("/user/{id}")
+  @GetMapping("/getUser/{id}")
   public ResponseEntity<User> getConnectionID(@PathVariable Long id){
     User user = userRepo.findById(id).orElseThrow( () -> new ResourceNotFoundException("routingTable mit Id: "+ id+" existiert nicht"));
     return ResponseEntity.ok(user);
   }
 
-  @PutMapping("/user/{id}")
+  @PutMapping("/putUser/{id}")
   public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User userDetails){
     User user = userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("user mit Id: "+ id+" existiert nicht"));
 
@@ -48,7 +48,7 @@ public class UserController {
     return ResponseEntity.ok(updatedConnection);
   }
 
-  @DeleteMapping("/user/{id}")
+  @DeleteMapping("/delUser/{id}")
   public ResponseEntity<Map<String, Boolean>> deleteUser(@PathVariable Long id){
     User user = userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("connection mit Id: "+ id+" existiert nicht"));
 
