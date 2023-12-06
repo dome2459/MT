@@ -49,10 +49,6 @@ export const SidebarData = [
         cName: 'sub-nav'
       },
       {
-        title: 'Router 2',
-        cName: 'sub-nav'
-      },
-      {
         title: 'Verbundener-Router',
        },
        {

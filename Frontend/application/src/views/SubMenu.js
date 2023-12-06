@@ -283,14 +283,6 @@ const SubMenu = ({ item, updateRouter }) => {
                                         Verbinden
                                     </button>
                                 ) : null}
-                                {item.title === 'Router 2' ? (
-                                    <div>
-                                        {item.title}
-                                        <Inputfield>
-                                            <input />
-                                        </Inputfield>
-                                    </div>
-                                ) : (null)}
 
                                 {item.title === 'Verbundener-Router' ? (
                                     <div>
