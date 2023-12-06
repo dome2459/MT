@@ -1,4 +1,4 @@
-package MT.Server;
+package MT.Server.Tables;
 
 
 import jakarta.persistence.*;

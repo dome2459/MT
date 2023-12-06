@@ -56,6 +56,8 @@ const Inputfield = styled(Link)`
   padding-right: 15px;
 `;
 
+
+
 const SubMenu = ({ item, updateRouter }) => {
     const [subnav, setSubnav] = useState(true);
     //const [EditScreen, setEditScreen] = useState(false);
@@ -66,6 +68,7 @@ const SubMenu = ({ item, updateRouter }) => {
 
     const {RouterArray, updateRouterArray} = useContext(GlobalContext);
     const {EditRouter, updateEditRouter} = useContext(GlobalContext);
+    const {CableArray, setCableArray} = useContext(GlobalContext);
 
     const handleChangeOspf = (checked) => {
         setSwitchOnOspf(checked);
@@ -212,14 +215,22 @@ const SubMenu = ({ item, updateRouter }) => {
                                         Löschen
                                     </button>
                                 ) : null}
-                                {item.title === 'Router 1' ? (
-                                    <div>
-                                        {item.title}
-                                        <Inputfield>
-                                            <input />
-                                        </Inputfield>
-                                    </div>
-                                ) : (console.log())}
+                               {item.title === 'Verbinden' ? (
+                                    <button
+                                        style={{
+                                            color: 'darkgrey',
+                                            margin: '40px auto 0',
+                                            display: 'block',
+                                            margin: '0 auto',
+                                            backgroundColor: 'white',
+                                            padding: '8px 16px',
+                                            borderRadius: '4px',
+                                            cursor: 'pointer',
+                                        }}
+                                        onClick={handleDeleteRouter}>
+                                        Verbinden
+                                    </button>
+                                ) : null}
                                 {item.title === 'Router 2' ? (
                                     <div>
                                         {item.title}
@@ -228,14 +239,28 @@ const SubMenu = ({ item, updateRouter }) => {
                                         </Inputfield>
                                     </div>
                                 ) : (console.log())}
-                                {item.title === 'Router 3' ? (
+
+                                {item.title === 'Verbundener-Router' ? (
                                     <div>
-                                        {item.title}
-                                        <Inputfield>
-                                            <input />
-                                        </Inputfield>
+                                      <label>Router3</label>  
+                                      <button
+                                        style={{
+                                            color: 'red',
+                                            display: 'inline-block',
+                                            margin: '8px',
+                                            backgroundColor: 'white',
+                                            padding: '8px 16px',
+                                            borderRadius: '4px',
+                                            cursor: 'pointer',
+                                           
+                                            
+                                        }}
+                                        onClick={handleDeleteRouter}>
+                                        X
+                                    </button>
                                     </div>
                                 ) : (console.log())}
+
                             </SidebarLabel>
                         </DropdownLink>
                     );
