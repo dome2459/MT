@@ -18,18 +18,18 @@ public class RoutingTable {
   @Column(name = "Networkmask")
   private String networkmask;
   @Column(name = "Interface")
-  private Integer interfac;
+  private String interfaces;
   @Column(name = "Metric")
   private Integer metric;
 
   public RoutingTable(){
   }
-  public RoutingTable(Long routingTableId, String destination, String gateway, String networkmask, Integer interfac, Integer metric) {
+  public RoutingTable(Long routingTableId, String destination, String gateway, String networkmask, String interfaces, Integer metric) {
     this.routingTableId = routingTableId;
     this.destination = destination;
     this.gateway = gateway;
     this.networkmask = networkmask;
-    this.interfac = interfac;
+    this.interfaces = interfaces;
     this.metric = metric;
   }
 
@@ -66,12 +66,12 @@ public class RoutingTable {
     this.networkmask = networkmask;
   }
 
-  public Integer getInterface() {
-    return interfac;
+  public String getInterface() {
+    return interfaces;
   }
 
-  public void setInterface(Integer interfac) {
-    this.interfac = interfac;
+  public void setInterface(String interfaces) {
+    this.interfaces = interfaces;
   }
 
   public Integer getMetric() {
@@ -84,7 +84,7 @@ public class RoutingTable {
 
   @Override
   public String toString() {
-    return "RoutingTable{" + "routingTableId=" + routingTableId + ", destination='" + destination + '\'' + ", gateway='" + gateway + '\'' + ", networkmask='" + networkmask + '\'' + ", Interface=" + interfac + ", metric=" + metric + '}';
+    return "RoutingTable{" + "routingTableId=" + routingTableId + ", destination='" + destination + '\'' + ", gateway='" + gateway + '\'' + ", networkmask='" + networkmask + '\'' + ", Interface=" + interfaces + ", metric=" + metric + '}';
   }
 
 }

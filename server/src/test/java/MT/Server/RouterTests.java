@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 @SpringBootTest
 class RouterTests {
 
@@ -28,13 +30,13 @@ class RouterTests {
 
 	@Test
 	void saveRouterToDB() {
-		// Variable vor dem Speichern
+		// Vor dem Speichern den Router in der Datenbank zählen
 		long countBefore = routerRepository.count();
 
 		// Test Router in die Datenbank schreiben
 		this.routerRepository.save(testRouter);
 
-		// Abrufen der Variable nach dem Speichern
+ 		// Überprüfen, ob die Anzahl der Router in der Datenbank um 1 zugenommen hat
 		long countAfter = routerRepository.count();
 
 		// Abfragen ob die beiden Variablen den gleichen Wert haben
@@ -46,7 +48,7 @@ class RouterTests {
 		// Überprüfen ob der geholte Router nicht Null ist
 		Assertions.assertNotNull(savedRouter);
 
-		// hat der gespeicherte Router den Namen "test"
+		// Überprüfen, ob der gespeicherte Router den erwarteten Werten entspricht
 		Assertions.assertEquals("test", savedRouter.getName());
 
 		// Vergleichen wir doch mal die ID´s beider Router ob es der gleiche ist
@@ -57,17 +59,46 @@ class RouterTests {
 
 	}
 
-
 	@Test
-	void bringMeTheRouter(){
+	void updateRouterInDB() {
+		// Router in die Datenbank einfügen
+		routerRepository.save(testRouter);
 
+		// Router aus der Datenbank abrufen und aktualisieren
+		Router updatedRouter = routerRepository.findById(testRouter.getId()).orElse(null);
+		Assertions.assertNotNull(updatedRouter);
 
+		updatedRouter.setName("updatedName");
+		routerRepository.save(updatedRouter);
+
+		// Überprüfen, ob der aktualisierte Router den erwarteten Werten entspricht
+		Router retrievedUpdatedRouter = routerRepository.findById(testRouter.getId()).orElse(null);
+		Assertions.assertNotNull(retrievedUpdatedRouter);
+		Assertions.assertEquals("updatedName", retrievedUpdatedRouter.getName());
 	}
 
+
 	@Test
-	void testErrorMessage(){
+	void deleteRouterFromDB() {
+		// Router in die Datenbank einfügen
+		routerRepository.save(testRouter);
 
+		// Vor dem Löschen den Router in der Datenbank zählen
+		long countBefore = routerRepository.count();
 
+		// Router aus der Datenbank löschen
+		routerRepository.delete(testRouter);
+
+		// Nach dem Löschen den Router in der Datenbank zählen
+		long countAfter = routerRepository.count();
+
+		// Überprüfen, ob die Anzahl der Router in der Datenbank um 1 abgenommen hat
+		Assertions.assertEquals(countBefore - 1, countAfter);
+
+		// Überprüfen, ob der Router nicht mehr in der Datenbank vorhanden ist
+		Assertions.assertFalse(routerRepository.existsById(testRouter.getId()));
+
+		routerRepository.deleteAll();
 	}
 
 }
