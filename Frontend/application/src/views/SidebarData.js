@@ -49,6 +49,10 @@ export const SidebarData = [
         cName: 'sub-nav'
       },
       {
+        title: 'Neue Verbindung',
+        cName: 'sub-nav'
+      },
+      {
         title: 'Verbundener-Router',
        },
        {

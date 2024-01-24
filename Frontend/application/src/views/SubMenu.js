@@ -283,10 +283,18 @@ const SubMenu = ({ item, updateRouter }) => {
                                         Verbinden
                                     </button>
                                 ) : null}
+                                {item.title === 'Neue Verbindung' ? (
+                                    <div>
+                                        {item.title}
+                                        <Inputfield>
+                                            <input />
+                                        </Inputfield>
+                                    </div>
+                                ) : (console.log())}
 
                                 {item.title === 'Verbundener-Router' ? (
                                     <div>
-                                      <label>Router3</label>  
+                                      <label>RouterX</label>  
                                       <button
                                         style={{
                                             color: 'red',
