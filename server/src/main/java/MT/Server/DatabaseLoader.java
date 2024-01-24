@@ -18,6 +18,7 @@ public class DatabaseLoader implements CommandLineRunner {
   public DatabaseLoader() {
 
   }
+
   public DatabaseLoader(routerRepo routerRepository) {
     this.routerRepository = routerRepository;
 
@@ -41,12 +42,7 @@ public class DatabaseLoader implements CommandLineRunner {
 
   @Override
   public void run(String... args) throws Exception {
-    /*
-    this.routerRepository.save(new Router("test", 1L,true,1,"000.000.000.001"));
-    this.routingTableRepo.save(new RoutingTable(1L,"10.0.20.30","10.0.0.0","28", 5, 2));
-    this.sessionRepo.save(new Session(1L));
-    this.connectionRepo.save(new Connection(1L, 10,20,300,400,false, true,"10.20.30.40"));
-    this.userRepo.save(new User(1L, "Name"));
-*/
+
+
   }
 }
