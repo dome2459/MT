@@ -1,25 +1,20 @@
 package MT.Server.Controller;
 
-import MT.Server.Repos.connectionRepo;
 import MT.Server.Repos.routerRepo;
-import MT.Server.Repos.sessionRepo;
-import MT.Server.Repos.userRepo;
 import MT.Server.ResourceNotFoundException;
 import MT.Server.Tables.Connection;
+import MT.Server.Tables.Router;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @CrossOrigin(origins = "https://localhost:3000")
 @RestController
 @RequestMapping("/api/v1")
 public class TimerController {
 
+    public boolean geprueft = false;
     @Autowired
     private MT.Server.Repos.userRepo userRepo;
 
@@ -32,11 +27,18 @@ public class TimerController {
     private MT.Server.Repos.connectionRepo connectionRepo;
 
     @PostMapping("/start")
-    public ResponseEntity<Connection> startTimer(Connection connectionFromFrontend) {
-        Connection connection = connectionRepo.findById(connectionFromFrontend.getConnectionId()).orElseThrow(
-                () -> new ResourceNotFoundException("routingTable mit Id: "+ connectionFromFrontend.getConnectionId()+" existiert nicht"));
+    public ResponseEntity<StartResponse> startTimer(@RequestBody Connection connectionFromFrontend,
+                                                    @RequestBody Router routerFromFrontend) {
 
-        return ResponseEntity.ok(connection);
+        StartResponse response = new StartResponse(connectionFromFrontend, routerFromFrontend);
+        pruefen(response.getConnection(), response.getRouter());
+
+       if(geprueft){
+           return ResponseEntity.ok(response);
+       }else{
+           return ResponseEntity.notFound().build();
+       }
+
     }
 
     @PostMapping("/stop")
@@ -53,4 +55,54 @@ public class TimerController {
 
         return ResponseEntity.ok("Timer resetet");
     }
+
+
+
+    private boolean pruefen( Connection connection, Router router){
+
+
+        Connection finalConnection = connectionRepo.findById(connection.getConnectionId()).orElseThrow(
+                () -> new ResourceNotFoundException("routingTable mit Id: " + connection.getConnectionId() + " existiert nicht"));
+
+        Router finalRouter = routerRepo.findById(router.getId()).orElseThrow(
+                () -> new ResourceNotFoundException("router mit der Id könnte nicht gefunden werden"));
+
+        // Hier prüfen, ob sowohl Connection als auch Router gefunden wurden
+        if (finalConnection != null && finalRouter != null) {
+            geprueft = true;
+        }
+        return geprueft;
+
+    }
+
+
+ class StartResponse {
+
+     public Connection getConnection() {
+         return connection;
+     }
+
+     public void setConnection(Connection connection) {
+         this.connection = connection;
+     }
+
+     public Router getRouter() {
+         return router;
+     }
+
+     public void setRouter(Router router) {
+         this.router = router;
+     }
+
+     private Connection connection;
+     private Router router;
+
+     public StartResponse(Connection connection, Router router) {
+         this.connection = connection;
+         this.router = router;
+     }
+
+ }
 }
+
+
