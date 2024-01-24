@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'; // Fügen Sie useEffect hinzu
+import React, { useState, useEffect, useRef, useContext } from 'react'; // Fügen Sie useEffect hinzu
 import Draggable from 'react-draggable';
 import { Box, Text, Center, Image } from "@chakra-ui/react";
 import { PathLine } from 'react-svg-pathline';
@@ -15,6 +15,7 @@ export default function DragArea() {
   const [parentWidth, setParentWidth] = useState(1900);
   const [parentHeight, setParentHeight] = useState(600);
 
+  const AreaRef = useRef(null);
 
   //useEffect(() => {
     
@@ -95,8 +96,8 @@ export default function DragArea() {
   }, []);
 
   function handleResize() {
-    setParentWidth(window.innerWidth);
-    setParentHeight(window.innerHeight * 0.6);
+    setParentWidth(AreaRef.current.offsetWidth);
+    setParentHeight(AreaRef.current.offsetHeight);
   }
 
   return (
@@ -106,7 +107,7 @@ export default function DragArea() {
     * Das ganze Geraffel hier unten auch noch automatisch an die Fenstergöße anpassen  
     * gerade was die X und Y Werte betrifft !!!
     */
-    <Box className="target" h={parentHeight} w={parentWidth} flex={1} borderWidth={1} borderColor='#000' position="relative" padding={2.5} overflow='auto'>
+    <Box className="target" h={parentHeight} w={parentWidth} flex={1} borderWidth={1} borderColor='#000' position="relative" padding={2.5} overflow='auto' ref = { AreaRef }>
 
       {RouterArray.map((item, i) => {
 
