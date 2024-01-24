@@ -103,15 +103,15 @@ height: 10px;
 
 .table
 {
-  margin-left: 2%;
-  width: 96%;
+  margin-left: 0%;
+  width: 100%;
 }
 
 .dragAndTableArea{
-  width: 90%;
+  width: 100%;
 
 }
 .tableDiv{
-    height: 200px;
+    height: 300px;
     overflow-y: auto;
 }

@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
-import { Flex, Tabs, TabList, TabPanels, Tab, TabPanel, Button, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react'
+import React, { Component, useEffect, useContext } from 'react';
+import { Flex, Tabs, TabList, TabPanels, Tab, TabPanel, Button, Menu, MenuButton, MenuItem, MenuList, Box } from '@chakra-ui/react'
 import DragArea from './DragArea';
 
 import Navbar from './Navbar';
 import RoutingTable from '../components/RoutingTable';
-
 
 export default class MainEnviroment extends Component {
 
@@ -13,23 +12,24 @@ export default class MainEnviroment extends Component {
     return (
 
 
-      <Flex flex={1} height='100%' flexDirection='column'>
+      <Flex flex={1} flexDirection='column'>
 
         <Navbar />
-          	
 
         <div className='dragAndTableArea' flex={1}>
-          <Flex flex={1} margin={10} borderWidth={2} borderColor={'#ddd'}>
+          <Flex h='68%' mh='500px' flex={1} margin={2} borderWidth={2} borderColor={'#ddd'}>
 
             <DragArea />
 
           </Flex>
-          <RoutingTable flex={1}/>
+          <Box h='30%' mh='100px'  flex={1} margin={2} borderWidth={2} borderColor={'#ddd'}>
+
+            <RoutingTable flex={1}/>
+
+          </Box>
         </div>
 
       </Flex>
-
-
     )
   }
 

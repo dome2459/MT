@@ -4,14 +4,14 @@ import { ChakraProvider } from '@chakra-ui/react'
 
 import GlobalProvider from './components/ProvidestateContext';
 
-import Main from './views/Main';
+import MainController from './components/MainController';
 
 export default class App extends Component {
   render(){
   return (
     <GlobalProvider>
       <ChakraProvider>
-        <Main />
+        <MainController />
       </ChakraProvider>
     </GlobalProvider>
   );

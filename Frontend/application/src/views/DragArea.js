@@ -86,10 +86,6 @@ export default function DragArea() {
 
   // Fenstergröße wird nun automatisch angepasst 
   useEffect(() => {
-    function handleResize() {
-      setParentWidth(window.innerWidth);
-      setParentHeight(window.innerHeight);
-    }
 
     window.addEventListener('resize', handleResize);
 
@@ -97,6 +93,11 @@ export default function DragArea() {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+
+  function handleResize() {
+    setParentWidth(window.innerWidth);
+    setParentHeight(window.innerHeight * 0.6);
+  }
 
   return (
 
