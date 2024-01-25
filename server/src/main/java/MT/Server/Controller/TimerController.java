@@ -30,13 +30,13 @@ public class TimerController {
     public ResponseEntity<StartResponse> startTimer(@RequestBody Connection connectionFromFrontend,
                                                     @RequestBody Router routerFromFrontend) {
         StartResponse response = new StartResponse(connectionFromFrontend, routerFromFrontend);
-        pruefen(response.getConnection(), response.getRouter());
-
-       if(geprueft){
-           return ResponseEntity.ok(response);
-       }else{
-           return ResponseEntity.notFound().build();
-       }
+        for(int i = 0; i <= connectionFromFrontend.getConnectionId().intValue(); i++) {
+            pruefen(response.getConnection(), response.getRouter());
+           if(geprueft){
+               return ResponseEntity.ok(response);
+           }
+        }
+      return ResponseEntity.notFound().build();
     }
 
     @PostMapping("/stop")

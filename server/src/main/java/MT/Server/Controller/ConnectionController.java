@@ -28,6 +28,7 @@ public class ConnectionController {
 
   @PostMapping("/postConnection")
   public Connection createConnection(@RequestBody Connection connection){
+
     return connectionRepo.save(connection);
   }
 
@@ -51,6 +52,9 @@ public class ConnectionController {
     connection.setRouterBInterface(connectionDetails.getRouterBInterface());
 
     Connection updatedConnection = connectionRepo.save(connection);
+
+
+
     return ResponseEntity.ok(updatedConnection);
   }
 
