@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 
 @CrossOrigin(origins = "https://localhost:3000")
 @RestController
@@ -36,8 +38,16 @@ public class TimerController {
                return ResponseEntity.ok(response);
            }
         }
+        if(connectionFromFrontend.getRIP()){
+            ripProtokoll(connectionFromFrontend);
+        }else{
+            ospfProtokoll(connectionFromFrontend);
+        }
       return ResponseEntity.notFound().build();
     }
+
+
+
 
     @PostMapping("/stop")
     public ResponseEntity<String> stopTimer(){
@@ -97,6 +107,22 @@ public class TimerController {
      }
 
  }
+    private void ripProtokoll(Connection connection) {
+
+
+    }
+
+
+    private void ospfProtokoll(Connection connection) {
+        Long AId = Long.valueOf(connection.getRouterA());
+        Long BId = Long.valueOf(connection.getRouterB());
+
+        Router routerA = routerRepo.findById(AId).orElseThrow(() -> new ResourceNotFoundException("Router nicht gefunden"));
+        Router routerB = routerRepo.findById(BId).orElseThrow(() -> new ResourceNotFoundException("Router nicht gefunden"));
+
+
+
+    }
 }
 
 
