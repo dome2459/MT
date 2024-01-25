@@ -174,7 +174,7 @@ const SubMenu = ({ item, updateRouter }) => {
         console.log('IpRef:', IpRef.value);
         console.log('NameRef', NameRef.current.value)
         // Überprüfe, ob die IP-Adresse gültig ist
-        if (IpRef.current && (validateIPv4(IpRef.current.value) || IpRef.current.value === '')) {
+        if (IpRef.current && (validateIPv4(IpRef.current.value) || IpRef.current.value !== '')) {
             // Die IP ist gültig oder leer, füge den Router hinzu
             console.log(IpRef.current.value);
             addRouter();
