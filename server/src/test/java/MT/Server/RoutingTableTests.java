@@ -16,7 +16,7 @@ public class RoutingTableTests {
 
     private DatabaseLoader loader;
 
-    private RoutingTable table = new RoutingTable(1L,"140.0.0.0","172.0.1.2","255.255.255.0","ea12",5);
+    private RoutingTable table = new RoutingTable(1L,"Test",1L,"140.0.0.0","172.0.1.2","255.255.255.0","ea12",5);
 
     RoutingTableTests(@Autowired routingTableRepo routingTRepo){
         this.routTRepo = routingTRepo;
@@ -29,7 +29,7 @@ public class RoutingTableTests {
 
 
     @Test
-    void saveRouterTableoDB(){
+    void saveRouterTableDB(){
         long countBefor = routTRepo.count();
         routTRepo.save(table);
         long countAfter = routTRepo.count();

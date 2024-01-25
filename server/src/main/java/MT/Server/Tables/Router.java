@@ -19,7 +19,7 @@ public class Router {
   @Column(name = "isActive")
   private boolean isActive;
 
-  @Column(name = "RoutingTableId")
+  @Column(name = "routingTableId")
   private Integer RoutingTableId;
   
   @Column(name = "ip")

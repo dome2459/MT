@@ -30,9 +30,32 @@ export default function MainController() {
  
    };
 
-   
+  
+
+  
 
 
+
+
+
+
+  /*
+  each Router has own connection Array
+
+  when add:(
+      add each others id in array
+  )
+  
+  when remove: (
+      remove connection X from Y, save number X, go to Router X remove connection Y
+  )
+
+  function(createCabbleArray) {
+      ...
+  }
+
+
+  */
 
 
     return (

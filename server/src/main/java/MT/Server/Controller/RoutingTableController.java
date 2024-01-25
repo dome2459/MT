@@ -40,12 +40,14 @@ public class RoutingTableController {
   public ResponseEntity<RoutingTable> updateRoutingTable(@PathVariable Long id, @RequestBody RoutingTable routingTableDetails){
     RoutingTable routingTable = routingTableRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("routingTable mit Id: "+ id+" existiert nicht"));
 
+    routingTable.setRoutingTableId(routingTableDetails.getRoutingTableId());
+    routingTable.setRoutingTableName(routingTableDetails.getRoutingTableName());
+    routingTable.setRouterId(routingTableDetails.getRouterId());
     routingTable.setDestination(routingTableDetails.getDestination());
     routingTable.setGateway(routingTableDetails.getGateway());
     routingTable.setInterface(routingTableDetails.getInterface());
     routingTable.setMetric(routingTableDetails.getMetric());
     routingTable.setNetworkmask(routingTableDetails.getNetworkmask());
-    routingTable.setRoutingTableId(routingTableDetails.getRoutingTableId());
 
     RoutingTable updatedRoutingTable = routingTableRepo.save(routingTable);
     return ResponseEntity.ok(updatedRoutingTable);

@@ -1,12 +1,16 @@
 package MT.Server.Controller;
 
 import MT.Server.Repos.routerRepo;
+import MT.Server.Repos.routingTableRepo;
 import MT.Server.ResourceNotFoundException;
 import MT.Server.Tables.Connection;
 import MT.Server.Tables.Router;
+import MT.Server.Tables.RoutingTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 
 @CrossOrigin(origins = "https://localhost:3000")
@@ -22,6 +26,8 @@ public class TimerController {
     private MT.Server.Repos.sessionRepo sessionRepo;
     @Autowired
     private routerRepo routerRepo;
+    @Autowired
+    private routingTableRepo routingTableRepo;
 
     @Autowired
     private MT.Server.Repos.connectionRepo connectionRepo;
@@ -30,14 +36,22 @@ public class TimerController {
     public ResponseEntity<StartResponse> startTimer(@RequestBody Connection connectionFromFrontend,
                                                     @RequestBody Router routerFromFrontend) {
         StartResponse response = new StartResponse(connectionFromFrontend, routerFromFrontend);
-        pruefen(response.getConnection(), response.getRouter());
-
-       if(geprueft){
-           return ResponseEntity.ok(response);
-       }else{
-           return ResponseEntity.notFound().build();
-       }
+        for(int i = 0; i <= connectionFromFrontend.getConnectionId().intValue(); i++) {
+            pruefen(response.getConnection(), response.getRouter());
+           if(geprueft){
+               return ResponseEntity.ok(response);
+           }
+        }
+        if(connectionFromFrontend.getRIP()){
+            ripProtokoll(connectionFromFrontend);
+        }else{
+            ospfProtokoll(connectionFromFrontend);
+        }
+      return ResponseEntity.notFound().build();
     }
+
+
+
 
     @PostMapping("/stop")
     public ResponseEntity<String> stopTimer(){
@@ -97,6 +111,31 @@ public class TimerController {
      }
 
  }
+    private void ripProtokoll(Connection connection) {
+
+
+    }
+
+
+    private void ospfProtokoll(Connection connection) {
+        Long AId = Long.valueOf(connection.getRouterA());
+        Long BId = Long.valueOf(connection.getRouterB());
+
+        Router routerA = routerRepo.findById(AId).orElseThrow(() -> new ResourceNotFoundException("Router nicht gefunden"));
+        Router routerB = routerRepo.findById(BId).orElseThrow(() -> new ResourceNotFoundException("Router nicht gefunden"));
+        RoutingTable tableRouterA = routingTableRepo.findById(AId).orElseThrow( () -> new ResourceNotFoundException(" RoutingTable Router A nicht gefunden"));
+        RoutingTable tableRouterB = routingTableRepo.findById(BId).orElseThrow( () -> new ResourceNotFoundException(" RoutingTable Router B nicht gefunden "));
+
+
+
+        tableRouterA.setRouterId(routerB.getId());
+        tableRouterA.setRoutingTableName(routerB.getName());
+        //tableRouterA.setNetworkmask(routerB);
+
+        tableRouterB.setRouterId(routerA.getId());
+        tableRouterB.setRoutingTableName(routerA.getName());
+        //table
+    }
 }
 
 

@@ -120,7 +120,7 @@ const SubMenu = ({ item, updateRouter }) => {
             var newArray = [...RouterArray]; 
             var Name = NameRef.current.value;
             var Ip = IpRef.current.value;
-            var newRouter = { name: Name, ip: Ip, ospf: switchOnOspf, rip: switchOnRip, x: 500, y: 500, id: (newArray.length + 1 ) + '_' + Name };
+            var newRouter = { name: Name, ip: Ip, ospf: switchOnOspf, rip: switchOnRip, x: 100, y: 100, id: (newArray.length + 1 ) + '_' + Name };
     
                 
     
@@ -167,9 +167,29 @@ const SubMenu = ({ item, updateRouter }) => {
         }
 
         }
+    }
+
+    const handleAddRouter = () => {
+        console.log('IpRef:', IpRef.current.value); // Überprüfe die Konsolenausgabe hier
+        console.log('IpRef:', IpRef.value);
+        console.log('NameRef', NameRef.current.value)
+        // Überprüfe, ob die IP-Adresse gültig ist
+        if (IpRef.current && (validateIPv4(IpRef.current.value) || IpRef.current.value !== '')) {
+            // Die IP ist gültig oder leer, füge den Router hinzu
+            console.log(IpRef.current.value);
+            addRouter();
+        } else {
+            // Die IP ist ungültig, zeige eine Fehlermeldung an oder führe andere Aktionen durch
+            console.log('Ungültige IPv4-Adresse');
+        }
+    };
+
+    const validateIPv4 = (ip) => {
+        // Regulärer Ausdruck für eine gültige IPv4-Adresse
+        const ipv4Regex = /^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+        return ipv4Regex.test(ip);
     };
     
-
 
     return (
         <>
@@ -209,7 +229,11 @@ const SubMenu = ({ item, updateRouter }) => {
                                     <div>
                                         {item.title}
                                         <Inputfield>
-                                            <Input ref={IpRef} type='text' bgColor={'white'} defaultValue={EditRouter.id !== undefined ? (EditRouter.ip) : ('')}
+                                            <Input  
+                                            type='text'
+                                            ref={IpRef} 
+                                            bgColor={'white'} 
+                                            defaultValue={EditRouter.id !== undefined ? (EditRouter.ip) : ('')}
                                             />
                                         </Inputfield>
                                     </div>
@@ -240,7 +264,7 @@ const SubMenu = ({ item, updateRouter }) => {
                                             borderRadius: '4px',
                                             cursor: 'pointer'}
                                         }
-                                        onClick={EditRouter.id != undefined ? () => saveEditSettings() : () => addRouter()}>
+                                        onClick={EditRouter.id != undefined ? () => saveEditSettings() : () => handleAddRouter()}>
                                         {EditRouter.id != undefined ? 'Speichern' : 'Hinzufügen'}
                                     </Button>
                                 ) : null}
