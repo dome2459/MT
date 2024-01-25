@@ -7,13 +7,16 @@ import { color } from 'framer-motion';
 
 export default function MainController() { 
 
+  var apiEndpoint = "http://localhost:8080/api/v1/";
 
   //controller Function
  async function getRouterArrayFromApi(){
-     return fetch('http://localhost:8080/api/v1/router/list',{
+     return fetch(apiEndpoint+'router/list',{
+      mode : 'no-cors',
       method: 'get',
       headers: new Headers({
-        "access-control-allow-origin" : "*"
+        "access-control-allow-origin" : "*",
+        'Content-Type': 'application/json'
       }
 
       )
@@ -24,16 +27,25 @@ export default function MainController() {
          return json;
        })
        .catch(error => {
-         console.error(error);
+         console.log(error);
        });
        
  
    };
 
-  
+   async function createRouter(data){
+    fetch(apiEndpoint+'router/create', {
 
-  
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
 
+      body: JSON.stringify(data),
+
+    });
+  }
 
 
 
