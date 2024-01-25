@@ -120,7 +120,7 @@ const SubMenu = ({ item, updateRouter }) => {
             var newArray = [...RouterArray]; 
             var Name = NameRef.current.value;
             var Ip = IpRef.current.value;
-            var newRouter = { name: Name, ip: Ip, ospf: switchOnOspf, rip: switchOnRip, x: 500, y: 500, id: (newArray.length + 1 ) + '_' + Name };
+            var newRouter = { name: Name, ip: Ip, ospf: switchOnOspf, rip: switchOnRip, x: 100, y: 100, id: (newArray.length + 1 ) + '_' + Name };
     
                 
     
