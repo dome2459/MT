@@ -33,7 +33,7 @@ export default function RoutingTable(){
                   
           <table  className="table" >
               <tr>
-                <th className="tableHeader">Number</th>
+                <th className="tableHeader">Name</th>
                 <th className="tableHeader">Destination</th>
                 <th className="tableHeader">Gateway </th>
                 <th className="tableHeader">Interface </th>
@@ -42,9 +42,9 @@ export default function RoutingTable(){
               </tr>
             <tbody>
              
-             {RoutingTableData.map(({Number, Destination, Gateway, Interface, Metric, Networkmask}) => (
+             {RoutingTableData.map(({Name, Destination, Gateway, Interface, Metric, Networkmask}) => (
               <tr>
-                <td className="tableRow">{Number}</td>
+                <td className="tableRow">{Name}</td>
                 <td className="tableRow">{Destination}</td>
                 <td className="tableRow" isNumeric>{Gateway}</td>
                 <td className="tableRow" isNumeric>{Interface}</td>
