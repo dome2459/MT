@@ -42,6 +42,7 @@ public class RoutingTableController {
 
     routingTable.setRoutingTableId(routingTableDetails.getRoutingTableId());
     routingTable.setRoutingTableName(routingTableDetails.getRoutingTableName());
+    routingTable.setRouterId(routingTableDetails.getRouterId());
     routingTable.setDestination(routingTableDetails.getDestination());
     routingTable.setGateway(routingTableDetails.getGateway());
     routingTable.setInterface(routingTableDetails.getInterface());

@@ -13,6 +13,8 @@ public class RoutingTable {
 
   @Column(name = "Name")
   private String name;
+  @Column(name = "id")
+  private Long id;
   @Column(name = "Destination")
   private String destination;
   @Column(name = "Gateway")
@@ -26,9 +28,10 @@ public class RoutingTable {
 
   public RoutingTable(){
   }
-  public RoutingTable(Long routingTableId, String name, String destination, String gateway, String networkmask, String interfaces, Integer metric) {
+  public RoutingTable(Long routingTableId, String name,Long id, String destination, String gateway, String networkmask, String interfaces, Integer metric) {
     this.routingTableId = routingTableId;
     this.name=name;
+    this.id=id;
     this.destination = destination;
     this.gateway = gateway;
     this.networkmask = networkmask;
@@ -51,6 +54,13 @@ public class RoutingTable {
 
   public void setRoutingTableName(String name) {
     this.name = name;
+  }
+
+  public Long getRouterId() {return id;}
+
+
+  public void setRouterId(Long id) {
+    this.id = id;
   }
 
   public String getDestination() {
