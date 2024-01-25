@@ -20,15 +20,15 @@ public class Connection {
   private Integer routerBInterface;
 
   @Column(name = "OSPF")
-  private Boolean isOSPF;
+  private boolean isOSPF;
   @Column(name = "RIP")
-  private Boolean isRIP;
+  private boolean isRIP;
 
   @Column(name = "ip")
   private String ip;
   public Connection(){
   }
-  public Connection(Long connectionId, Integer routerA, Integer routerB, Integer routerAInterface, Integer routerBInterface, Boolean isOSPF, Boolean isRIP, String ip) {
+  public Connection(Long connectionId, Integer routerA, Integer routerB, Integer routerAInterface, Integer routerBInterface, boolean isOSPF, boolean isRIP, String ip) {
     this.connectionId = connectionId;
     this.routerAId = routerA;
     this.routerBId = routerB;
@@ -78,19 +78,19 @@ public class Connection {
     this.routerBInterface = routerBInterface;
   }
 
-  public Boolean getOSPF() {
+  public boolean getOSPF() {
     return isOSPF;
   }
 
-  public void setOSPF(Boolean OSPF) {
+  public void setOSPF(boolean OSPF) {
     isOSPF = OSPF;
   }
 
-  public Boolean getRIP() {
+  public boolean getRIP() {
     return isRIP;
   }
 
-  public void setRIP(Boolean RIP) {
+  public void setRIP(boolean RIP) {
     isRIP = RIP;
   }
 

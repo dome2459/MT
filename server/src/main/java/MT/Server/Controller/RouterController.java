@@ -22,7 +22,7 @@ public class RouterController {
   @Autowired
   private routerRepo repo;
 
-  @GetMapping("/router")
+  @GetMapping("/router/list")
   public List<Router> getAllRouter() {
     return repo.findAll();
   }
@@ -52,7 +52,7 @@ public class RouterController {
     return ResponseEntity.ok(updatedRouter);
   }
 
-  @DeleteMapping("/router/{id}")
+  @DeleteMapping("/router/delete/{id}")
   public ResponseEntity<Map<String, Boolean>> deleteRouter(@PathVariable Long id){
     Router router = repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Router mit Id: "+ id+" existiert nicht"));
 

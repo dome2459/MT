@@ -17,7 +17,7 @@ public class Router {
   @Column(name = "name")
   private String name;
   @Column(name = "isActive")
-  private Boolean isActive;
+  private boolean isActive;
 
   @Column(name = "RoutingTableId")
   private Integer RoutingTableId;
@@ -26,7 +26,7 @@ public class Router {
   private String ip;
   public Router(){
   }
-  public Router(String name, Long id, Boolean isActive, Integer routingTableId, String ip) {
+  public Router(String name, Long id, boolean isActive, Integer routingTableId, String ip) {
     this.name = name;
     this.id = id;
     this.isActive = isActive;
@@ -49,11 +49,11 @@ public class Router {
     this.id = id;
   }
 
-  public Boolean getActive() {
+  public boolean getActive() {
     return isActive;
   }
 
-  public void setActive(Boolean active) {
+  public void setActive(boolean active) {
     isActive = active;
   }
 
