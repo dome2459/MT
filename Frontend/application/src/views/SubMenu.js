@@ -191,20 +191,6 @@ const SubMenu = ({ item, updateRouter }) => {
                     return (
                         <DropdownLink key={index}>
                             <SidebarLabel>
-                                {item.title === 'OSPF' ? (
-                                    <label >
-                                        <span style={{ display: 'block' }}>OSPF</span>
-                                        <Switch onChange={handleChangeOspf} checked={switchOnOspf} 
-                                         />
-                                    </label>
-                                ) : (null)}
-                                {item.title === 'RIP' ? (
-                                    <label>
-                                        <span style={{ display: 'block' }} >RIP</span>
-                                        <Switch onChange={handleChangeRip} checked={switchOnRip} 
-                                        />
-                                    </label>
-                                ) : null}
                                 {item.title === 'Name' ? (
                                     <div>
                                         {item.title}
@@ -228,6 +214,15 @@ const SubMenu = ({ item, updateRouter }) => {
                                         </Inputfield>
                                     </div>
                                 ) : null}
+                                {
+                                    item.title === 'Subnet' ? (
+                                        <div>
+                                        {item.title}
+                                        <Inputfield>
+                                            <Input ref={IpRef} type='text' bgColor={'white'} />
+                                        </Inputfield>
+                                        </div>
+                                    ) : null}
                                 {item.title === 'PIC' ? (
                                     <div>
                                         <Image src={source} alt='Router' style={{ height: '80px', width: '80px' }} />
@@ -266,7 +261,20 @@ const SubMenu = ({ item, updateRouter }) => {
                                         Löschen
                                     </Button>
                                 ) : null}
-
+                                     {item.title === 'OSPF' ? (
+                                    <label >
+                                        <span style={{ display: 'block' }}>OSPF</span>
+                                        <Switch onChange={handleChangeOspf} checked={switchOnOspf} 
+                                         />
+                                    </label>
+                                ) : (null)}
+                                {item.title === 'RIP' ? (
+                                    <label>
+                                        <span style={{ display: 'block' }} >RIP</span>
+                                        <Switch onChange={handleChangeRip} checked={switchOnRip} 
+                                        />
+                                    </label>
+                                ) : null}
                                {item.title === 'Verbinden' ? (
                                     <button
                                         style={{

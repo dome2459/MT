@@ -20,14 +20,12 @@ export const SidebarData = [
         title: 'IP',
       },
       {
-        title: 'OSPF',
-      },
-      {
-        title: 'RIP',
+        title: 'Subnet',
       },
       {
         title: 'PIC',
-      },{
+      },
+      {
         title: 'Hinzufügen',
       },
       {
@@ -49,8 +47,10 @@ export const SidebarData = [
         cName: 'sub-nav'
       },
       {
-        title: 'Neue Verbindung',
-        cName: 'sub-nav'
+        title: 'OSPF',
+      },
+      {
+        title: 'RIP',
       },
       {
         title: 'Verbundener-Router',

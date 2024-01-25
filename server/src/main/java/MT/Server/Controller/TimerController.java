@@ -29,7 +29,6 @@ public class TimerController {
     @PostMapping("/start")
     public ResponseEntity<StartResponse> startTimer(@RequestBody Connection connectionFromFrontend,
                                                     @RequestBody Router routerFromFrontend) {
-
         StartResponse response = new StartResponse(connectionFromFrontend, routerFromFrontend);
         pruefen(response.getConnection(), response.getRouter());
 
@@ -38,7 +37,6 @@ public class TimerController {
        }else{
            return ResponseEntity.notFound().build();
        }
-
     }
 
     @PostMapping("/stop")
@@ -56,10 +54,7 @@ public class TimerController {
         return ResponseEntity.ok("Timer resetet");
     }
 
-
-
     private boolean pruefen( Connection connection, Router router){
-
 
         Connection finalConnection = connectionRepo.findById(connection.getConnectionId()).orElseThrow(
                 () -> new ResourceNotFoundException("routingTable mit Id: " + connection.getConnectionId() + " existiert nicht"));
@@ -67,7 +62,6 @@ public class TimerController {
         Router finalRouter = routerRepo.findById(router.getId()).orElseThrow(
                 () -> new ResourceNotFoundException("router mit der Id könnte nicht gefunden werden"));
 
-        // Hier prüfen, ob sowohl Connection als auch Router gefunden wurden
         if (finalConnection != null && finalRouter != null) {
             geprueft = true;
         }
