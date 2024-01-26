@@ -18,7 +18,6 @@ export default function MainController() {
         "access-control-allow-origin" : "*",
         'Content-Type': 'application/json'
       }
-
       )
      })
        .then(response => response.json())
@@ -29,26 +28,40 @@ export default function MainController() {
        .catch(error => {
          console.log(error);
        });
-       
- 
    };
 
    async function createRouter(data){
-    fetch(apiEndpoint+'router/create', {
-
+    fetch(apiEndpoint+'router', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-
       body: JSON.stringify(data),
-
     });
-  }
-
-
-
+  };
+// id des Routers wird noch benötigt und in Endpoint eingetragen
+  async function deleteRouter(data){
+    fetch(apiEndpoint+'router/delete/{id}', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+  };
+  // id des Routers wird noch benötigt und in Endpoint eingetragen
+  async function updateRouter(data){
+    fetch(apiEndpoint+'router/{id}', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+  };
 
 
   /*
