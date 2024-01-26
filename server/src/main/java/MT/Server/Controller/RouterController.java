@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins = "https://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/v1")
 public class RouterController {
@@ -27,7 +27,7 @@ public class RouterController {
     return repo.findAll();
   }
 
-  @PostMapping("/router")
+  @PostMapping("/router/create")
   public Router createRouter(@RequestBody Router router){
     return repo.save(router);
   }
