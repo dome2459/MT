@@ -5,14 +5,15 @@ import GlobalContext from './InitStateContext';
 import { json } from 'react-router-dom';
 import { color } from 'framer-motion';
 
+
 export default function RouterController() { 
 
   var apiEndpoint = "http://localhost:8080/api/v1/";
-
+  
   //controller Function
  async function getRouterArrayFromApi(){
      return fetch(apiEndpoint+'router/list',{
-      mode : 'no-cors',
+      mode : 'cors',
       method: 'get',
       headers: new Headers({
         "access-control-allow-origin" : "*",
@@ -40,8 +41,8 @@ export default function RouterController() {
     });
   };
 // id des Routers wird noch benötigt und in Endpoint eingetragen
-  async function deleteRouter(data){
-    fetch(apiEndpoint+'router/delete/{id}', {
+  async function deleteRouter(RouterId){
+    fetch(apiEndpoint+'router/delete/'+RouterId ,{
       method: 'POST',
       headers: {
         Accept: 'application/json',

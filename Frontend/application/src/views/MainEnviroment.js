@@ -5,16 +5,16 @@ import DragArea from './DragArea';
 import Navbar from './Navbar';
 import RoutingTable from '../components/RoutingTable';
 
-export default class MainEnviroment extends Component {
+export default function MainEnviroment(props) {
 
           //https://react.dev/reference/react/useContext
-  render() {
+
     return (
 
 
       <Flex flex={1} flexDirection='column'>
 
-        <Navbar />
+        <Navbar  addRouter={props.addRouter}/>
 
         <div className='dragAndTableArea' flex={1}>
           <Flex h='68%' mh='500px' flex={1} margin={2} borderWidth={2} borderColor={'#ddd'}>
@@ -33,7 +33,7 @@ export default class MainEnviroment extends Component {
     )
   }
 
-}
+
 
 
 

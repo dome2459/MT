@@ -59,7 +59,7 @@ const Inputfield = styled(Link)`
 
 
 
-const SubMenu = ({ item, updateRouter }) => {
+const SubMenu = ({ item, updateRouter, props }) => {
     const [subnav, setSubnav] = useState(true);
     //const [EditScreen, setEditScreen] = useState(false);
     const showSubnav = () => setSubnav(!subnav);
@@ -112,28 +112,7 @@ const SubMenu = ({ item, updateRouter }) => {
         }
         
     };
-    const addRouter = () => {
-
-        if ( EditRouter.id === undefined ) {
-
-            console.log("first addRouter");
-            var newArray = [...RouterArray]; 
-            var Name = NameRef.current.value;
-            var Ip = IpRef.current.value;
-            var newRouter = { name: Name, ip: Ip, ospf: switchOnOspf, rip: switchOnRip, x: 100, y: 100, id: (newArray.length + 1 ) + '_' + Name };
     
-                
-    
-            newArray.push(newRouter)
-            updateRouterArray(newArray);
-
-        // Füge neue Router-Daten zum RouterArray hinzu
-        //updateRouter(newRouterData);
-        //console.log("addRouter");
-        // Setze die Eingabefelder zurück
-        //setNewRouterData({ name: '', x: 500, y: 500 });
-        }
-    };
     const saveEditSettings = () => {
 
         //var newEditRouter = EditRouter; 
@@ -176,7 +155,7 @@ const SubMenu = ({ item, updateRouter }) => {
         if (IpRef.current && (validateIPv4(IpRef.current.value) || IpRef.current.value !== '')) {
             // Die IP ist gültig oder leer, füge den Router hinzu
             console.log(IpRef.current.value);
-            addRouter();
+            props.addRouter();
         } else {
             // Die IP ist ungültig, zeige eine Fehlermeldung an oder führe andere Aktionen durch
             console.log('Ungültige IPv4-Adresse');

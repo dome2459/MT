@@ -73,7 +73,7 @@ const DivBut = styled.div`
   }
 `;
 
-export default function NavBar() {
+export default function NavBar(props) {
 
   const [sidebar, setSidebar] = useState(false)
   const TimerRef = useRef();
@@ -191,7 +191,7 @@ export default function NavBar() {
               <AiIcons.AiOutlineClose onClick={showSidebar} />
             </NavIcon>
             {SidebarData.map((item, index) => {
-              return <SubMenu item={item} key={index} />;
+              return <SubMenu item={item} key={index} addRouter={props.addRouter} />;
             })}
           </SidebarWrap>
 
