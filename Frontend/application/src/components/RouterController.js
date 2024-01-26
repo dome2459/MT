@@ -5,7 +5,7 @@ import GlobalContext from './InitStateContext';
 import { json } from 'react-router-dom';
 import { color } from 'framer-motion';
 
-export default function MainController() { 
+export default function RouterController() { 
 
   var apiEndpoint = "http://localhost:8080/api/v1/";
 
