@@ -13,7 +13,7 @@ import java.util.List;
 @SpringBootTest
 class RouterTests {
 
-	private Router testRouter = new Router("Test-Router", 1L,true,1,"000.000.000.001");
+	private Router testRouter = new Router("Test-Router", 1L,true,1,"000.000.000.001", "255.255.255.255");
 
 	private routerRepo routerRepository;
 

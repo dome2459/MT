@@ -47,6 +47,7 @@ public class RouterController {
     router.setActive(routerDetails.getActive());
     router.setRoutingTableId(routerDetails.getRoutingTableId());
     router.setIp(routerDetails.getIp());
+    router.setNetworkmask(routerDetails.getNetworkmask());
 
     Router updatedRouter = repo.save(router);
     return ResponseEntity.ok(updatedRouter);
