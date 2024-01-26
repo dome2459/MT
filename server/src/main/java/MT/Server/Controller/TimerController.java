@@ -130,11 +130,24 @@ public class TimerController {
 
         tableRouterA.setRouterId(routerB.getId());
         tableRouterA.setRoutingTableName(routerB.getName());
-        //tableRouterA.setNetworkmask(routerB);
+        tableRouterA.setNetworkmask(routerB.getNetworkmask());
+        tableRouterA.setGateway("0.0.0.0");
+        tableRouterA.setMetric(1);
+        tableRouterA.setDestination(routerB.getIp());
+        tableRouterA.setRoutingTableId(BId);
+        this.routingTableRepo.save(new RoutingTable(BId, routerB.getName(), routerB.getId(),routerB.getIp(),"0",routerB.getNetworkmask(),"", 1));
 
+        
         tableRouterB.setRouterId(routerA.getId());
         tableRouterB.setRoutingTableName(routerA.getName());
-        //table
+        tableRouterB.setNetworkmask(routerA.getNetworkmask());
+        tableRouterB.setGateway("0.0.0.0");
+        tableRouterB.setMetric(1);
+        tableRouterB.setDestination(routerA.getIp());
+        tableRouterB.setRoutingTableId(AId);
+
+        this.routingTableRepo.save(new RoutingTable(AId, routerA.getName(), routerA.getId(),routerA.getIp(),"0",routerA.getNetworkmask(),"", 1));
+
     }
 }
 

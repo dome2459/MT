@@ -16,6 +16,8 @@ public class Router {
 
   @Column(name = "name")
   private String name;
+  @Column(name = "networkmask")
+  private String networkmask;
   @Column(name = "isActive")
   private boolean isActive;
 
@@ -26,12 +28,13 @@ public class Router {
   private String ip;
   public Router(){
   }
-  public Router(String name, Long id, boolean isActive, Integer routingTableId, String ip) {
+  public Router(String name, Long id, boolean isActive, Integer routingTableId, String ip, String networkmask) {
     this.name = name;
     this.id = id;
     this.isActive = isActive;
     RoutingTableId = routingTableId;
     this.ip = ip;
+    networkmask=networkmask;
   }
 
   public String getName() {
@@ -71,6 +74,13 @@ public class Router {
 
   public void setIp(String ip) {
     this.ip = ip;
+  }
+  public String getNetworkmask() {
+    return networkmask;
+  }
+
+  public void setNetworkmask(String networkmask) {
+    this.networkmask = networkmask;
   }
 
 
