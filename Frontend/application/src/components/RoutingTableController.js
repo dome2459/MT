@@ -8,7 +8,7 @@ import { color } from 'framer-motion';
 export default function RoutingTableController(){
     var apiEndpoint = "https://localhost:3000";
 
-
+    // holen aller Routing Tables
     async function getRouterTableFromApi(){
         return fetch(apiEndpoint + '/getRoutingTable',{
         mode: 'no-corse',
@@ -27,8 +27,28 @@ export default function RoutingTableController(){
       console.log(error);
     });
     };
-
+    // holen einer bestinmmten Tabelle eines Routers
     async function getRoutingTableWithID(){
+        return fetch(apiEndpoint + '/getRoutingTable/{id}',{
+            mode: 'no-cors',
+            method: 'GET',
+            headers: new Headers({
+                "access-control-allow-origin" : "*",
+                'Content-Type': 'application/json'
+            })
+        })
 
+    }
+    // aktualisieren einer RoutingTable eines bestimmten Routers
+    // id der Tabelle muss noch mitgegeben werden
+    async function putRoutingTableWithID(){
+        return fetch( apiEndpoint + '/putRoutingTable/{id}',{
+            mode: 'no-cors',
+            method:'POST',
+            headers: new Headers({
+                "access-control-allow-origin" : "*",
+                'Content-Type': 'application/json'
+            })
+        })
     }
 }

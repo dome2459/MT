@@ -17,8 +17,7 @@ export default function RouterController() {
       headers: new Headers({
         "access-control-allow-origin" : "*",
         'Content-Type': 'application/json'
-      }
-      )
+      })
      })
        .then(response => response.json())
        .then(json => {
