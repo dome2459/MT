@@ -155,7 +155,7 @@ const SubMenu = ({ item, updateRouter }) => {
         // Hier den Code für das Löschen des Routers einfügen
         if(EditRouter.id !== undefined)
         {
-         var i = RouterArray.findIndex((item) => item.id == EditRouter.id);
+         var i = RouterArray.findIndex((item) => item.id === EditRouter.id);
 
             if(i >= 0) 
             {

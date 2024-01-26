@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Map;
 
 
@@ -34,16 +37,22 @@ public class TimerController {
 
     @PostMapping("/start")
     public ResponseEntity<StartResponse> startTimer(@RequestBody Connection connectionFromFrontend,
-                                                    @RequestBody Router routerFromFrontend) {
-        StartResponse response = new StartResponse(connectionFromFrontend, routerFromFrontend);
+                                                    @RequestBody Router routerFromFrontend,
+                                                    @RequestBody Timestamp time) {
+        StartResponse response = new StartResponse(connectionFromFrontend, routerFromFrontend, time);
         for(int i = 0; i <= connectionFromFrontend.getConnectionId().intValue(); i++) {
             pruefen(response.getConnection(), response.getRouter());
            if(geprueft){
                return ResponseEntity.ok(response);
            }
         }
+        LocalDateTime rip = time.toLocalDateTime().plusSeconds(20);
+        Timestamp ts = Timestamp.valueOf(rip);
+
         if(connectionFromFrontend.getRIP()){
-            ripProtokoll(connectionFromFrontend);
+            if(ts.after(time)){
+                ripProtokoll(connectionFromFrontend);
+            }
         }else{
             ospfProtokoll(connectionFromFrontend);
         }
@@ -93,6 +102,13 @@ public class TimerController {
      public void setConnection(Connection connection) {
          this.connection = connection;
      }
+     public Timestamp getDate() {
+         return time;
+     }
+
+     public void setTime(Timestamp connection) {
+         this.time = time;
+     }
 
      public Router getRouter() {
          return router;
@@ -104,14 +120,18 @@ public class TimerController {
 
      private Connection connection;
      private Router router;
+     private Timestamp time;
 
-     public StartResponse(Connection connection, Router router) {
+     public StartResponse(Connection connection, Router router, Timestamp time) {
          this.connection = connection;
          this.router = router;
+         this.time = time;
+
      }
 
  }
     private void ripProtokoll(Connection connection) {
+
 
 
     }
@@ -137,7 +157,7 @@ public class TimerController {
         tableRouterA.setRoutingTableId(BId);
         this.routingTableRepo.save(new RoutingTable(BId, routerB.getName(), routerB.getId(),routerB.getIp(),"0",routerB.getNetworkmask(),"", 1));
 
-        
+
         tableRouterB.setRouterId(routerA.getId());
         tableRouterB.setRoutingTableName(routerA.getName());
         tableRouterB.setNetworkmask(routerA.getNetworkmask());
