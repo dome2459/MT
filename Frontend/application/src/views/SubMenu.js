@@ -157,15 +157,14 @@ const SubMenu = ({ item, updateRouter }) => {
         {
          var i = RouterArray.findIndex((item) => item.id == EditRouter.id);
 
-         if(i >= 0) 
-         {
-            var RouterArr = [...RouterArray];
-            
-            RouterArr.splice(i,1);
-            updateRouterArray(RouterArr);
-            updateEditRouter({});
-        }
-
+            if(i >= 0) 
+            {
+                var RouterArr = [...RouterArray];
+                
+                RouterArr.splice(i,1);
+                updateRouterArray(RouterArr);
+                updateEditRouter({});
+            }
         }
     }
 
