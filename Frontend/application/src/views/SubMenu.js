@@ -167,6 +167,7 @@ const SubMenu = ({ item, updateRouter, props }) => {
                 console.log(SubnetRef.current.value);
                 if(NameRef.current && (validateName(NameRef.current.value) || NameRef.current.value !== '')){
                     console.log(NameRef.current.value);
+                    props.addRouter();
                 }else{
                     console.log('ungültiger Name');
                 }
