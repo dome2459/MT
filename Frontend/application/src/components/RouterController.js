@@ -48,7 +48,9 @@ export default function RouterController() {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data),
+      // ich hab mal data raus genommen und die RouterId reingegeben
+      // das nächste mal drauf Achten das keine Fehler committet werden!!
+      body: JSON.stringify(RouterId),
     });
   };
   // id des Routers wird noch benötigt und in Endpoint eingetragen

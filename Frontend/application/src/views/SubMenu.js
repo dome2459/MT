@@ -54,7 +54,8 @@ const DropdownLink = styled(Link)`
 
 const Inputfield = styled(Link)`
   color: black;
-  padding-right: 15px;
+  padding-right: 15px;input {
+  }
 `;
 
 
@@ -62,6 +63,9 @@ const Inputfield = styled(Link)`
 const SubMenu = ({ item, updateRouter, props }) => {
     const [subnav, setSubnav] = useState(true);
     //const [EditScreen, setEditScreen] = useState(false);
+    const [ipInputColor, setIpInputColor] = useState('white');
+    const [subnetInputColor, setSubnetInputColor] = useState('white');
+    const [nameInputColor, setNameInputColor] = useState('white');
     const showSubnav = () => setSubnav(!subnav);
     const [switchOnOspf, setSwitchOnOspf] = useState(false);
     const [switchOnRip, setSwitchOnRip] = useState(false);
@@ -72,6 +76,7 @@ const SubMenu = ({ item, updateRouter, props }) => {
 
     const NameRef = useRef(null);
     const IpRef = useRef(null);
+    const SubnetRef = useRef(null);
 
 
     useEffect(() => {   
@@ -119,6 +124,8 @@ const SubMenu = ({ item, updateRouter, props }) => {
         var Name = NameRef.current.value;
 
         var Ip = IpRef.current.value;
+
+        var Subnet = SubnetRef.current.value;
     
         var Ospf = switchOnOspf;
 
@@ -126,7 +133,7 @@ const SubMenu = ({ item, updateRouter, props }) => {
 
 
 
-        console.log('Name: ' + Name + ' IP: ' + Ip + Ospf + Rip)
+        console.log('Name: ' + Name + ' IP: ' + Ip + ' Subnet: ' + Subnet)
 
     }
 
@@ -155,17 +162,47 @@ const SubMenu = ({ item, updateRouter, props }) => {
         if (IpRef.current && (validateIPv4(IpRef.current.value) || IpRef.current.value !== '')) {
             // Die IP ist gültig oder leer, füge den Router hinzu
             console.log(IpRef.current.value);
-            props.addRouter();
+            if (SubnetRef.current && (validateSubnet(SubnetRef.current.value) || SubnetRef.current.value !== '')) {
+                // Das Subnetz ist gültig oder leer, füge den Router hinzu
+                console.log(SubnetRef.current.value);
+                if(NameRef.current && (validateName(NameRef.current.value) || NameRef.current.value !== '')){
+                    console.log(NameRef.current.value);
+                }else{
+                    console.log('ungültiger Name');
+                }
+                // props.addRouter();
+            } else {
+                // Das Subnetz ist ungültig, zeige eine Fehlermeldung an oder führe andere Aktionen durch
+                console.log('Ungültiges Subnetz');
+            }
+            //props.addRouter();
         } else {
             // Die IP ist ungültig, zeige eine Fehlermeldung an oder führe andere Aktionen durch
-            console.log('Ungültige IPv4-Adresse');
+            console.log('Ungültige IPv4-Adresse und Subnet');
         }
     };
 
     const validateIPv4 = (ip) => {
         // Regulärer Ausdruck für eine gültige IPv4-Adresse
         const ipv4Regex = /^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+        const isValid = ipv4Regex.test(ip);
+        setIpInputColor(isValid ? 'white' : '#FFCCCB');
         return ipv4Regex.test(ip);
+
+    };
+    const validateSubnet = (subnet) => {
+        // Regulärer Ausdruck für ein gültiges Subnetz (Beispiel: 255.255.255.0)
+        const subnetRegex = /^(\d{1,3}\.){3}\d{1,3}$/;
+        const isValid = subnetRegex.test(subnet);
+        setSubnetInputColor(isValid ? 'white' : '#FFCCCB');
+        return isValid;
+    };
+    const validateName = (name) => {
+        // Regulärer Ausdruck für einen gültigen Namen
+        const nameRegex = /^[a-zA-Z0-9]+$/;
+        const isValid = nameRegex.test(name.trim()); // Trim, um führende und endende Leerzeichen zu entfernen
+        setNameInputColor(isValid ? 'white' : '#FFCCCB');
+        return isValid;
     };
     
 
@@ -196,8 +233,8 @@ const SubMenu = ({ item, updateRouter, props }) => {
                                             <Input
                                                 type="text" 
                                                 ref={NameRef}
-                                                bgColor={'white'}
-                                                defaultValue={''}
+                                                bgColor={nameInputColor}
+                                                //defaultValue={''}
                                                 //onChange={(e) => setNewRouterData({ ...newRouterData, name: e.target.value })}
                                             />
                                         </Inputfield>
@@ -210,7 +247,8 @@ const SubMenu = ({ item, updateRouter, props }) => {
                                             <Input  
                                             type='text'
                                             ref={IpRef} 
-                                            bgColor={'white'} 
+                                            bgColor={ipInputColor}
+                                            placeholder="192.168.0.1"
                                             defaultValue={EditRouter.id !== undefined ? (EditRouter.ip) : ('')}
                                             />
                                         </Inputfield>
@@ -221,7 +259,12 @@ const SubMenu = ({ item, updateRouter, props }) => {
                                         <div>
                                         {item.title}
                                         <Inputfield>
-                                            <Input ref={IpRef} type='text' bgColor={'white'} />
+                                            <Input 
+                                            ref={SubnetRef} 
+                                            type='text' 
+                                            bgColor={subnetInputColor} 
+                                            placeholder="255.255.255.0"
+                                            />
                                         </Inputfield>
                                         </div>
                                     ) : null}
