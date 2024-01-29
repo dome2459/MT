@@ -12,11 +12,13 @@ class Router extends Component {
         connectionId: '',
         routingTableId: '',
         ip: '0.0.0.0',
+        posx: 100,
+        posy: 100,
       };
   
       return (
         <div>
-          {/* Verwenden Sie Ihr Objekt in JSX */}
+          {/* Verwenden Sie Ihr Objekt in JSX */} 
           <p>Name: {Router.name}</p>
           <p>Aktiv: {Router.isActiv}</p>
           <p>:IP {Router.ip}</p>
