@@ -12,6 +12,17 @@ export default function RouterController() {
   
   const {RouterArray, updateRouterArray} = useContext(GlobalContext);
   const {EditRouter, updateEditRouter} = useContext(GlobalContext);
+  
+  async function Reciever(Function, value1, value2, value3) {
+
+    switch (Function) {
+      case 'test':
+        return test(value1, value2, value3)
+        break;
+      //add other function cases here
+
+    }
+  }
 
   //controller Function
  async function getRouterArrayFromApi(){
@@ -89,10 +100,5 @@ export default function RouterController() {
   */
 
 
-    return (
-      <> 
-        <MainEnviroment/>
-        <Button onClick={() => getRouterArrayFromApi()}></Button>
-        </>
-    )
+    return (null)
 }

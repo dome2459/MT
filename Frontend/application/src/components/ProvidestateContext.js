@@ -20,6 +20,7 @@ const [RouterArray, setRouterArray] = useState([]
   //   { id: 5, name: 'R5', x: 500, y: 500 ,ip: '255.255.0.0', rip: false, ospf: false},
   // ]
   )
+
 const updateRouterArray = (newValue) => {
     setRouterArray(newValue);
   };
@@ -33,7 +34,7 @@ const [CableArray, setCableArray] = useState([
 // { connectionId: '1', routerA: 1, routerB: 2, ospf: '', rip: '' },
 // { connectionId: '2', routerA: 1, routerB: 3, ospf: '', rip: '' },
 // { connectionId: '3', routerA: 1, routerB: 4, ospf: '', rip: '' },
-//   { connectionId: '7', routerA: 1, routerB: 0, ospf: '', rip: '' },
+//  { connectionId: '7', routerA: 1, routerB: 0, ospf: '', rip: '' },
 //  { connectionId: '4', routerA: 3, routerB: 2, ospf: '', rip: '' },
 //  { connectionId: '5', routerA: 0, routerB: 4, ospf: '', rip: '' }
 ])

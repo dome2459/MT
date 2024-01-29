@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Button, Image, Input
+import { Button, Image, Input, Text
 } from '@chakra-ui/react'
 import source from "./Router2.svg";
 import DragArea from "./DragArea";
@@ -60,7 +60,7 @@ const Inputfield = styled(Link)`
 
 
 
-const SubMenu = ({ item, updateRouter },props) => {
+const SubMenu = ({ item, updateRouter}, props) => {
     const [subnav, setSubnav] = useState(true);
     //const [EditScreen, setEditScreen] = useState(false);
     const [ipInputColor, setIpInputColor] = useState('white');
@@ -167,7 +167,7 @@ const SubMenu = ({ item, updateRouter },props) => {
                 console.log(SubnetRef.current.value);
                 if(NameRef.current && (validateName(NameRef.current.value) || NameRef.current.value !== '')){
                     console.log(NameRef.current.value);
-                    props.addRouter();
+                    props.callback(' idk?...', 'AddRouter', {});
                 }else{
                     console.log('ungültiger Name');
                 }
@@ -337,39 +337,21 @@ const SubMenu = ({ item, updateRouter },props) => {
                                         Verbinden
                                     </button>
                                 ) : null}
-                                {item.title === 'Neue Verbindung' ? (
-                                    <div>
-                                        {item.title}
-                                        <Inputfield>
-                                            <input />
-                                        </Inputfield>
-                                    </div>
-                                ) : (console.log())}
+                                {item.title === 'ConnectionList' && EditRouter.id != undefined && EditRouter.connections != undefined ? (
 
-                                {item.title === 'Verbundener-Router' ? (
                                     <div>
-                                      <label>RouterX</label>  
-                                      <button
-                                        style={{
-                                            color: 'red',
-                                            display: 'inline-block',
-                                            margin: '8px',
-                                            backgroundColor: 'white',
-                                            padding: '8px 16px',
-                                            borderRadius: '4px',
-                                            cursor: 'pointer',
-                                           
-                                            
-                                        }}
-                                        onClick={handleDeleteRouter}>
-                                        X
-                                    </button>
-                                    </div>
-                                ) : (null)}
+                                        { EditRouter.connections.map((item) => {
+
+                                            <Text>{item.InterFace}</Text>
+
+                                        })}
+                                    </div>    
+                                ) : null}
+     
                             </SidebarLabel>
                         </DropdownLink>
                     );
-                })}
+                })}  
         </>
     )
 }

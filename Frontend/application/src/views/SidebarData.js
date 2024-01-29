@@ -53,11 +53,8 @@ export const SidebarData = [
         title: 'RIP',
       },
       {
-        title: 'Verbundener-Router',
-       },
-       {
-        title: 'Verbundener-Router',
-       }
+        title: 'ConnectionList',
+      },
     ]
   } 
 ];

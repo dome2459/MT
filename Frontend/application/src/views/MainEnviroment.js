@@ -14,7 +14,7 @@ export default function MainEnviroment(props) {
 
       <Flex flex={1} flexDirection='column'>
 
-        <Navbar  addRouter={props.addRouter}/>
+        <Navbar  callBack={props.callBack}/>
 
         <div className='dragAndTableArea' flex={1}>
           <Flex h='68%' mh='500px' flex={1} margin={2} borderWidth={2} borderColor={'#ddd'}>

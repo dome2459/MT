@@ -191,7 +191,7 @@ export default function NavBar(props) {
               <AiIcons.AiOutlineClose onClick={showSidebar} />
             </NavIcon>
             {SidebarData.map((item, index) => {
-              return <SubMenu item={item} key={index} addRouter={props.addRouter} />;
+              return <SubMenu item={item} key={index} callBack={props.callBack} />;
             })}
           </SidebarWrap>
 

@@ -4,18 +4,14 @@ import { ChakraProvider } from '@chakra-ui/react'
 
 import GlobalProvider from './components/ProvidestateContext';
 
-import RouterController from './components/RouterController';
-import RoutingTableController from './components/RoutingTableController';
-import ConnectionController from './components/ConnectionController';
+import MainController from './components/MainController';
 
 export default class App extends Component {
   render(){
   return (
     <GlobalProvider>
       <ChakraProvider>
-        <RouterController />
-        <RoutingTableController/>
-        <ConnectionController/>
+        <MainController />
       </ChakraProvider>
     </GlobalProvider>
   );
