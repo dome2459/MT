@@ -16,8 +16,8 @@ export default function RouterController() {
   async function Reciever(Function, value1, value2, value3) {
 
     switch (Function) {
-      case 'test':
-        return test(value1, value2, value3)
+      case 'getRouterArrayFromApi':
+        return getRouterArrayFromApi()
         break;
       //add other function cases here
 
@@ -46,7 +46,7 @@ export default function RouterController() {
    };
 
    async function createRouter(data){
-    fetch(apiEndpoint+'router', {
+    fetch(apiEndpoint+'router/create', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
