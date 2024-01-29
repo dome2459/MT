@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useContext } from 'react';
 import { Flex, Tabs, TabList, TabPanels, Tab, TabPanel,Button } from '@chakra-ui/react'
 import MainEnviroment from '../views/MainEnviroment';
 import GlobalContext from './InitStateContext';
@@ -10,6 +10,9 @@ export default function RouterController() {
 
   var apiEndpoint = "http://localhost:8080/api/v1/";
   
+  const {RouterArray, updateRouterArray} = useContext(GlobalContext);
+  const {EditRouter, updateEditRouter} = useContext(GlobalContext);
+
   //controller Function
  async function getRouterArrayFromApi(){
      return fetch(apiEndpoint+'router/list',{
@@ -23,6 +26,7 @@ export default function RouterController() {
        .then(response => response.json())
        .then(json => {
         console.log(json);
+        updateRouterArray(json);
          return json;
        })
        .catch(error => {
@@ -54,7 +58,7 @@ export default function RouterController() {
     });
   };
   // id des Routers wird noch benötigt und in Endpoint eingetragen
-  async function updateRouter(data){
+  async function updateRouterOnDB(data){
     fetch(apiEndpoint+'router/{id}', {
       method: 'POST',
       headers: {

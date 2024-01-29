@@ -116,7 +116,8 @@ export default function DragArea() {
       })}
       <svg style={{ width: '100%', height: '100%' }}>
 
-        {CableArray.map((item, i) => {
+        
+        {RouterArray.length != 0 ?( CableArray.map((item, i) => {
 
           return (
             <PathLine
@@ -127,7 +128,7 @@ export default function DragArea() {
               r={10}
             />
           )
-        })}
+        })): (null)}
       </svg>
     </Box>
   );
