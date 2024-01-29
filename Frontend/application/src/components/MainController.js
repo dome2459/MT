@@ -60,7 +60,7 @@
                 <RoutingTableController ref={RtaConRef} />
                 <ConnectionController ref={ConConRef} />
                 <MainEnviroment callBack={callBack}/>
-                <Button onClick={() => getRouterArrayFromApi()}></Button>
+                <Button onClick={() => null}></Button>
                 
               </>
             )
