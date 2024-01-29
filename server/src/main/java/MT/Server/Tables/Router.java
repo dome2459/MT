@@ -23,16 +23,24 @@ public class Router {
 
   @Column(name = "routingTableId")
   private Integer RoutingTableId;
-  
+
   @Column(name = "ip")
   private String ip;
+  @Column(name = "posx")
+  private int posx;
+
+  @Column(name = "posy")
+  private int posy;
+
   public Router(){
   }
-  public Router(String name, Long id, boolean isActive, Integer routingTableId, String ip, String networkmask) {
+  public Router(String name, Long id, boolean isActive, Integer routingTableId, String ip, String networkmask, int posx, int posy) {
     this.name = name;
     this.id = id;
     this.isActive = isActive;
     RoutingTableId = routingTableId;
+    this.posx = posx;
+    this.posy = posy;
     this.ip = ip;
     networkmask=networkmask;
   }
@@ -83,10 +91,25 @@ public class Router {
     this.networkmask = networkmask;
   }
 
+  public int getPosX() {
+    return posx;
+  }
+
+  public void setPosX(int posx) {
+    this.posx = posx;
+  }
+
+  public int getPosy() {
+    return posy;
+  }
+
+  public void setPosY(int posy) {
+    this.posy = posy;
+  }
 
   @Override
   public String toString() {
-    return "Router{" + "name='" + name + '\'' + ", id=" + id + ", isActive=" + isActive + ", RoutingTableId=" + RoutingTableId + ", ip='" + ip + '\'' + '}';
+    return "Router{" + "name='" + name + '\'' + ", id=" + id + ", isActive=" + isActive + ", RoutingTableId=" + RoutingTableId + ", ip='" + ip  + ", posx='" + posx  + ", posy='" + posy+ '\'' + '}';
   }
 
 }
