@@ -28,9 +28,11 @@ public class RouterController {
   }
 
   @PostMapping("/router/create")
-  public Router createRouter(@RequestBody Router router){
-    return repo.save(router);
+  public  ResponseEntity<Router> createRouter(@RequestBody Router router){
+    Router createdRouter = repo.save(router);
+    return new ResponseEntity<>(createdRouter, HttpStatus.CREATED);
   }
+
 
   @GetMapping("/router/{id}")
   public  ResponseEntity<Router> getRouterID(@PathVariable Long id){
@@ -50,7 +52,7 @@ public class RouterController {
     router.setNetworkmask(routerDetails.getNetworkmask());
     router.setPosX(routerDetails.getPosX());
     router.setPosY(routerDetails.getPosy());
-    
+
     Router updatedRouter = repo.save(router);
     return ResponseEntity.ok(updatedRouter);
   }
