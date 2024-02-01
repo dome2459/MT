@@ -3,6 +3,7 @@ import MainEnviroment from '../views/MainEnviroment';
 import GlobalContext from './InitStateContext';
 import { json } from 'react-router-dom';
 import { color } from 'framer-motion';
+import { Box } from '@chakra-ui/react';
 
 
 export default function RoutingTableController(){
@@ -62,4 +63,5 @@ export default function RoutingTableController(){
             })
         })
     }
+    return(<Box/>)
 }

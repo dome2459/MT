@@ -1,5 +1,5 @@
 import React, { Component, useContext } from 'react';
-import { Flex, Tabs, TabList, TabPanels, Tab, TabPanel,Button } from '@chakra-ui/react'
+import { Flex, Tabs, TabList, TabPanels, Tab, TabPanel,Button, Box } from '@chakra-ui/react'
 import MainEnviroment from '../views/MainEnviroment';
 import GlobalContext from './InitStateContext';
 import { json } from 'react-router-dom';
@@ -100,5 +100,5 @@ export default function RouterController() {
   */
 
 
-    return (null)
+  return(<Box/>)
 }

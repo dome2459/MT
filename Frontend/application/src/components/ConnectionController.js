@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import MainEnviroment from '../views/MainEnviroment';
 import { json } from 'react-router-dom';
 import { color } from 'framer-motion';
+import { Box } from '@chakra-ui/react';
+
 
 
 export default function ConnectionController(){
@@ -58,5 +60,5 @@ async function deleteConnection(){
     })
 })
 } 
-
+    return(<Box/>)
 }
