@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +49,7 @@ public class RouterController {
     router.setRoutingTableId(routerDetails.getRoutingTableId());
     router.setIp(routerDetails.getIp());
     router.setNetworkmask(routerDetails.getNetworkmask());
-    router.setPosX(routerDetails.getPosX());
+    router.setPosx(routerDetails.getPosx());
     router.setPosY(routerDetails.getPosy());
 
     Router updatedRouter = repo.save(router);
