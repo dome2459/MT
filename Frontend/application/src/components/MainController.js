@@ -113,7 +113,7 @@ const {RouterArray, updateRouterArray} = useContext(GlobalContext);
         return putRoutingTableWithID(value1, value2, value3)
         break;
       case 'updatePosition':
-         return updatePosition()
+         return updatePosition(value1, value2)
          break
       //add other function cases here
 
@@ -218,8 +218,9 @@ async function updateRouterOnDB(data){
   });
 };
 
-async function updatePosition(values){
-  fetch(apiEndpoint+'router/position/', {
+async function updatePosition(values, id){
+  console.log("das ist die id " + id);
+  fetch(apiEndpoint+'router/'+ id, {
     mode: 'cors',
     method: 'POST',
     headers: {

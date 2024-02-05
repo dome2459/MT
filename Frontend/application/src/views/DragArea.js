@@ -37,7 +37,7 @@ export default function DragArea(props) {
     const { x, y } = data;
     var RouterArr = [...RouterArray]
 
-    RouterArr[index].posX = x
+    RouterArr[index].posx = x
     RouterArr[index].posy = y
 
     updateRouterArray(RouterArr);
@@ -56,8 +56,8 @@ export default function DragArea(props) {
     }
     
   };
-  function updatePosition(values, index){
-    props.callBack('updatePosition', values, index)
+  function updatePosition(values, id){
+    props.callBack('updatePosition', values, id);
     
   }
 
@@ -65,12 +65,12 @@ export default function DragArea(props) {
     return (
       <Draggable
         bounds={{ left: 0, top: 0, right: maxX, bottom: maxY }}
-        position={{ x: item.posX, y: item.posy }}
+        position={{ x: item.posx, y: item.posy }}
         onDrag={handleDrag(index)}
         style={theme}  
         IsEdit={false}
         onStart={() => setCurrendDrag(true)} 
-        onStop={() => [updatePosition(item, index),setCurrendDrag(false),console.log(item)] }
+        onStop={() => [updatePosition(item, item.id),setCurrendDrag(false),console.log(item, item.id)] }
         >
         
         <Center flexDirection={'column'} width={100} className="draggable" //borderWidth={1} borderColor='#000' 
