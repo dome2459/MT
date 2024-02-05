@@ -6,7 +6,7 @@ import RouterSvg from './Router2.svg';
 import RouterEditSvg from './Router2edit.svg';
 import GlobalContext from '../components/InitStateContext';
 
-export default function DragArea() {
+export default function DragArea(props) {
 
 
   // statische Werte im Code zu schreiben ist immer schlecht!!! 
@@ -37,8 +37,8 @@ export default function DragArea() {
     const { x, y } = data;
     var RouterArr = [...RouterArray]
 
-    RouterArr[index].x = x
-    RouterArr[index].y = y
+    RouterArr[index].posX = x
+    RouterArr[index].posy = y
 
     updateRouterArray(RouterArr);
   };
@@ -56,17 +56,21 @@ export default function DragArea() {
     }
     
   };
+  function updatePosition(values, index){
+    props.callBack('updatePosition', values, index)
+    
+  }
 
   const RouterObj = (item, index) => {
     return (
       <Draggable
         bounds={{ left: 0, top: 0, right: maxX, bottom: maxY }}
-        position={{ x: item.x, y: item.y }}
+        position={{ x: item.posX, y: item.posy }}
         onDrag={handleDrag(index)}
         style={theme}  
         IsEdit={false}
         onStart={() => setCurrendDrag(true)} 
-        onStop={() => setCurrendDrag(false)}
+        onStop={() => [updatePosition(item, index),setCurrendDrag(false),console.log(item)] }
         >
         
         <Center flexDirection={'column'} width={100} className="draggable" //borderWidth={1} borderColor='#000' 

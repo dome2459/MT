@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import GlobalContext from './InitStateContext';
-import RouterController from './RouterController';
 
 
 const GlobalProvider = ({ children }) => {

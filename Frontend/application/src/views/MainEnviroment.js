@@ -19,7 +19,7 @@ export default function MainEnviroment(props) {
         <div className='dragAndTableArea' flex={1}>
           <Flex h='68%' mh='500px' flex={1} margin={2} borderWidth={2} borderColor={'#ddd'}>
 
-            <DragArea />
+            <DragArea  callBack={props.callBack} />
 
           </Flex>
           <Box h='30%' mh='100px'  flex={1} margin={2} borderWidth={2} borderColor={'#ddd'}>
