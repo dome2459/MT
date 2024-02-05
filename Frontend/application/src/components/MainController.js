@@ -8,7 +8,32 @@ import ConnectionController from './ConnectionController';
 import GlobalContext from './InitStateContext';
 
 
-export default function MainController() { 
+export default function MainController(){
+const {RouterArray, updateRouterArray} = useContext(GlobalContext);
+
+          
+          const ConConRef = React.createRef();
+          const RutConRef = React.createRef();
+          const RtaConRef = React.createRef();
+        
+
+          var apiEndpoint = "http://localhost:8080/api/v1/";
+          // const callBack = async(Controller, Function, value1, value2, value3) => {
+
+          //   switch (Controller) {
+          //     case 'RouterController':
+          //       return RutConRef.current.Reciever(Function, value1, value2, value3);
+          //       break;
+          //     case 'RoutingTableController':
+          //       return RtaConRef.current.Reciever(Function, value1, value2, value3);
+          //       break;
+          //     case 'ConnectionController':
+          //       return ConConRef.current.Reciever(Function, value1, value2, value3);
+          //       break;
+          //   }
+          //}
+        /*
+          const addRouter = () => {
 
   const {RouterArray, updateRouterArray} = useContext(GlobalContext);
   const {EditRouter, updateEditRouter} = useContext(GlobalContext);
@@ -143,7 +168,9 @@ return fetch(apiEndpoint + '/delConnection/{id}',{
    })
      .then(response => response.json())
      .then(json => {
+      console.log("Das Hier ");
       console.log(json);
+
       updateRouterArray(json);
        return json;
      })
@@ -234,16 +261,8 @@ async function putRoutingTableWithID(){
 
 
     return (
-      <> 
-      {/*
-        <RouterController ref={RutConRef}/>
-        <RoutingTableController ref={RtaConRef} />
-        <ConnectionController ref={ConConRef} />
-        <Button onClick={() => null} ></Button>
-    */}
-        <MainEnviroment callBack={callBack} ref={ref}/>
-        
-        
-      </>
-    )
+     
+        <MainEnviroment callBack={callBack} />
+
+    );  
 }

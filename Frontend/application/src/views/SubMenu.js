@@ -167,7 +167,12 @@ const SubMenu = ({ item, updateRouter}, props) => {
                 console.log(SubnetRef.current.value);
                 if(NameRef.current && (validateName(NameRef.current.value) || NameRef.current.value !== '')){
                     console.log(NameRef.current.value);
-                    props.callback(' idk?...', 'AddRouter', {});
+
+                    var newRouter = {ip: IpRef.current.value , name: NameRef.current.value, routingTableId: 1, networkmask: SubnetRef.current.value, posX: 300, posy: 300, isActiv: 1};
+                    props.callBack('createRouter', newRouter);
+                    props.callBack('getRouterArrayFromApi');
+
+                    console.log(props.callBack('getRouterArrayFromApi'));
                 }else{
                     console.log('ungültiger Name');
                 }
