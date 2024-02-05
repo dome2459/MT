@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,9 +27,11 @@ public class RouterController {
   }
 
   @PostMapping("/router/create")
-  public Router createRouter(@RequestBody Router router){
-    return repo.save(router);
+  public  ResponseEntity<Router> createRouter(@RequestBody Router router){
+    Router createdRouter = repo.save(router);
+    return new ResponseEntity<>(createdRouter, HttpStatus.CREATED);
   }
+
 
   @GetMapping("/router/{id}")
   public  ResponseEntity<Router> getRouterID(@PathVariable Long id){
@@ -48,9 +49,9 @@ public class RouterController {
     router.setRoutingTableId(routerDetails.getRoutingTableId());
     router.setIp(routerDetails.getIp());
     router.setNetworkmask(routerDetails.getNetworkmask());
-    router.setPosX(routerDetails.getPosX());
+    router.setPosx(routerDetails.getPosx());
     router.setPosY(routerDetails.getPosy());
-    
+
     Router updatedRouter = repo.save(router);
     return ResponseEntity.ok(updatedRouter);
   }

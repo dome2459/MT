@@ -2,10 +2,8 @@
 import React, { Component, useEffect,useRef, useContext } from 'react';
 import { Flex, Tabs, TabList, TabPanels, Tab, TabPanel, Button } from '@chakra-ui/react'
 import MainEnviroment from '../views/MainEnviroment';
-import RouterController from './RouterController';
-import RoutingTableController from './RoutingTableController';
-import ConnectionController from './ConnectionController';
 import GlobalContext from './InitStateContext';
+import RoutingTable from './RoutingTable';
 
 
 export default function MainController(){
@@ -114,6 +112,9 @@ const {RouterArray, updateRouterArray} = useContext(GlobalContext);
       case 'putRoutingTableWithID':
         return putRoutingTableWithID(value1, value2, value3)
         break;
+      case 'updatePosition':
+         return updatePosition()
+         break
       //add other function cases here
 
     }
@@ -178,8 +179,12 @@ return fetch(apiEndpoint + '/delConnection/{id}',{
        console.log(error);
      });
  };
+
  async function createRouter(data){
-  fetch(apiEndpoint+'router', {
+  console.log(data);
+  console.log(JSON.stringify(data))
+  fetch(apiEndpoint+'router/create', {
+    mode : 'cors',
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -213,6 +218,18 @@ async function updateRouterOnDB(data){
   });
 };
 
+async function updatePosition(values){
+  fetch(apiEndpoint+'router/position/', {
+    mode: 'cors',
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(values),
+  });
+
+};
 // holen aller Routing Tables
 async function getRouterTableFromApi(){
   return fetch(apiEndpoint + '/getRoutingTable',{

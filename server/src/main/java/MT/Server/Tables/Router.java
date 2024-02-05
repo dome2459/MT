@@ -42,7 +42,7 @@ public class Router {
     this.posx = posx;
     this.posy = posy;
     this.ip = ip;
-    networkmask=networkmask;
+    this.networkmask=networkmask;
   }
 
   public String getName() {
@@ -68,11 +68,11 @@ public class Router {
     isActive = active;
   }
 
-  public Integer getRoutingTableId() {
+  public int getRoutingTableId() {
     return RoutingTableId;
   }
 
-  public void setRoutingTableId(Integer routingTableId) {
+  public void setRoutingTableId(int routingTableId) {
     RoutingTableId = routingTableId;
   }
 
@@ -91,11 +91,11 @@ public class Router {
     this.networkmask = networkmask;
   }
 
-  public int getPosX() {
+  public int getPosx() {
     return posx;
   }
 
-  public void setPosX(int posx) {
+  public void setPosx(int posx) {
     this.posx = posx;
   }
 

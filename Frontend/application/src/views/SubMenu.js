@@ -60,7 +60,7 @@ const Inputfield = styled(Link)`
 
 
 
-const SubMenu = ({ item, updateRouter}, props) => {
+const SubMenu = ({ item, updateRouter, ...props},) => {
     const [subnav, setSubnav] = useState(true);
     //const [EditScreen, setEditScreen] = useState(false);
     const [ipInputColor, setIpInputColor] = useState('white');

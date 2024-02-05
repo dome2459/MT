@@ -4,6 +4,7 @@ import MT.Server.Repos.*;
 import MT.Server.ResourceNotFoundException;
 import MT.Server.Tables.RoutingTable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,8 +30,9 @@ public class RoutingTableController {
 
   // Endpunkt zum Erstellen eines neuen RoutingTable-Eintrags
   @PostMapping("/postRoutingTable")
-  public RoutingTable createRoutingTable(@RequestBody RoutingTable routingTable) {
-    return routingTableRepo.save(routingTable);
+  public  ResponseEntity<RoutingTable> createRoutingTable(@RequestBody RoutingTable routingTable) {
+    RoutingTable createdRoutingTable = routingTableRepo.save(routingTable);
+    return new ResponseEntity<>(createdRoutingTable, HttpStatus.CREATED);
   }
 
   // Endpunkt zum Abrufen eines bestimmten RoutingTable-Eintrags anhand der ID
