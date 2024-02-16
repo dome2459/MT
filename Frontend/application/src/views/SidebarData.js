@@ -43,18 +43,29 @@ export const SidebarData = [
 
     subNav: [
       {
-        title: 'Verbinden',
-        cName: 'sub-nav'
+        title: 'Router'
       },
       {
         title: 'OSPF',
       },
       {
-        title: 'RIP',
-      },
+        combinedTitle: 'Metrik & RIP', // Neuer Eintrag für das kombinierte Feld
+        subItems: [
+            {
+                title: 'Metrik'
+            },
+            {
+                title: 'RIP'
+            }
+        ]
+    },
       {
         title: 'ConnectionList',
       },
+      {
+        title: 'Verbinden',
+        cName: 'sub-nav'
+      }
     ]
   } 
 ];

@@ -1,7 +1,8 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Button, Image, Input, Text
+import {
+    Button, Image, Input, Text, Select
 } from '@chakra-ui/react'
 import source from "./Router2.svg";
 import DragArea from "./DragArea";
@@ -60,7 +61,7 @@ const Inputfield = styled(Link)`
 
 
 
-const SubMenu = ({ item, updateRouter, ...props},) => {
+const SubMenu = ({ item, updateRouter, ...props },) => {
     const [subnav, setSubnav] = useState(true);
     //const [EditScreen, setEditScreen] = useState(false);
     const [ipInputColor, setIpInputColor] = useState('white');
@@ -69,55 +70,99 @@ const SubMenu = ({ item, updateRouter, ...props},) => {
     const showSubnav = () => setSubnav(!subnav);
     const [switchOnOspf, setSwitchOnOspf] = useState(false);
     const [switchOnRip, setSwitchOnRip] = useState(false);
+    const [selectedRouter, setSelectedRouter] = useState(null);
+    const [ospfMetric, setOspfMetric] = useState('');
+    const [ospfMetricInputVisible, setOspfMetricInputVisible] = useState(false);
 
-    const {RouterArray, updateRouterArray} = useContext(GlobalContext);
-    const {EditRouter, updateEditRouter} = useContext(GlobalContext);
-    const {CableArray, setCableArray} = useContext(GlobalContext);
+    const handleRouterSelection = (event) => {
+        setSelectedRouter(event.target.value);
+    };
+
+
+    const { RouterArray, updateRouterArray } = useContext(GlobalContext);
+    const { EditRouter, updateEditRouter } = useContext(GlobalContext);
+    const { CableArray, setCableArray } = useContext(GlobalContext);
 
     const NameRef = useRef(null);
     const IpRef = useRef(null);
     const SubnetRef = useRef(null);
 
 
-    useEffect(() => {   
-        
-            if (NameRef.current !== null) {
+    // useEffect(() => {   
 
-            if (EditRouter.id !== undefined ) {
+    //         if (NameRef.current !== null) {
 
-                    NameRef.current.value = EditRouter.name
-                    IpRef.current.value = EditRouter.ip
-                    setSwitchOnOspf(EditRouter.ospf)
-                    setSwitchOnRip(EditRouter.rip)
+    //         if (EditRouter.id !== undefined ) {
 
-                } else {
-                
-                    NameRef.current.value = ''
-                    IpRef.current.value = ''
-                    setSwitchOnOspf(false)
-                    setSwitchOnRip(false)
-                } 
+    //                 NameRef.current.value = EditRouter.name
+    //                 IpRef.current.value = EditRouter.ip
+    //                 setSwitchOnOspf(EditRouter.ospf)
+    //                 setSwitchOnRip(EditRouter.rip)
+
+    //             } else {
+
+    //                 NameRef.current.value = ''
+    //                 IpRef.current.value = ''
+    //                 setSwitchOnOspf(false)
+    //                 setSwitchOnRip(false)
+    //             } 
+    //         }
+    //        console.log('submenu mounted')
+    // }, [EditRouter]);
+
+
+    useEffect(() => {
+        if (EditRouter.id !== undefined) {
+            if (NameRef.current) {
+                NameRef.current.value = EditRouter.name;
             }
-           //console.log('submenu mounted')
+            if (IpRef.current) {
+                IpRef.current.value = EditRouter.ip;
+            }
+            setSwitchOnOspf(EditRouter.ospf);
+            setSwitchOnRip(EditRouter.rip);
+        } else {
+            if (NameRef.current) {
+                NameRef.current.value = '';
+            }
+            if (IpRef.current) {
+                IpRef.current.value = '';
+            }
+            setSwitchOnOspf(false);
+            setSwitchOnRip(false);
+        }
     }, [EditRouter]);
+
+
 
     const handleChangeOspf = (checked) => {
         setSwitchOnOspf(checked);
-        // Wenn OSPF eingeschaltet wird, schalte RIP aus
+        // Wenn OSPF eingeschaltet wird
         if (checked) {
+            // Schalte RIP aus
             setSwitchOnRip(false);
+            // Zeige das Inputfeld für die OSPF-Metrik an
+            setOspfMetricInputVisible(true);
+        } else {
+            // Wenn OSPF ausgeschaltet wird, blende das Inputfeld für die OSPF-Metrik aus
+            setOspfMetricInputVisible(false);
+            // Sie können die OSPF-Metrik auch zurücksetzen, wenn Sie möchten
+            setOspfMetric('');
         }
     };
+
     const handleChangeRip = (checked) => {
-        
         setSwitchOnRip(checked);
         // Wenn RIP eingeschaltet wird, schalte OSPF aus
         if (checked) {
             setSwitchOnOspf(false);
+            // Blende das Inputfeld für die OSPF-Metrik aus
+            setOspfMetricInputVisible(false);
+            // Sie können die OSPF-Metrik auch zurücksetzen, wenn Sie möchten
+            setOspfMetric('');
         }
-        
     };
-    
+
     const saveEditSettings = () => {
 
         //var newEditRouter = EditRouter; 
@@ -126,7 +171,7 @@ const SubMenu = ({ item, updateRouter, ...props},) => {
         var Ip = IpRef.current.value;
 
         var Subnet = SubnetRef.current.value;
-    
+
         var Ospf = switchOnOspf;
 
         var Rip = switchOnRip;
@@ -139,15 +184,13 @@ const SubMenu = ({ item, updateRouter, ...props},) => {
 
     const handleDeleteRouter = () => {
         // Hier den Code für das Löschen des Routers einfügen
-        if(EditRouter.id !== undefined)
-        {
-         var i = RouterArray.findIndex((item) => item.id === EditRouter.id);
+        if (EditRouter.id !== undefined) {
+            var i = RouterArray.findIndex((item) => item.id === EditRouter.id);
 
-            if(i >= 0) 
-            {
+            if (i >= 0) {
                 var RouterArr = [...RouterArray];
-                
-                RouterArr.splice(i,1);
+
+                RouterArr.splice(i, 1);
                 updateRouterArray(RouterArr);
                 updateEditRouter({});
             }
@@ -165,15 +208,15 @@ const SubMenu = ({ item, updateRouter, ...props},) => {
             if (SubnetRef.current && (validateSubnet(SubnetRef.current.value) || SubnetRef.current.value !== '')) {
                 // Das Subnetz ist gültig oder leer, füge den Router hinzu
                 console.log(SubnetRef.current.value);
-                if(NameRef.current && (validateName(NameRef.current.value) || NameRef.current.value !== '')){
+                if (NameRef.current && (validateName(NameRef.current.value) || NameRef.current.value !== '')) {
                     console.log(NameRef.current.value);
 
-                    var newRouter = {ip: IpRef.current.value , name: NameRef.current.value, routingTableId: 1, networkmask: SubnetRef.current.value, posX: 300, posy: 300, isActiv: 1};
+                    var newRouter = { ip: IpRef.current.value, name: NameRef.current.value, routingTableId: 1, networkmask: SubnetRef.current.value, posX: 300, posy: 300, isActiv: 1 };
                     props.callBack('createRouter', newRouter);
                     props.callBack('getRouterArrayFromApi');
 
                     console.log(props.callBack('getRouterArrayFromApi'));
-                }else{
+                } else {
                     console.log('ungültiger Name');
                 }
                 // props.addRouter();
@@ -210,7 +253,7 @@ const SubMenu = ({ item, updateRouter, ...props},) => {
         setNameInputColor(isValid ? 'white' : '#FFCCCB');
         return isValid;
     };
-    
+
 
     return (
         <>
@@ -237,11 +280,11 @@ const SubMenu = ({ item, updateRouter, ...props},) => {
                                         {item.title}
                                         <Inputfield>
                                             <Input
-                                                type="text" 
+                                                type="text"
                                                 ref={NameRef}
                                                 bgColor={nameInputColor}
-                                                //defaultValue={''}
-                                                //onChange={(e) => setNewRouterData({ ...newRouterData, name: e.target.value })}
+                                            //defaultValue={''}
+                                            //onChange={(e) => setNewRouterData({ ...newRouterData, name: e.target.value })}
                                             />
                                         </Inputfield>
                                     </div>
@@ -250,12 +293,12 @@ const SubMenu = ({ item, updateRouter, ...props},) => {
                                     <div>
                                         {item.title}
                                         <Inputfield>
-                                            <Input  
-                                            type='text'
-                                            ref={IpRef} 
-                                            bgColor={ipInputColor}
-                                            placeholder="192.168.0.1"
-                                            defaultValue={EditRouter.id !== undefined ? (EditRouter.ip) : ('')}
+                                            <Input
+                                                type='text'
+                                                ref={IpRef}
+                                                bgColor={ipInputColor}
+                                                placeholder="192.168.0.1"
+                                                defaultValue={EditRouter.id !== undefined ? (EditRouter.ip) : ('')}
                                             />
                                         </Inputfield>
                                     </div>
@@ -263,15 +306,15 @@ const SubMenu = ({ item, updateRouter, ...props},) => {
                                 {
                                     item.title === 'Subnet' ? (
                                         <div>
-                                        {item.title}
-                                        <Inputfield>
-                                            <Input 
-                                            ref={SubnetRef} 
-                                            type='text' 
-                                            bgColor={subnetInputColor} 
-                                            placeholder="255.255.255.0"
-                                            />
-                                        </Inputfield>
+                                            {item.title}
+                                            <Inputfield>
+                                                <Input
+                                                    ref={SubnetRef}
+                                                    type='text'
+                                                    bgColor={subnetInputColor}
+                                                    placeholder="255.255.255.0"
+                                                />
+                                            </Inputfield>
                                         </div>
                                     ) : null}
                                 {item.title === 'PIC' ? (
@@ -280,7 +323,7 @@ const SubMenu = ({ item, updateRouter, ...props},) => {
                                     </div>
                                 ) : null}
                                 {item.title === 'Hinzufügen' ? (
-                                    <Button 
+                                    <Button
                                         style={{
                                             color: 'darkgrey',
                                             margin: '40px auto 0',
@@ -289,14 +332,14 @@ const SubMenu = ({ item, updateRouter, ...props},) => {
                                             backgroundColor: 'white',
                                             padding: '8px 16px',
                                             borderRadius: '4px',
-                                            cursor: 'pointer'}
+                                            cursor: 'pointer'
+                                        }
                                         }
                                         onClick={EditRouter.id != undefined ? () => saveEditSettings() : () => handleAddRouter()}>
                                         {EditRouter.id != undefined ? 'Speichern' : 'Hinzufügen'}
                                     </Button>
                                 ) : null}
-
-                                {item.title === 'Löschen' &&  EditRouter.id != undefined ?(
+                                {item.title === 'Löschen' && EditRouter.id != undefined ? (
                                     <Button
                                         style={{
                                             color: 'darkgrey',
@@ -312,21 +355,38 @@ const SubMenu = ({ item, updateRouter, ...props},) => {
                                         Löschen
                                     </Button>
                                 ) : null}
-                                     {item.title === 'OSPF' ? (
-                                    <label >
-                                        <span style={{ display: 'block' }}>OSPF</span>
-                                        <Switch onChange={handleChangeOspf} checked={switchOnOspf} 
-                                         />
-                                    </label>
-                                ) : (null)}
-                                {item.title === 'RIP' ? (
-                                    <label>
-                                        <span style={{ display: 'block' }} >RIP</span>
-                                        <Switch onChange={handleChangeRip} checked={switchOnRip} 
-                                        />
-                                    </label>
+                                {item.title === 'OSPF' ? (
+                                    <div>
+                                        <label style={{ display: 'block' }}>OSPF</label>
+                                        <Switch onChange={handleChangeOspf} checked={switchOnOspf} />
+                                    </div>
                                 ) : null}
-                               {item.title === 'Verbinden' ? (
+                                {item.combinedTitle && (
+                                    <SidebarLabel key={item.combinedTitle}>
+                                        {item.subItems.map((subItem, index) => (
+                                            <div key={index}>
+                                                {subItem.title === 'Metrik' && switchOnOspf ? (
+                                                    <Inputfield>
+                                                        <Input
+                                                            type="number"
+                                                            placeholder="Metrik"
+                                                            bgColor={"white"}
+                                                            value={ospfMetric}
+                                                            onChange={(e) => setOspfMetric(e.target.value)}
+                                                        />
+                                                    </Inputfield>
+                                                ) : null}
+                                                {subItem.title === 'RIP' && !switchOnOspf ? (
+                                                    <label>
+                                                        <span style={{ display: 'block' }}>RIP</span>
+                                                        <Switch onChange={handleChangeRip} checked={switchOnRip} />
+                                                    </label>
+                                                ) : null}
+                                            </div>
+                                        ))}
+                                    </SidebarLabel>
+                                )}
+                                {item.title === 'Verbinden' ? (
                                     <button
                                         style={{
                                             color: 'darkgrey',
@@ -342,21 +402,36 @@ const SubMenu = ({ item, updateRouter, ...props},) => {
                                         Verbinden
                                     </button>
                                 ) : null}
-                                {item.title === 'ConnectionList' && EditRouter.id != undefined && EditRouter.connections != undefined ? (
-
+                                {item.title === 'ConnectionList' ? (
                                     <div>
-                                        { EditRouter.connections.map((item) => {
-
-                                            <Text>{item.InterFace}</Text>
-
-                                        })}
-                                    </div>    
+                                        <label>Zielrouter</label>
+                                        <Select
+                                            bgColor={nameInputColor}
+                                            color={"black"}
+                                            value={selectedRouter} onChange={handleRouterSelection}>
+                                            {RouterArray.map((router, index) => (
+                                                <option key={index} value={router.id}>{router.name}</option>
+                                            ))}
+                                        </Select>
+                                    </div>
                                 ) : null}
-     
+                                {item.title === 'Router' ? (
+                                    <div>
+                                        {item.title}
+                                        <Inputfield>
+                                            <Input
+                                                type="text"
+                                                ref={NameRef}
+                                                bgColor={nameInputColor}
+                                                readOnly={true}
+                                            />
+                                        </Inputfield>
+                                    </div>
+                                ) : null}
                             </SidebarLabel>
-                        </DropdownLink>
+                        </DropdownLink >
                     );
-                })}  
+                })}
         </>
     )
 }
