@@ -283,6 +283,7 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                                                 type="text"
                                                 ref={NameRef}
                                                 bgColor={nameInputColor}
+                                                defaultValue={EditRouter.id !== undefined ? (EditRouter.ip) : ('')}
                                             //defaultValue={''}
                                             //onChange={(e) => setNewRouterData({ ...newRouterData, name: e.target.value })}
                                             />
