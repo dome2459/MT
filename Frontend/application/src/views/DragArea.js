@@ -57,7 +57,7 @@ export default function DragArea(props) {
     
   };
   function updatePosition(values, id){
-    props.callBack('updatePosition', values, id);
+    props.callBack('updateRouterOnDB', values, id);
     
   }
 

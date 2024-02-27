@@ -208,8 +208,9 @@ async function deleteRouter(RouterId){
 };
 // id des Routers wird noch benötigt und in Endpoint eingetragen
 async function updateRouterOnDB(data){
-  fetch(apiEndpoint+'router/{id}', {
-    method: 'POST',
+  console.log("bbitte");
+  fetch(apiEndpoint+'router/'+ data.id, {
+    method: 'PUT',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
