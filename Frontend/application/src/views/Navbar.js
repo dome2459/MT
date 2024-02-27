@@ -25,6 +25,7 @@ const SidebarNav = styled.nav`
   left: ${({ sidebar }) => (sidebar ? '0' : '-100%')};
   transition: 350ms;
   z-index: 10;
+  overflow: scroll;
 `;
 const NavIconMenu = styled(Link)`
   margin-left: 3rem;
