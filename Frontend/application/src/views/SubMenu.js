@@ -193,6 +193,7 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                 RouterArr.splice(i, 1);
                 updateRouterArray(RouterArr);
                 updateEditRouter({});
+                props.callBack('deleteRouter', EditRouter);
             }
         }
     }

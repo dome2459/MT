@@ -194,22 +194,25 @@ return fetch(apiEndpoint + '/delConnection/{id}',{
   });
 };
 // id des Routers wird noch benötigt und in Endpoint eingetragen
-async function deleteRouter(RouterId){
-  fetch(apiEndpoint+'router/delete/'+RouterId ,{
-    method: 'POST',
+async function deleteRouter(data){
+  console.log("das ist die Router ID: " + data + " oder " + data.id);
+  fetch(apiEndpoint+'router/delete/'+ data.id  ,{
+    mode: 'cors',
+    method: 'DELETE',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
     // ich hab mal data raus genommen und die RouterId reingegeben
     // das nächste mal drauf Achten das keine Fehler committet werden!!
-    body: JSON.stringify(RouterId),
+    body: JSON.stringify(data),
   });
 };
 // id des Routers wird noch benötigt und in Endpoint eingetragen
 async function updateRouterOnDB(data){
   console.log("bbitte");
   fetch(apiEndpoint+'router/'+ data.id, {
+    mode: 'cors',
     method: 'PUT',
     headers: {
       Accept: 'application/json',
