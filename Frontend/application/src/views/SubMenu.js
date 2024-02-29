@@ -167,6 +167,8 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                 updateRouterArray(RouterArr);
                 updateEditRouter({});
                 props.callBack('deleteRouter', EditRouter);
+                props.callBack('getRouterArrayFromApi');
+
             }
         }
     }
@@ -174,10 +176,11 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
     const handleConnectRouter = () => {
 
         var Connection = {routerA: 'test',routerAInterface: 'fa01', routerB: 'test2',routerBInterface: 'fb01',
-         ospf: 'true', metrik: '120', rip: 'false', routerAIP: '190.160.0.1', routerBIP: '180.160.0.0' }        
+         ospf: 1, metrik: '120', rip: 0, routerAIP: '190.160.0.1', routerBIP: '180.160.0.0' }        
 
-
-        props.callBack('postConnection', Connection );
+        console.log('postConnection');
+        props.callBack('postConnection',Connection);
+        console.log(Connection);
 
     }   
 
@@ -195,10 +198,9 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                 if (NameRef.current && (validateName(NameRef.current.value) || NameRef.current.value !== '')) {
                     console.log(NameRef.current.value);
 
-                    var newRouter = { ip: IpRef.current.value, name: NameRef.current.value, routingTableId: 1, networkmask: SubnetRef.current.value, posX: 300, posy: 300, isActiv: 1 };
+                    var newRouter = { ip: IpRef.current.value, name: NameRef.current.value, routingTableId: 1, networkmask: SubnetRef.current.value, posX: 300, posy: 300, isActiv: true};
                     props.callBack('createRouter', newRouter);
-
-                  
+                    props.callBack('getRouterArrayFromApi');
                 } else {
                     console.log('ungültiger Name');
                 }
