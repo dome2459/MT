@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-export default function Timer({TimerRef, isTimerRunning, startTimer, stopTimer }) {
+export default function Timer({TimerRef, isTimerRunning, startTimer, stopTimer,...props }) {
   const [seconds, setSeconds] = useState(0);
   const intervalIdRef = useRef(null);
   const [isReady, setIsReady] = useState(false);
@@ -19,6 +19,7 @@ export default function Timer({TimerRef, isTimerRunning, startTimer, stopTimer }
   };
 
   const stopTimerInternal = () => {
+   
     try {
       clearInterval(intervalIdRef.current);
       intervalIdRef.current = null;
