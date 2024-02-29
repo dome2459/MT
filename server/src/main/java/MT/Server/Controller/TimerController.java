@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.Map;
 
 
-@CrossOrigin(origins = "https://localhost:3000")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/v1")
 public class TimerController {

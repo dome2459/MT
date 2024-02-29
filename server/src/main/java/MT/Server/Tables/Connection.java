@@ -9,26 +9,32 @@ public class Connection {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long connectionId;
-
+  // Router A
   @Column(name = "RouterA")
-  private Integer routerAId;
-  @Column(name = "RouterB")
-  private Integer routerBId;
+  private String routerAId;
+
   @Column(name = "RouterAInterface")
-  private Integer routerAInterface;
+  private String routerAInterface;
+
+  @Column(name = "RouterAIp")
+  private String routerAIp;
+  // Router B
+  @Column(name = "RouterB")
+  private String routerBId;
   @Column(name = "RouterBInterface")
-  private Integer routerBInterface;
+  private String routerBInterface;
+
+  @Column(name = "RouterBIp")
+  private String routerBIp;
 
   @Column(name = "OSPF")
   private boolean isOSPF;
   @Column(name = "RIP")
   private boolean isRIP;
 
-  @Column(name = "ip")
-  private String ip;
   public Connection(){
   }
-  public Connection(Long connectionId, Integer routerA, Integer routerB, Integer routerAInterface, Integer routerBInterface, boolean isOSPF, boolean isRIP, String ip) {
+  public Connection(Long connectionId, String routerA, String routerB, String routerAInterface, String routerBInterface, boolean isOSPF, boolean isRIP, String routerAIp, String routerBIp) {
     this.connectionId = connectionId;
     this.routerAId = routerA;
     this.routerBId = routerB;
@@ -36,7 +42,8 @@ public class Connection {
     this.routerBInterface = routerBInterface;
     this.isOSPF = isOSPF;
     this.isRIP = isRIP;
-    this.ip = ip;
+    this.routerAIp = routerAIp;
+    this.routerBIp = routerBIp;
   }
   public Long getConnectionId() {
     return connectionId;
@@ -46,35 +53,35 @@ public class Connection {
     this.connectionId = connectionId;
   }
 
-  public Integer getRouterA() {
+  public String getRouterA() {
     return routerAId;
   }
 
-  public void setRouterA(Integer routerA) {
+  public void setRouterA(String routerA) {
     this.routerAId = routerA;
   }
 
-  public Integer getRouterB() {
+  public String getRouterB() {
     return routerBId;
   }
 
-  public void setRouterB(Integer routerB) {
+  public void setRouterB(String routerB) {
     this.routerBId = routerB;
   }
 
-  public Integer getRouterAInterface() {
+  public String getRouterAInterface() {
     return routerAInterface;
   }
 
-  public void setRouterAInterface(Integer routerAInterface) {
+  public void setRouterAInterface(String routerAInterface) {
     this.routerAInterface = routerAInterface;
   }
 
-  public Integer getRouterBInterface() {
+  public String getRouterBInterface() {
     return routerBInterface;
   }
 
-  public void setRouterBInterface(Integer routerBInterface) {
+  public void setRouterBInterface(String routerBInterface) {
     this.routerBInterface = routerBInterface;
   }
 
@@ -94,18 +101,26 @@ public class Connection {
     isRIP = RIP;
   }
 
-  public String getIp() {
-    return ip;
+  public String getRouterAIp() {
+    return routerAIp;
   }
 
-  public void setIp(String ip) {
-    this.ip = ip;
+  public void setRouterAIp(String routerAIp) {
+    this.routerAIp = routerAIp;
   }
 
-  @Override
-  public String toString() {
-    return "Connection{" + "connectionId=" + connectionId + ", routerA=" + routerAId + ", routerB=" + routerBId + ", routerAInterface=" + routerAInterface + ", routerBInterface=" + routerBInterface + ", isOSPF=" + isOSPF + ", isRIP=" + isRIP + ", ip='" + ip + '\'' + '}';
+  public String getRouterBIp() {
+    return routerBIp;
   }
+
+  public void setRouterBIp(String routerBIp) {
+    this.routerBIp = routerBIp;
+  }
+
+//  @Override
+//  public String toString() {
+//    return "Connection{" + "connectionId=" + connectionId + ", routerA=" + routerAId + ", routerB=" + routerBId + ", routerAInterface=" + routerAInterface + ", routerBInterface=" + routerBInterface + ", isOSPF=" + isOSPF + ", isRIP=" + isRIP + ", ip='" + ip + '\'' + '}';
+//  }
 
 
 

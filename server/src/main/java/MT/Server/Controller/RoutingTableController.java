@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 // Erlaubt Cross-Origin-Anfragen von "https://localhost:3000"
-@CrossOrigin(origins = "https://localhost:3000")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/v1")
 public class RoutingTableController {

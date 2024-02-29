@@ -5,6 +5,7 @@ import MT.Server.ResourceNotFoundException;
 import MT.Server.Tables.Connection;
 import MT.Server.Tables.RoutingTable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins = "https://localhost:3000")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/v1")
 public class ConnectionController {
@@ -27,9 +28,9 @@ public class ConnectionController {
   }
 
   @PostMapping("/postConnection")
-  public Connection createConnection(@RequestBody Connection connection){
-
-    return connectionRepo.save(connection);
+  public ResponseEntity<Connection> createConnection(@RequestBody Connection connection){
+    Connection createdConnection = connectionRepo.save(connection);
+    return new ResponseEntity<>(createdConnection, HttpStatus.CREATED);
   }
 
   @GetMapping("/getConnection/{id}")
@@ -43,14 +44,14 @@ public class ConnectionController {
     Connection connection = connectionRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("routingTable mit Id: "+ id+" existiert nicht"));
 
     connection.setConnectionId(connectionDetails.getConnectionId());
-    connection.setIp(connectionDetails.getIp());
     connection.setOSPF(connectionDetails.getOSPF());
     connection.setRIP(connectionDetails.getRIP());
     connection.setRouterA(connectionDetails.getRouterA());
     connection.setRouterB(connectionDetails.getRouterB());
     connection.setRouterAInterface(connectionDetails.getRouterAInterface());
     connection.setRouterBInterface(connectionDetails.getRouterBInterface());
-
+    connection.setRouterAIp(connectionDetails.getRouterAIp());
+    connection.setRouterBIp(connectionDetails.getRouterBIp());
     Connection updatedConnection = connectionRepo.save(connection);
 
 
