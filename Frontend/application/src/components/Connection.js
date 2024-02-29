@@ -9,7 +9,10 @@ class Connection extends Component {
         routerA: '',
         routerB : '',
         ospf: '',
-        rip : ''
+        rip : '',
+        routerAInterface: '',
+        routerBInterface: '',
+        ip: ''
       };
   
       return (

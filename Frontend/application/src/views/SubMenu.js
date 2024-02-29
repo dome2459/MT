@@ -87,30 +87,6 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
     const IpRef = useRef(null);
     const SubnetRef = useRef(null);
 
-
-    // useEffect(() => {   
-
-    //         if (NameRef.current !== null) {
-
-    //         if (EditRouter.id !== undefined ) {
-
-    //                 NameRef.current.value = EditRouter.name
-    //                 IpRef.current.value = EditRouter.ip
-    //                 setSwitchOnOspf(EditRouter.ospf)
-    //                 setSwitchOnRip(EditRouter.rip)
-
-    //             } else {
-
-    //                 NameRef.current.value = ''
-    //                 IpRef.current.value = ''
-    //                 setSwitchOnOspf(false)
-    //                 setSwitchOnRip(false)
-    //             } 
-    //         }
-    //        console.log('submenu mounted')
-    // }, [EditRouter]);
-
-
     useEffect(() => {
         if (EditRouter.id !== undefined) {
             if (NameRef.current) {
@@ -176,12 +152,9 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
 
         var Rip = switchOnRip;
 
-
-
         console.log('Name: ' + Name + ' IP: ' + Ip + ' Subnet: ' + Subnet)
 
     }
-
     const handleDeleteRouter = () => {
         // Hier den Code für das Löschen des Routers einfügen
         if (EditRouter.id !== undefined) {
@@ -197,6 +170,16 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
             }
         }
     }
+
+    const handleConnectRouter = () => {
+
+        var Connection = {routerA: 'test',routerAInterface: 'fa01', routerB: 'test2',routerBInterface: 'fb01',
+         ospf: 'true', metrik: '120', rip: 'false', routerAIP: '190.160.0.1', routerBIP: '180.160.0.0' }        
+
+
+        props.callBack('postConnection', Connection );
+
+    }   
 
     const handleAddRouter = () => {
         console.log('IpRef:', IpRef.current.value); // Überprüfe die Konsolenausgabe hier
@@ -214,13 +197,11 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
 
                     var newRouter = { ip: IpRef.current.value, name: NameRef.current.value, routingTableId: 1, networkmask: SubnetRef.current.value, posX: 300, posy: 300, isActiv: 1 };
                     props.callBack('createRouter', newRouter);
-                    props.callBack('getRouterArrayFromApi');
 
-                    console.log(props.callBack('getRouterArrayFromApi'));
+                  
                 } else {
                     console.log('ungültiger Name');
                 }
-                // props.addRouter();
             } else {
                 // Das Subnetz ist ungültig, zeige eine Fehlermeldung an oder führe andere Aktionen durch
                 console.log('Ungültiges Subnetz');
@@ -230,7 +211,7 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
             // Die IP ist ungültig, zeige eine Fehlermeldung an oder führe andere Aktionen durch
             console.log('Ungültige IPv4-Adresse und Subnet');
         }
-    };
+    }
 
     const validateIPv4 = (ip) => {
         // Regulärer Ausdruck für eine gültige IPv4-Adresse
@@ -239,21 +220,21 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
         setIpInputColor(isValid ? 'white' : '#FFCCCB');
         return ipv4Regex.test(ip);
 
-    };
+    }
     const validateSubnet = (subnet) => {
         // Regulärer Ausdruck für ein gültiges Subnetz (Beispiel: 255.255.255.0)
         const subnetRegex = /^(\d{1,3}\.){3}\d{1,3}$/;
         const isValid = subnetRegex.test(subnet);
         setSubnetInputColor(isValid ? 'white' : '#FFCCCB');
         return isValid;
-    };
+    }
     const validateName = (name) => {
         // Regulärer Ausdruck für einen gültigen Namen
         const nameRegex = /^[a-zA-Z0-9]+$/;
         const isValid = nameRegex.test(name.trim()); // Trim, um führende und endende Leerzeichen zu entfernen
         setNameInputColor(isValid ? 'white' : '#FFCCCB');
         return isValid;
-    };
+    }
 
 
     return (
@@ -285,8 +266,6 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                                                 ref={NameRef}
                                                 bgColor={nameInputColor}
                                                 defaultValue={EditRouter.id !== undefined ? (EditRouter.ip) : ('')}
-                                            //defaultValue={''}
-                                            //onChange={(e) => setNewRouterData({ ...newRouterData, name: e.target.value })}
                                             />
                                         </Inputfield>
                                     </div>
@@ -339,6 +318,7 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                                         }
                                         onClick={EditRouter.id != undefined ? () => saveEditSettings() : () => handleAddRouter()}>
                                         {EditRouter.id != undefined ? 'Speichern' : 'Hinzufügen'}
+                                
                                     </Button>
                                 ) : null}
                                 {item.title === 'Löschen' && EditRouter.id != undefined ? (
@@ -400,7 +380,7 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                                             borderRadius: '4px',
                                             cursor: 'pointer',
                                         }}
-                                        onClick={handleDeleteRouter}>
+                                        onClick={handleConnectRouter}>
                                         Verbinden
                                     </button>
                                 ) : null}

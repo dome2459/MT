@@ -132,6 +132,20 @@ async function getConnectionFromApi(){
     })
 }
 
+// Connection zur DB schicken
+async function postConnection(data){
+  console.log(data);
+  return fetch(apiEndpoint + '/postConnection', {
+    mode: 'cors',
+    method: 'POST',
+    headers: new Headers({
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    }),
+    body: JSON.stringify(data),
+  })
+}
+
 // holen einer bestimmten Connection mit ID
 // ID der Connection noch vom Objekt holen
 async function getConnectionWithIdFromApi(){
@@ -147,7 +161,7 @@ async function getConnectionWithIdFromApi(){
 
 // löschen der Connection die nicht mehr gebraucht wird
 // id des Objekts noch holen
-async function deleteConnection(){
+async function deleteConnection(data){
 return fetch(apiEndpoint + '/delConnection/{id}',{
   mode: 'no-corse',
   method: 'POST',
@@ -159,6 +173,7 @@ return fetch(apiEndpoint + '/delConnection/{id}',{
 } 
   //controller Function
   async function getRouterArrayFromApi(){
+    console.log('getRouterArrayFromApi');
    return fetch(apiEndpoint+'router/list',{
     mode : 'cors',
     method: 'get',
@@ -181,8 +196,6 @@ return fetch(apiEndpoint + '/delConnection/{id}',{
  };
 
  async function createRouter(data){
-  console.log(data);
-  console.log(JSON.stringify(data))
   fetch(apiEndpoint+'router/create', {
     mode : 'cors',
     method: 'POST',
@@ -192,10 +205,10 @@ return fetch(apiEndpoint + '/delConnection/{id}',{
     },
     body: JSON.stringify(data),
   });
+  getRouterArrayFromApi();
 };
-// id des Routers wird noch benötigt und in Endpoint eingetragen
+
 async function deleteRouter(data){
-  console.log("das ist die Router ID: " + data + " oder " + data.id);
   fetch(apiEndpoint+'router/delete/'+ data.id  ,{
     mode: 'cors',
     method: 'DELETE',
@@ -203,14 +216,13 @@ async function deleteRouter(data){
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-    // ich hab mal data raus genommen und die RouterId reingegeben
-    // das nächste mal drauf Achten das keine Fehler committet werden!!
     body: JSON.stringify(data),
   });
+
+  getRouterArrayFromApi();
 };
 // id des Routers wird noch benötigt und in Endpoint eingetragen
 async function updateRouterOnDB(data){
-  console.log("bbitte");
   fetch(apiEndpoint+'router/'+ data.id, {
     mode: 'cors',
     method: 'PUT',
@@ -223,7 +235,6 @@ async function updateRouterOnDB(data){
 };
 
 async function updatePosition(values, id){
-  console.log("das ist die id " + id);
   fetch(apiEndpoint+'router/'+ id, {
     mode: 'cors',
     method: 'POST',
@@ -278,13 +289,10 @@ async function putRoutingTableWithID(){
       })
   })
 }
-
-
-
-
     return (
      
-        <MainEnviroment callBack={callBack} />
+        <MainEnviroment callBack={callBack}/>
+        // getRouterArrayFromApi={getRouterArrayFromApi}
 
     );  
 }
