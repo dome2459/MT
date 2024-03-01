@@ -200,6 +200,7 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                      console.log('postConnection: ', Connection);
                      // fleich nochmal alles aktualisieren was es zu aktualisieren gibt 
                      props.callBack('getRouterArrayFromApi');
+                     console.log('ConnectionArray from SubMenu' , ConnectionArray);
                 } else {
                     console.log("Es waren 2 gleiche Router Objekte.... soo gehts nicht! ")
                 }
@@ -268,9 +269,10 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                 console.log(SubnetRef.current.value);
                 if (NameRef.current && (validateName(NameRef.current.value) || NameRef.current.value !== '')) {
                     console.log(NameRef.current.value);
-
+                    
                     var newRouter = { ip: IpRef.current.value, name: NameRef.current.value, routingTableId: 1, networkmask: SubnetRef.current.value, posX: 500, posy: 300, activ: true };
                     console.log(newRouter);
+                    
                     props.callBack('createRouter', newRouter);
                     props.callBack('getRouterArrayFromApi');
                 } else {

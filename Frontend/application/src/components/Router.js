@@ -12,8 +12,8 @@ class Router extends Component {
         connectionId: '',
         routingTableId: '',
         ip: '',
-        posx: undefined,
-        posy: undefined,
+        posx: 500,
+        posy: 500,
       };
   
       return (

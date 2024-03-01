@@ -162,7 +162,9 @@ case 'ConnectionController':
       .then(response => response.json())
       .then(json => {
         console.log('Postconnection responsejson', json);
+        console.log('Bevor Updated Connection Array ', ConnectionArray);
         updateConnectionArray(json);
+        console.log('Updated Connection Array ', ConnectionArray);
         return json;
       })
       .catch(error => {
