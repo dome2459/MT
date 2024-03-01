@@ -252,18 +252,7 @@ case 'ConnectionController':
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
-    })
-      .then(response => response.json())
-      .then(json => {
-        console.log("RouterArray response ");
-        console.log(json);
-
-        updateRouterArray(json);
-        return json;
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    });
     getRouterArrayFromApi();
   };
   async function deleteRouter(data) {
@@ -299,20 +288,9 @@ case 'ConnectionController':
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
-    })
-      .then(response => response.json())
-      .then(json => {
-        console.log("RouterArray response ");
-        console.log(json);
+    });
+  };
 
-        updateRouterArray(json);
-        return json;
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    getRouterArrayFromApi();
-  }
   async function updatePosition(values, id) {
     fetch(apiEndpoint + 'router/' + id, {
       mode: 'cors',
@@ -322,20 +300,9 @@ case 'ConnectionController':
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(values),
-    })
-      .then(response => response.json())
-      .then(json => {
-        console.log("RouterArray response ");
-        console.log(json);
+    });
 
-        updateRouterArray(json);
-        return json;
-      })
-      .catch(error => {
-        console.log(error);
-      });
-      getRouterArrayFromApi();
-  }
+  };
   // holen aller Routing Tables
   async function getRouterTableFromApi() {
     return fetch(apiEndpoint + '/getRoutingTable', {
