@@ -65,6 +65,9 @@ export const SidebarData = [
       {
         title: 'Verbinden',
         cName: 'sub-nav'
+      },
+      {
+        title: 'Connection-Löschen',
       }
     ]
   } 

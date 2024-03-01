@@ -4,12 +4,9 @@ package MT.Server.Tables;
 import jakarta.persistence.*;
 
 
-
 @Entity
 @Table(name="router")
 public class Router {
-
-
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
@@ -19,7 +16,7 @@ public class Router {
   @Column(name = "networkmask")
   private String networkmask;
   @Column(name = "isActive")
-  private boolean isActive;
+  private boolean active;
 
   @Column(name = "routingTableId")
   private Integer RoutingTableId;
@@ -34,10 +31,10 @@ public class Router {
 
   public Router(){
   }
-  public Router(String name, Long id, boolean isActive, Integer routingTableId, String ip, String networkmask, int posx, int posy) {
+  public Router(String name, Long id, boolean active, Integer routingTableId, String ip, String networkmask, int posx, int posy) {
     this.name = name;
     this.id = id;
-    this.isActive = isActive;
+    this.active = active;
     RoutingTableId = routingTableId;
     this.posx = posx;
     this.posy = posy;
@@ -60,12 +57,11 @@ public class Router {
     this.id = id;
   }
 
-  public boolean getActive() {
-    return isActive;
+  public boolean isActive() {
+    return active;
   }
 
   public void setActive(boolean active) {
-    isActive = active;
   }
 
   public int getRoutingTableId() {
@@ -109,7 +105,7 @@ public class Router {
 
   @Override
   public String toString() {
-    return "Router{" + "name='" + name + '\'' + ", id=" + id + ", isActive=" + isActive + ", RoutingTableId=" + RoutingTableId + ", ip='" + ip  + ", posx='" + posx  + ", posy='" + posy+ '\'' + '}';
+    return "Router{" + "name='" + name + '\'' + ", id=" + id + ", isActive=" + active + ", RoutingTableId=" + RoutingTableId + ", ip='" + ip  + ", posx='" + posx  + ", posy='" + posy+ '\'' + '}';
   }
 
 }

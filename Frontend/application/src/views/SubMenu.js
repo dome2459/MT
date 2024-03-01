@@ -78,9 +78,9 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
         setSelectedRouter(event.target.value);
     };
 
-
     const { RouterArray, updateRouterArray } = useContext(GlobalContext);
     const { EditRouter, updateEditRouter } = useContext(GlobalContext);
+    const { ConnectionArray, updateConnectionArray } = useContext(GlobalContext);
     const { CableArray, setCableArray } = useContext(GlobalContext);
 
     const NameRef = useRef(null);
@@ -108,8 +108,6 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
             setSwitchOnRip(false);
         }
     }, [EditRouter]);
-
-
 
     const handleChangeOspf = (checked) => {
         setSwitchOnOspf(checked);
@@ -162,7 +160,6 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
 
             if (i >= 0) {
                 var RouterArr = [...RouterArray];
-
                 RouterArr.splice(i, 1);
                 updateRouterArray(RouterArr);
                 updateEditRouter({});
@@ -174,20 +171,94 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
     }
 
     const handleConnectRouter = () => {
+        console.log("RouterArray:", RouterArray);
+        // Überprüfen, ob eine Router-ID ausgewählt wurde
+        if (selectedRouter !== null) {
+            const selectedRouterID = parseInt(selectedRouter);
+            // Das ausgewählte Router-Objekt im Array finden
+            const foundRouter = RouterArray.find(router => router.id === selectedRouterID);
 
-        var Connection = {routerA: 'test',routerAInterface: 'fa01', routerB: 'test2',routerBInterface: 'fb01',
-         ospf: 1, metrik: '120', rip: 0, routerAIP: '190.160.0.1', routerBIP: '180.160.0.0' }        
+            // Überprüfen, ob das Router-Objekt gefunden wurde
+            if (foundRouter) {
+                // Das ausgewählte Router-Objekt wurde gefunden
+                console.log("Gefundenes Router-Objekt: ", foundRouter);
+                console.log("Selctiertes Router-Objekt: ", EditRouter);
+                if (foundRouter.name !== EditRouter.name || foundRouter.ip !== EditRouter.ip) {
+                    var Connection = {
+                        routerA: EditRouter.name,
+                        routerAInterface: 'fa01',
+                        routerB: foundRouter.name,
+                        routerBInterface: 'fb01',
+                        ospf: switchOnOspf,
+                        metrik: ospfMetric,
+                        rip: switchOnRip,
+                        routerAIp: EditRouter.ip.toString(),
+                        routerBIp: foundRouter.ip.toString(),
+                    };
+                     // Connection los schicken
+                     props.callBack('postConnection', Connection);
+                     console.log('postConnection: ', Connection);
+                     // fleich nochmal alles aktualisieren was es zu aktualisieren gibt 
+                     props.callBack('getRouterArrayFromApi');
+                } else {
+                    console.log("Es waren 2 gleiche Router Objekte.... soo gehts nicht! ")
+                }
+            } else {
+                // Das ausgewählte Router-Objekt wurde nicht gefunden
+                console.log("Router mit der angegebenen ID nicht gefunden.");
+            }
+        } else {
+            // Keine Router-ID ausgewählt
+            console.log("Kein Router ausgewählt.");
+        }
+    }
 
-        console.log('postConnection');
-        props.callBack('postConnection',Connection);
-        console.log(Connection);
+    const handleDeleteConnection = () => {
+        console.log("RouterArray:", RouterArray);
+        // Überprüfen, ob eine Router-ID ausgewählt wurde
+        if (selectedRouter !== null) {
+            const selectedRouterID = parseInt(selectedRouter);
+            // Das ausgewählte Router-Objekt im Array finden
+            const foundRouter = RouterArray.find(router => router.id === selectedRouterID);
 
-    }   
+            // Überprüfen, ob das Router-Objekt gefunden wurde
+            if (foundRouter) {
+                // Das ausgewählte Router-Objekt wurde gefunden
+                console.log("Gefundenes Router-Objekt: ", foundRouter);
+                console.log("Selctiertes Router-Objekt: ", EditRouter);
+                if (foundRouter.name !== EditRouter.name || foundRouter.ip !== EditRouter.ip) {
+                    var Connection = {
+                        routerA: EditRouter.name,
+                        routerAInterface: 'fa01',
+                        routerB: foundRouter.name,
+                        routerBInterface: 'fb01',
+                        ospf: switchOnOspf,
+                        metrik: ospfMetric,
+                        rip: switchOnRip,
+                        routerAIp: EditRouter.ip.toString(),
+                        routerBIp: foundRouter.ip.toString(),
+                    };
+                     // Connection los schicken
+                     console.log('deleteConnection: ', Connection);
+                     props.callBack('deleteConnection', Connection);
+                     // fleich nochmal alles aktualisieren was es zu aktualisieren gibt 
+                     props.callBack('getRouterArrayFromApi');
+                } else {
+                    console.log("Es waren 2 gleiche Router Objekte.... soo gehts nicht! ")
+                }
+            } else {
+                // Das ausgewählte Router-Objekt wurde nicht gefunden
+                console.log("Router mit der angegebenen ID nicht gefunden.");
+            }
+        } else {
+            // Keine Router-ID ausgewählt
+            console.log("Kein Router ausgewählt.");
+        }
+
+
+    }
 
     const handleAddRouter = () => {
-        console.log('IpRef:', IpRef.current.value); // Überprüfe die Konsolenausgabe hier
-        console.log('IpRef:', IpRef.value);
-        console.log('NameRef', NameRef.current.value)
         // Überprüfe, ob die IP-Adresse gültig ist
         if (IpRef.current && (validateIPv4(IpRef.current.value) || IpRef.current.value !== '')) {
             // Die IP ist gültig oder leer, füge den Router hinzu
@@ -198,7 +269,8 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                 if (NameRef.current && (validateName(NameRef.current.value) || NameRef.current.value !== '')) {
                     console.log(NameRef.current.value);
 
-                    var newRouter = { ip: IpRef.current.value, name: NameRef.current.value, routingTableId: 1, networkmask: SubnetRef.current.value, posX: 300, posy: 300, isActiv: true};
+                    var newRouter = { ip: IpRef.current.value, name: NameRef.current.value, routingTableId: 1, networkmask: SubnetRef.current.value, posX: 500, posy: 300, activ: true };
+                    console.log(newRouter);
                     props.callBack('createRouter', newRouter);
                     props.callBack('getRouterArrayFromApi');
                 } else {
@@ -320,7 +392,7 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                                         }
                                         onClick={EditRouter.id != undefined ? () => saveEditSettings() : () => handleAddRouter()}>
                                         {EditRouter.id != undefined ? 'Speichern' : 'Hinzufügen'}
-                                
+
                                     </Button>
                                 ) : null}
                                 {item.title === 'Löschen' && EditRouter.id != undefined ? (
@@ -395,6 +467,7 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                                             value={selectedRouter} onChange={handleRouterSelection}>
                                             {RouterArray.map((router, index) => (
                                                 <option key={index} value={router.id}>{router.name}</option>
+
                                             ))}
                                         </Select>
                                     </div>
@@ -411,6 +484,23 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                                             />
                                         </Inputfield>
                                     </div>
+                                ) : null}
+
+                                {item.title === 'Connection-Löschen' && EditRouter.id != undefined ? (
+                                    <Button
+                                        style={{
+                                            color: 'darkgrey',
+                                            margin: '40px auto 0',
+                                            display: 'block',
+                                            margin: '0 auto',
+                                            backgroundColor: 'white',
+                                            padding: '8px 16px',
+                                            borderRadius: '4px',
+                                            cursor: 'pointer',
+                                        }}
+                                        onClick={handleDeleteConnection}>
+                                        Löschen
+                                    </Button>
                                 ) : null}
                             </SidebarLabel>
                         </DropdownLink >

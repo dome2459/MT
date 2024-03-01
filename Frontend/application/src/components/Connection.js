@@ -12,7 +12,9 @@ class Connection extends Component {
         rip : '',
         routerAInterface: '',
         routerBInterface: '',
-        ip: ''
+        routerAIp: '',
+        routerBIp: '',
+        metrik: ''
       };
   
       return (

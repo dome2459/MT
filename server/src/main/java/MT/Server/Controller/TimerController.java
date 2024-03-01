@@ -49,7 +49,7 @@ public class TimerController {
         LocalDateTime rip = time.toLocalDateTime().plusSeconds(20);
         Timestamp ts = Timestamp.valueOf(rip);
 
-        if(connectionFromFrontend.getRIP()){
+        if(connectionFromFrontend.isRIP()){
             if(ts.after(time)){
                 ripProtokoll(connectionFromFrontend);
             }

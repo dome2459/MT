@@ -9,6 +9,7 @@ public class Connection {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long connectionId;
+
   // Router A
   @Column(name = "RouterA")
   private String routerAId;
@@ -18,9 +19,11 @@ public class Connection {
 
   @Column(name = "RouterAIp")
   private String routerAIp;
+
   // Router B
   @Column(name = "RouterB")
   private String routerBId;
+
   @Column(name = "RouterBInterface")
   private String routerBInterface;
 
@@ -28,23 +31,30 @@ public class Connection {
   private String routerBIp;
 
   @Column(name = "OSPF")
-  private boolean isOSPF;
+  private boolean OSPF;
+
+  @Column (name="Metrik")
+  private String metrik;
+
   @Column(name = "RIP")
-  private boolean isRIP;
+  private boolean RIP;
 
   public Connection(){
   }
-  public Connection(Long connectionId, String routerA, String routerB, String routerAInterface, String routerBInterface, boolean isOSPF, boolean isRIP, String routerAIp, String routerBIp) {
+
+  public Connection(Long connectionId, String routerA, String routerB, String routerAInterface, String routerBInterface, boolean OSPF, boolean RIP, String routerAIp, String routerBIp, String metrik) {
     this.connectionId = connectionId;
     this.routerAId = routerA;
     this.routerBId = routerB;
     this.routerAInterface = routerAInterface;
     this.routerBInterface = routerBInterface;
-    this.isOSPF = isOSPF;
-    this.isRIP = isRIP;
+    this.OSPF = OSPF;
+    this.RIP = RIP;
     this.routerAIp = routerAIp;
     this.routerBIp = routerBIp;
+    this.metrik = metrik;
   }
+
   public Long getConnectionId() {
     return connectionId;
   }
@@ -85,20 +95,20 @@ public class Connection {
     this.routerBInterface = routerBInterface;
   }
 
-  public boolean getOSPF() {
-    return isOSPF;
+  public boolean isOSPF() {
+    return OSPF;
   }
 
   public void setOSPF(boolean OSPF) {
-    isOSPF = OSPF;
+    this.OSPF = OSPF;
   }
 
-  public boolean getRIP() {
-    return isRIP;
+  public boolean isRIP() {
+    return RIP;
   }
 
   public void setRIP(boolean RIP) {
-    isRIP = RIP;
+    this.RIP = RIP;
   }
 
   public String getRouterAIp() {
@@ -117,13 +127,27 @@ public class Connection {
     this.routerBIp = routerBIp;
   }
 
-//  @Override
-//  public String toString() {
-//    return "Connection{" + "connectionId=" + connectionId + ", routerA=" + routerAId + ", routerB=" + routerBId + ", routerAInterface=" + routerAInterface + ", routerBInterface=" + routerBInterface + ", isOSPF=" + isOSPF + ", isRIP=" + isRIP + ", ip='" + ip + '\'' + '}';
-//  }
+  public String getMetrik() {
+    return metrik;
+  }
 
+  public void setMetrik(String metrik) {
+    this.metrik = metrik;
+  }
 
-
-
+  @Override
+  public String toString() {
+    return "Connection{" +
+            "connectionId=" + connectionId +
+            ", routerAId='" + routerAId + '\'' +
+            ", routerAInterface='" + routerAInterface + '\'' +
+            ", routerAIp='" + routerAIp + '\'' +
+            ", routerBId='" + routerBId + '\'' +
+            ", routerBInterface='" + routerBInterface + '\'' +
+            ", routerBIp='" + routerBIp + '\'' +
+            ", isOSPF=" + OSPF +
+            ", metrik='" + metrik + '\'' +
+            ", isRIP=" + RIP +
+            '}';
+  }
 }
-

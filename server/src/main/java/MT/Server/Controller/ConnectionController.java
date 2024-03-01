@@ -19,53 +19,62 @@ import java.util.Map;
 public class ConnectionController {
 
 
-  @Autowired
-  private connectionRepo connectionRepo;
+    @Autowired
+    private connectionRepo connectionRepo;
 
-  @GetMapping("/getConnection")
-  public List<Connection> getAllConnection() {
-    return connectionRepo.findAll();
-  }
+    @GetMapping("/getConnection")
+    public List<Connection> getAllConnection() {
+        return connectionRepo.findAll();
+    }
 
-  @PostMapping("/postConnection")
-  public ResponseEntity<Connection> createConnection(@RequestBody Connection connection){
-    Connection createdConnection = connectionRepo.save(connection);
-    return new ResponseEntity<>(createdConnection, HttpStatus.CREATED);
-  }
+    @PostMapping("/postConnection")
+    public ResponseEntity<Connection> createConnection(@RequestBody Connection connection) {
+        System.out.println(connection);
+        Connection createdConnection = connectionRepo.save(connection);
+        System.out.println(createdConnection);
+        return new ResponseEntity<>(createdConnection, HttpStatus.CREATED);
+    }
 
-  @GetMapping("/getConnection/{id}")
-  public ResponseEntity<Connection> getConnectionID(@PathVariable Long id){
-    Connection connection = connectionRepo.findById(id).orElseThrow( () -> new ResourceNotFoundException("routingTable mit Id: "+ id+" existiert nicht"));
-    return ResponseEntity.ok(connection);
-  }
+    @GetMapping("/getConnection/{id}")
+    public ResponseEntity<Connection> getConnectionID(@PathVariable Long id) {
+        Connection connection = connectionRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("routingTable mit Id: " + id + " existiert nicht"));
+        return ResponseEntity.ok(connection);
+    }
 
-  @PutMapping("/putConnection/{id}")
-  public ResponseEntity<Connection> updateConnection(@PathVariable Long id, @RequestBody Connection connectionDetails){
-    Connection connection = connectionRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("routingTable mit Id: "+ id+" existiert nicht"));
+    @PutMapping("/putConnection/{id}")
+    public ResponseEntity<Connection> updateConnection(@PathVariable Long id, @RequestBody Connection connectionDetails) {
+        Connection connection = connectionRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("routingTable mit Id: " + id + " existiert nicht"));
 
-    connection.setConnectionId(connectionDetails.getConnectionId());
-    connection.setOSPF(connectionDetails.getOSPF());
-    connection.setRIP(connectionDetails.getRIP());
-    connection.setRouterA(connectionDetails.getRouterA());
-    connection.setRouterB(connectionDetails.getRouterB());
-    connection.setRouterAInterface(connectionDetails.getRouterAInterface());
-    connection.setRouterBInterface(connectionDetails.getRouterBInterface());
-    connection.setRouterAIp(connectionDetails.getRouterAIp());
-    connection.setRouterBIp(connectionDetails.getRouterBIp());
-    Connection updatedConnection = connectionRepo.save(connection);
+        connection.setConnectionId(connectionDetails.getConnectionId());
+        connection.setOSPF(connectionDetails.isOSPF());
+        connection.setRIP(connectionDetails.isRIP());
+        connection.setRouterA(connectionDetails.getRouterA());
+        connection.setRouterB(connectionDetails.getRouterB());
+        connection.setRouterAInterface(connectionDetails.getRouterAInterface());
+        connection.setRouterBInterface(connectionDetails.getRouterBInterface());
+        connection.setRouterAIp(connectionDetails.getRouterAIp());
+        connection.setRouterBIp(connectionDetails.getRouterBIp());
+        Connection updatedConnection = connectionRepo.save(connection);
 
 
+        return ResponseEntity.ok(updatedConnection);
+    }
 
-    return ResponseEntity.ok(updatedConnection);
-  }
+    @DeleteMapping("/delConnection")
+    public ResponseEntity<Connection> deleteConnection(@RequestBody Connection connection) {
+        System.out.println("Delete Connection:::: " + connection);
 
-  @DeleteMapping("/delConnection/{id}")
-  public ResponseEntity<Map<String, Boolean>> deleteConnection(@PathVariable Long id){
-    Connection connection = connectionRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("connection mit Id: "+ id+" existiert nicht"));
 
-    connectionRepo.delete(connection);
-    Map<String, Boolean> response = new HashMap<>();
-    response.put("deleted", Boolean.TRUE);
-    return  ResponseEntity.ok(response);
-  }
+//        Connection deletedConnection = connectionRepo.findByConnectionId(
+//                connection.getRouterA(), connection.getRouterB(), connection.getRouterAInterface(), connection.getRouterBInterface(),
+//                connection.isOSPF(), connection.getMetrik(), connection.isRIP(), connection.getRouterAIp(), connection.getRouterBIp()
+//        );
+//        if (deletedConnection != null) {
+//            connectionRepo.delete(deletedConnection);
+//            return ResponseEntity.ok().build();
+//        } else {
+//            return ResponseEntity.notFound().build();
+//        }+
+        return null;
+    }
 }

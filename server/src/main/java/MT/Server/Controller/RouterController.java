@@ -29,6 +29,8 @@ public class RouterController {
   @PostMapping("/router/create")
   public  ResponseEntity<Router> createRouter(@RequestBody Router router){
     Router createdRouter = repo.save(router);
+    System.out.println(router);
+    System.out.println(createdRouter);
     return new ResponseEntity<>(createdRouter, HttpStatus.CREATED);
   }
 
@@ -45,7 +47,7 @@ public class RouterController {
 
     router.setName(routerDetails.getName());
     router.setId(routerDetails.getId());
-    router.setActive(routerDetails.getActive());
+    router.setActive(routerDetails.isActive());
     router.setRoutingTableId(routerDetails.getRoutingTableId());
     router.setIp(routerDetails.getIp());
     router.setNetworkmask(routerDetails.getNetworkmask());
