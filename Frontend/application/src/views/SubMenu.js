@@ -86,6 +86,39 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
     const NameRef = useRef(null);
     const IpRef = useRef(null);
     const SubnetRef = useRef(null);
+    const metricValueRef = useRef(null);
+
+
+
+
+    useEffect(() =>{
+        if(ConnectionArray && EditRouter.id !== undefined){
+            console.log('ConnectionArray(Global) ', ConnectionArray);
+            const foundConnection = ConnectionArray.find(connection =>
+                 connection.routerA === EditRouter.name && connection.routerAIp === EditRouter.ip)
+            if(foundConnection){
+                console.log("Connection gefunden ", foundConnection);
+                if (NameRef.current) {
+                    NameRef.current.value = EditRouter.name;
+                }
+                setSwitchOnOspf(foundConnection.ospf);
+                if(metricValueRef.current){
+                    metricValueRef.current.value = foundConnection.metrik;
+                }
+                setSwitchOnRip(foundConnection.rip);
+            }
+        }else{
+            console.log("keine Connection gefunden")
+            if (NameRef.current) {
+                NameRef.current.value = '';
+            }
+            if(metricValueRef.current){
+                metricValueRef.current.value = ''
+            }
+            setSwitchOnOspf(false);
+            setSwitchOnRip(false);
+        }
+    })
 
     useEffect(() => {
         if (EditRouter.id !== undefined) {
@@ -95,8 +128,6 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
             if (IpRef.current) {
                 IpRef.current.value = EditRouter.ip;
             }
-            setSwitchOnOspf(EditRouter.ospf);
-            setSwitchOnRip(EditRouter.rip);
         } else {
             if (NameRef.current) {
                 NameRef.current.value = '';
@@ -104,8 +135,6 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
             if (IpRef.current) {
                 IpRef.current.value = '';
             }
-            setSwitchOnOspf(false);
-            setSwitchOnRip(false);
         }
     }, [EditRouter]);
 
@@ -416,7 +445,7 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                                 {item.title === 'OSPF' ? (
                                     <div>
                                         <label style={{ display: 'block' }}>OSPF</label>
-                                        <Switch onChange={handleChangeOspf} checked={switchOnOspf} />
+                                        <Switch onChange={handleChangeOspf} checked={switchOnOspf}/>
                                     </div>
                                 ) : null}
                                 {item.combinedTitle && (
@@ -430,6 +459,7 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                                                             placeholder="Metrik"
                                                             bgColor={"white"}
                                                             value={ospfMetric}
+                                                            ref={metricValueRef}
                                                             onChange={(e) => setOspfMetric(e.target.value)}
                                                         />
                                                     </Inputfield>
@@ -437,7 +467,7 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                                                 {subItem.title === 'RIP' && !switchOnOspf ? (
                                                     <label>
                                                         <span style={{ display: 'block' }}>RIP</span>
-                                                        <Switch onChange={handleChangeRip} checked={switchOnRip} />
+                                                        <Switch onChange={handleChangeRip} checked={switchOnRip}/>
                                                     </label>
                                                 ) : null}
                                             </div>
