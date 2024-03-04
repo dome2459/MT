@@ -24,6 +24,7 @@ public class ConnectionController {
 
     @GetMapping("/getConnection")
     public List<Connection> getAllConnection() {
+        System.out.println(connectionRepo.findAll());
         return connectionRepo.findAll();
     }
 
@@ -66,15 +67,23 @@ public class ConnectionController {
 
 
 //        Connection deletedConnection = connectionRepo.findByConnectionId(
-//                connection.getRouterA(), connection.getRouterB(), connection.getRouterAInterface(), connection.getRouterBInterface(),
-//                connection.isOSPF(), connection.getMetrik(), connection.isRIP(), connection.getRouterAIp(), connection.getRouterBIp()
-//        );
+//                connection.getRouterA(),
+//                connection.getRouterB(),
+//                connection.getRouterAInterface(),
+//                connection.getRouterBInterface(),
+//                connection.isOSPF(),
+//                connection.getMetrik(),
+//                connection.isRIP(),
+//                connection.getRouterAIp(),
+//                connection.getRouterBIp());
 //        if (deletedConnection != null) {
+//            System.out.println("gelöschte Connection "+deletedConnection);
 //            connectionRepo.delete(deletedConnection);
 //            return ResponseEntity.ok().build();
 //        } else {
 //            return ResponseEntity.notFound().build();
-//        }+
+//        }
         return null;
+
     }
 }

@@ -126,24 +126,23 @@ case 'ConnectionController':
 
   // holen aller Connections
   async function getConnectionFromApi() {
-    return fetch(apiEndpoint + 'getConnection/', {
+    return fetch(apiEndpoint + 'getConnection', {
       mode: 'cors',
-      method: 'GET',
+      method: 'get',
       headers: new Headers({
         "access-control-allow-origin": "*",
         'Content-Type': 'application/json'
-      })
-    }.then(response => response.json())
+      }),
+    })
+      .then(response => response.json())
       .then(json => {
-        console.log("RouterArray response ");
-        console.log(json);
-
+        console.log("ConnectionArray response ", json);
         updateConnectionArray(json);
         return json;
       })
       .catch(error => {
         console.log(error);
-      }));
+      });
   };
 
 
@@ -177,7 +176,7 @@ case 'ConnectionController':
   // ID der Connection noch vom Objekt holen
   async function getConnectionWithIdFromApi() {
     return fetch(apiEndpoint + '/getRoutingTable/{id}', {
-      mode: 'no-corse',
+      mode: 'cors',
       method: 'GET',
       headers: new Headers({
         "access-control-allow-origin": "*",
@@ -233,9 +232,7 @@ case 'ConnectionController':
     })
       .then(response => response.json())
       .then(json => {
-        console.log("RouterArray response ");
-        console.log(json);
-
+        console.log("RouterArray response ", json);
         updateRouterArray(json);
         return json;
       })
@@ -308,7 +305,7 @@ case 'ConnectionController':
   // holen aller Routing Tables
   async function getRouterTableFromApi() {
     return fetch(apiEndpoint + '/getRoutingTable', {
-      mode: 'no-corse',
+      mode: 'cors',
       method: 'GET',
       headers: new Headers({
         "access-control-allow-origin": "*",
@@ -327,7 +324,7 @@ case 'ConnectionController':
   // holen einer bestinmmten Tabelle eines Routers
   async function getRoutingTableWithID() {
     return fetch(apiEndpoint + '/getRoutingTable/{id}', {
-      mode: 'no-cors',
+      mode: 'cors',
       method: 'GET',
       headers: new Headers({
         "access-control-allow-origin": "*",
@@ -340,7 +337,7 @@ case 'ConnectionController':
   // id der Tabelle muss noch mitgegeben werden
   async function putRoutingTableWithID() {
     return fetch(apiEndpoint + '/putRoutingTable/{id}', {
-      mode: 'no-cors',
+      mode: 'cors',
       method: 'POST',
       headers: new Headers({
         "access-control-allow-origin": "*",
