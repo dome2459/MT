@@ -208,16 +208,25 @@ case 'ConnectionController':
       }),
       body: JSON.stringify(data),
     })
-      .then(response => response.json())
-      .then(json => {
-        console.log('Postconnection responsejson', json);
-        updateConnectionArray(json);
-        return json;
+      .then(response => response.text()) // Änderung von json() zu text()
+      .then(text => {
+        console.log('DeleteConnection response:', text); // Ausgabe der Antwort als Text
+        try {
+          const json = JSON.parse(text); // Versuch, die Antwort zu JSON zu parsen
+          console.log('DeleteConnection responsejson', json);
+          updateConnectionArray(json);
+          return json;
+        } catch (error) {
+          console.error('Fehler beim Parsen der Antwort:', error);
+          throw error; // Weiterwerfen des Fehlers für die weitere Diagnose
+        }
       })
       .catch(error => {
-        console.log(error);
+        console.log('Fehler beim Löschen der Verbindung:', error);
+        throw error; // Weiterwerfen des Fehlers für die weitere Diagnose
       });
   };
+  
 
   //controller Function
   async function getRouterArrayFromApi() {
