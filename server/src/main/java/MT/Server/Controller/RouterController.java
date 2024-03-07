@@ -23,6 +23,8 @@ public class RouterController {
 
   @GetMapping("/router/list")
   public List<Router> getAllRouter() {
+
+    System.out.println(repo.findAll());
     return repo.findAll();
   }
 

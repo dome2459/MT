@@ -260,9 +260,22 @@ case 'ConnectionController':
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .then(json => {
+      console.log("RouterArray response ",json);
+      updateRouterArray(json);
+      return json;
+    })
+    .catch(error => {
+      console.log(error);
     });
-    getRouterArrayFromApi();
-  };
+  getRouterArrayFromApi();
+}
+   
+  
+
+
   async function deleteRouter(data) {
     fetch(apiEndpoint + 'router/delete/' + data.id, {
       mode: 'cors',
@@ -275,10 +288,7 @@ case 'ConnectionController':
     })
       .then(response => response.json())
       .then(json => {
-        console.log("RouterArray response ");
-        console.log(json);
-
-        updateRouterArray(json);
+        console.log("deleteRouter ",json);
         return json;
       })
       .catch(error => {
