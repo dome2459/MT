@@ -9,6 +9,8 @@ const GlobalProvider = ({ children }) => {
 const [RouterArray, setRouterArray] = useState([]);
 // aktualisiert den RouterArray mit neuen Router
 const updateRouterArray = (newValue) => {
+
+    console.log('updateRouterArray: ', newValue)
     setRouterArray(newValue);
   };
 
@@ -41,6 +43,7 @@ const updateRoutingTableData = (newValue) => {
 const [ConnectionArray, setConnectionArray] = useState([]);
 // aktualisiert den RouterArray mit neuen Router
 const updateConnectionArray = (newValue) => {
+  console.log('updateConnectionArray: ', newValue);
   setConnectionArray(newValue);
   };
 
