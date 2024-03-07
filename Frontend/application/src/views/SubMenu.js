@@ -86,6 +86,7 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
     const SubnetRef = useRef(null);
     const metricValueRef = useRef(null);
     const RouterRef = useRef(null);
+    let routerB = null;
 
     const handleRouterSelection = (event) => {
         // Wert der ausgewählten Option extrahieren
@@ -96,16 +97,17 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
         // Jetzt haben Sie den ausgewählten Router in der Variable selectedRouter
         // Sie können damit machen, was auch immer Sie brauchen
         console.log("(handleRouterSelection) Ausgewählter Router:", selectedRouter);
-    
+
         setSelectedRouterId(selectedRouterId);
     };
 
     useEffect(() => {
         if (ConnectionArray && EditRouter.id !== undefined) {
-            console.log('ConnectionArray(Global) ', ConnectionArray);
+            //props.callBack('getConnectionFromApi');
+            console.log('USEEFFECT ConnectionArray(Global) ', ConnectionArray);
             console.log('Ausgewählter Router im UseEffect: ', EditRouter)
 
-            const foundConnection = ConnectionArray.find(connection =>
+            const foundConnection = ConnectionArray && ConnectionArray.length > 0 && ConnectionArray.find(connection =>
                 connection.routerA === EditRouter.name && connection.routerAIp === EditRouter.ip);
             if (foundConnection) {
                 console.log("Connection gefunden ", foundConnection);
@@ -151,6 +153,8 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
             }
         }
     }, [EditRouter]);
+
+
 
 
     const handleChangeOspf = (checked) => {
@@ -498,23 +502,26 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                                         <Select
                                             bgColor={nameInputColor}
                                             color={"black"}
-                                            defaultValue={selectedRouter ? selectedRouter.id : ''}
+                                            //defaultValue={selectedRouter ? selectedRouter.id : ''}
                                             onChange={handleRouterSelection}
                                         >
                                             {ConnectionArray && ConnectionArray.length > 0 && ConnectionArray.map((connection, index) => {
-                                                // Überprüfen, ob die aktuelle Verbindung zum aktuellen Router gehört
+                                                let routerB = null;
                                                 if (connection.routerA === EditRouter.name && connection.routerAIp === EditRouter.ip) {
-                                                    // Wenn ja, fügen Sie den Router B zur Dropdown-Liste hinzu
-                                                    const routerB = RouterArray.find(router => router.name === connection.routerB);
-                                                    if (routerB !== undefined) {
-                                                        return <option key={index} value={routerB.id}>{routerB.name}</option>;
-                                                    }
+                                                    routerB = RouterArray.find(router => router.name === connection.routerB);
+                                                    console.log('routerB gefunden: ', routerB);
+                                                    // Überprüfen, ob routerB gefunden wurde und JSX entsprechend rendern
+                                                    return routerB ? (
+                                                        <option key={index} value={routerB.id}>{routerB.name}</option>
+                                                    ) : null;
+                                                } else {
+                                                    // Wenn routerB nicht gefunden wurde, alle Router aus dem RouterArray anzeigen
+                                                    return RouterArray.map((router, index) => {
+                                                        console.log('routerB nicht gefunden: ', router);
+                                                         <option key={index} value={router.id}>{router.name}</option>;
+                                                    });
                                                 }
-                                                return null; // Wenn nicht, überspringen 
                                             })}
-                                            {RouterArray.map((router, index) => (
-                                                <option key={index} value={router.id}>{router.name}</option>
-                                            ))}
                                         </Select>
                                     </div>
                                 ) : null}
