@@ -1,19 +1,12 @@
 
-import React, { Component, useEffect, useRef, useContext } from 'react';
-import { Flex, Tabs, TabList, TabPanels, Tab, TabPanel, Button } from '@chakra-ui/react'
+import React, { useContext } from 'react';
 import MainEnviroment from '../views/MainEnviroment';
 import GlobalContext from './InitStateContext';
-import RoutingTable from './RoutingTable';
 
 
 export default function MainController() {
-  const { RouterArray, updateRouterArray } = useContext(GlobalContext);
+  const { updateRouterArray } = useContext(GlobalContext);
   const { ConnectionArray, updateConnectionArray } = useContext(GlobalContext);
-
-
-  const ConConRef = React.createRef();
-  const RutConRef = React.createRef();
-  const RtaConRef = React.createRef();
 
 
   var apiEndpoint = "http://localhost:8080/api/v1/";
@@ -65,16 +58,7 @@ case 'ConnectionController':
 }
 }
 */
-  async function callBackAlt(Function, value1, value2, value3) {
 
-    switch (Function) {
-      case 'test':
-        return test(value1, value2, value3)
-        break;
-      //add other function cases here
-
-    }
-  }
 
 
   async function callBack(Function, value1, value2, value3) {
@@ -82,42 +66,31 @@ case 'ConnectionController':
     switch (Function) {
       case 'test':
         return test(value1, value2, value3)
-        break;
       case 'getRouterArrayFromApi':
         return getRouterArrayFromApi(value1, value2, value3)
-        break;
       case 'createRouter':
         return createRouter(value1, value2, value3)
-        break;
       case 'getConnectionFromApi':
         return getConnectionFromApi(value1, value2, value3)
-        break;
       case 'getConnectionWithIdFromApi':
         return getConnectionWithIdFromApi(value1, value2, value3)
-        break;
       case 'deleteConnection':
         return deleteConnection(value1, value2, value3)
-        break;
       case 'deleteRouter':
         return deleteRouter(value1, value2, value3)
-        break;
       case 'updateRouterOnDB':
         return updateRouterOnDB(value1, value2, value3)
-        break;
       case 'getRouterTableFromApi':
         return getRouterTableFromApi(value1, value2, value3)
-        break;
       case 'getRoutingTableWithID':
         return getRoutingTableWithID(value1, value2, value3)
-        break;
       case 'putRoutingTableWithID':
         return putRoutingTableWithID(value1, value2, value3)
-        break;
       case 'postConnection':
         return postConnection(value1, value2, value3)
-        break;
       case 'updatePosition':
         return updatePosition(value1, value2)
+      default:
         break
       //add other function cases here
 

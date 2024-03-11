@@ -121,7 +121,7 @@ export default function DragArea(props) {
       <svg style={{ width: '100%', height: '100%' }}>
 
         
-        {RouterArray.length != 0 ?( CableArray.map((item, i) => {
+        {RouterArray.length !== 0 ?( CableArray.map((item, i) => {
 
           return (
             <PathLine
