@@ -55,6 +55,7 @@ public class ConnectionController {
         connection.setRouterBInterface(connectionDetails.getRouterBInterface());
         connection.setRouterAIp(connectionDetails.getRouterAIp());
         connection.setRouterBIp(connectionDetails.getRouterBIp());
+        connection.setMetrik(connectionDetails.getMetrik());
         Connection updatedConnection = connectionRepo.save(connection);
 
 

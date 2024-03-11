@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -54,7 +56,7 @@ public class TimerController {
                 ripProtokoll(connectionFromFrontend);
             }
         }else{
-            ospfProtokoll(connectionFromFrontend);
+            ospfProtokoll(connectionFromFrontend, (List<Router>) routerFromFrontend);
         }
       return ResponseEntity.notFound().build();
     }
@@ -137,38 +139,39 @@ public class TimerController {
     }
 
 
-    private void ospfProtokoll(Connection connection) {
-        Long AId = Long.valueOf(connection.getRouterA());
-        Long BId = Long.valueOf(connection.getRouterB());
+    private void ospfProtokoll(Connection connection, List<Router> routers) {
+        if (connection == null) {
+            System.out.println("Ungültige Verbindung.");
+            return;
+        }
+            String routerAId = connection.getRouterA();
+            String routerBId = connection.getRouterB();
 
-        Router routerA = routerRepo.findById(AId).orElseThrow(() -> new ResourceNotFoundException("Router nicht gefunden"));
-        Router routerB = routerRepo.findById(BId).orElseThrow(() -> new ResourceNotFoundException("Router nicht gefunden"));
-        RoutingTable tableRouterA = routingTableRepo.findById(AId).orElseThrow( () -> new ResourceNotFoundException(" RoutingTable Router A nicht gefunden"));
-        RoutingTable tableRouterB = routingTableRepo.findById(BId).orElseThrow( () -> new ResourceNotFoundException(" RoutingTable Router B nicht gefunden "));
+            Router routerA = findRouterById(routerAId, routers);
+            Router routerB = findRouterById(routerBId, routers);
+
+            if (routerA != null && routerB != null) {
+                if (routerA.getNetworkmask().equals(routerB.getNetworkmask())) {
+                    // Die Router haben dieselbe Subnetzmaske
+                    System.out.println("OSPF ist aktiviert und die Router haben dieselbe Subnetzmaske.");
+                } else {
+                    // Die Router haben unterschiedliche Subnetzmasken
+                    System.out.println("OSPF ist aktiviert, aber die Router haben unterschiedliche Subnetzmasken.");
+                }
+            }
+        }
 
 
-
-        tableRouterA.setRouterId(routerB.getId());
-        tableRouterA.setRoutingTableName(routerB.getName());
-        tableRouterA.setNetworkmask(routerB.getNetworkmask());
-        tableRouterA.setGateway("0.0.0.0");
-        tableRouterA.setMetric(1);
-        tableRouterA.setDestination(routerB.getIp());
-        tableRouterA.setRoutingTableId(BId);
-        this.routingTableRepo.save(new RoutingTable(BId, routerB.getName(), routerB.getId(),routerB.getIp(),"0",routerB.getNetworkmask(),"", 1));
-
-
-        tableRouterB.setRouterId(routerA.getId());
-        tableRouterB.setRoutingTableName(routerA.getName());
-        tableRouterB.setNetworkmask(routerA.getNetworkmask());
-        tableRouterB.setGateway("0.0.0.0");
-        tableRouterB.setMetric(1);
-        tableRouterB.setDestination(routerA.getIp());
-        tableRouterB.setRoutingTableId(AId);
-
-        this.routingTableRepo.save(new RoutingTable(AId, routerA.getName(), routerA.getId(),routerA.getIp(),"0",routerA.getNetworkmask(),"", 1));
-
+    // Hilfsmethode, um einen Router anhand seiner ID zu finden
+    private Router findRouterById(String routerId, List<Router> routers) {
+        for (Router router : routers) {
+            if (router.getName().equals(routerId)) {
+                return router;
+            }
+        }
+        return null;
     }
 }
+
 
 

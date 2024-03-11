@@ -39,8 +39,7 @@ public class Connection {
   @Column(name = "RIP")
   private boolean RIP;
 
-  public Connection(){
-  }
+
 
   public Connection(Long connectionId, String routerA, String routerB, String routerAInterface, String routerBInterface, boolean OSPF, boolean RIP, String routerAIp, String routerBIp, String metrik) {
     this.connectionId = connectionId;
