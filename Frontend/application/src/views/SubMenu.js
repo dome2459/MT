@@ -188,7 +188,7 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
         }
     };
 
-    const saveEditSettings = () => {
+    const saveEditSettings = (EditRouter) => {
 
         //var newEditRouter = EditRouter; 
         var Name = NameRef.current.value;
@@ -200,9 +200,16 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
         var Ospf = switchOnOspf;
 
         var Rip = switchOnRip;
-
+       
         console.log('Name: ' + Name + ' IP: ' + Ip + ' Subnet: ' + Subnet)
 
+        EditRouter.ip = IpRef.current.value;
+        EditRouter.name = NameRef.current.value;
+        EditRouter.networkmask = SubnetRef.current.value;
+        props.callBack('updateRouterOnDB', EditRouter);
+        var RouterArr = [...RouterArray];
+        updateRouterArray(RouterArr);
+        
     }
     const handleDeleteRouter = () => {
 
@@ -428,7 +435,7 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                                             cursor: 'pointer'
                                         }
                                         }
-                                        onClick={EditRouter.id !== undefined ? () => saveEditSettings() : () => handleAddRouter()}>
+                                        onClick={EditRouter.id !== undefined ? () => saveEditSettings(EditRouter) : () => handleAddRouter()}>
                                         {EditRouter.id !== undefined ? 'Speichern' : 'Hinzufügen'}
 
                                     </Button>
