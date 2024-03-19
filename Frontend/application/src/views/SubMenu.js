@@ -101,9 +101,9 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
         setSelectedRouterId(selectedRouterId);
     };
 
-    useEffect(() => {
+
+    const handleConnectionArrayUpdate = () => {
         if (ConnectionArray && EditRouter.id !== undefined) {
-            //props.callBack('getConnectionFromApi');
             console.log('USEEFFECT ConnectionArray(Global) ', ConnectionArray);
             console.log('Ausgewählter Router im UseEffect: ', EditRouter)
 
@@ -129,9 +129,12 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                 setSwitchOnRip(false);
             }
         }
-    }
-        , [EditRouter, ConnectionArray]
-    );
+    };
+
+
+    useEffect(() => {
+        handleConnectionArrayUpdate();
+    }, [EditRouter, ConnectionArray]);
 
     useEffect(() => {
         if (EditRouter.id !== undefined) {
@@ -496,35 +499,40 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                                         Verbinden
                                     </button>
                                 ) : null}
+
                                 {item.title === 'ConnectionList' ? (
                                     <div>
                                         <label>Zielrouter</label>
                                         <Select
                                             bgColor={nameInputColor}
                                             color={"black"}
-                                            //defaultValue={selectedRouter ? selectedRouter.id : ''}
                                             onChange={handleRouterSelection}
                                         >
-                                            {ConnectionArray && ConnectionArray.length > 0 && ConnectionArray.map((connection, index) => {
-                                                let routerB = null;
-                                                if (connection.routerA === EditRouter.name && connection.routerAIp === EditRouter.ip) {
-                                                    routerB = RouterArray.find(router => router.name === connection.routerB);
-                                                    console.log('routerB gefunden: ', routerB);
-                                                    // Überprüfen, ob routerB gefunden wurde und JSX entsprechend rendern
-                                                    return routerB ? (
-                                                        <option key={index} value={routerB.id}>{routerB.name}</option>
-                                                    ) : null;
-                                                } else {
-                                                    // Wenn routerB nicht gefunden wurde, alle Router aus dem RouterArray anzeigen
-                                                    return RouterArray.map((router, index) => {
-                                                        console.log('routerB nicht gefunden: ', router);
-                                                         <option key={index} value={router.id}>{router.name}</option>;
+                                            {ConnectionArray.some(connection => {
+                                                return connection.routerA === EditRouter.name && connection.routerAIp === EditRouter.ip;
+                                            }) ? (                    
+                                                RouterArray.map((router, index) => {
+                                                    const isConnected = ConnectionArray.some(connection => {
+                                                        return connection.routerA === EditRouter.name && connection.routerAIp === EditRouter.ip && connection.routerB === router.name;
                                                     });
-                                                }
-                                            })}
+
+                                                    if (isConnected) {
+                                                        return <option key={index} value={router.id}>{router.name}</option>;
+                                                    } else {
+                                                        return null;
+                                                    }
+                                                })
+                                            ) : (
+                                                RouterArray
+                                                .filter(router => router.id !== EditRouter.id)
+                                                .map((router, index) => (
+                                                    <option key={index} value={router.id}>{router.name}</option>
+                                                ))
+                                            )}
                                         </Select>
                                     </div>
                                 ) : null}
+
                                 {item.title === 'Router' ? (
                                     <div>
                                         {item.title}
