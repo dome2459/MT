@@ -162,28 +162,28 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
 
     const handleChangeOspf = (checked) => {
         setSwitchOnOspf(checked);
-        // Wenn OSPF eingeschaltet wird
+
         if (checked) {
-            // Schalte RIP aus
+
             setSwitchOnRip(false);
-            // Zeige das Inputfeld für die OSPF-Metrik an
+
             setOspfMetricInputVisible(true);
         } else {
-            // Wenn OSPF ausgeschaltet wird, blende das Inputfeld für die OSPF-Metrik aus
+
             setOspfMetricInputVisible(false);
-            // Sie können die OSPF-Metrik auch zurücksetzen, wenn Sie möchten
+
             setOspfMetric('');
         }
     };
 
     const handleChangeRip = (checked) => {
         setSwitchOnRip(checked);
-        // Wenn RIP eingeschaltet wird, schalte OSPF aus
+
         if (checked) {
             setSwitchOnOspf(false);
-            // Blende das Inputfeld für die OSPF-Metrik aus
+
             setOspfMetricInputVisible(false);
-            // Sie können die OSPF-Metrik auch zurücksetzen, wenn Sie möchten
+
             setOspfMetric('');
         }
     };
@@ -205,7 +205,7 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
 
     }
     const handleDeleteRouter = () => {
-        // Hier den Code für das Löschen des Routers einfügen
+
         if (EditRouter.id !== undefined) {
             var i = RouterArray.findIndex((item) => item.id === EditRouter.id);
 
@@ -222,20 +222,18 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
 
     const handleConnectRouter = () => {
         console.log("RouterArray:", RouterArray);
-        // Überprüfen, ob eine Router-ID ausgewählt wurde
+
         console.log('selected Router (handleConnectRouter) ', SelectedRouterId);
         if (SelectedRouterId !== null) {
-            // Die ausgewählte Router-ID
-            console.log('selected Router (handleConnectRouter) ', SelectedRouterId);
-            // Die ID des ausgewählten Routers als Zahl extrahieren
-            //const selectedRouterID = parseInt(selectedRouter);
 
-            // Das ausgewählte Router-Objekt im Array finden
+            console.log('selected Router (handleConnectRouter) ', SelectedRouterId);
+
+
+
             const foundRouter = RouterArray.find(router => router.id === SelectedRouterId);
 
-            // Überprüfen, ob das Router-Objekt gefunden wurde
             if (foundRouter !== null) {
-                // Das ausgewählte Router-Objekt wurde gefunden
+
                 console.log("Gefundenes Router-Objekt: ", foundRouter);
                 console.log("Selctiertes Router-Objekt: ", EditRouter);
                 if (foundRouter.name !== EditRouter.name || foundRouter.ip !== EditRouter.ip && foundRouter !== null && foundRouter.ip !== null) {
@@ -250,10 +248,10 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                         routerAIp: EditRouter.ip,
                         routerBIp: foundRouter.ip,
                     };
-                    // Connection los schicken
+
                     props.callBack('postConnection', Connection);
                     console.log('postConnection: ', Connection);
-                    // fleich nochmal alles aktualisieren was es zu aktualisieren gibt 
+
                     props.callBack('getRouterArrayFromApi');
                     updateConnectionArray(Connection);
                     console.log('ConnectionArray from SubMenu', ConnectionArray);
@@ -261,11 +259,11 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                     console.log("Es waren 2 gleiche Router Objekte.... soo gehts nicht! ")
                 }
             } else {
-                // Das ausgewählte Router-Objekt wurde nicht gefunden
+
                 console.log("Router mit der angegebenen ID nicht gefunden.");
             }
         } else {
-            // Keine Router-ID ausgewählt
+
             console.log("Kein Router ausgewählt.");
         }
     }
@@ -273,37 +271,37 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
     const handleDeleteConnection = () => {
         console.log("handleDeleteConnection RouterArray:", RouterArray);
         console.log("handleDeleteConnection ConnectionArray:", ConnectionArray);
-        // Überprüfen, ob eine Router-ID ausgewählt wurde
+
         if (ConnectionArray && EditRouter.id !== undefined) {
             const foundConnection = ConnectionArray.find(connection =>
                 connection.routerA === EditRouter.name && connection.routerAIp === EditRouter.ip &&
                 connection.metrik === metricValueRef.current.value && connection.ospf === switchOnOspf
                 && connection.rip === switchOnRip);
             if (foundConnection) {
-                // Wir haben eine Connection gefunden nice!
+
                 console.log('handleDeleteConnection (foundConnection): ', foundConnection);
-                // jetzt wird gelöscht
+
                 props.callBack('deleteConnection', foundConnection);
                 props.callBack('getRouterArrayFromApi');
                 props.callBack('getConnectionFromApi');
                 console.log('ConnectionArray nach dem löschen: ', ConnectionArray);
             } else {
-                // foundConnection ist leer
+
                 console.log("Keine Connection gefunden.");
             }
         } else {
-            // ConnectionArray && ausgewählter Router
+
             console.log("Keine Connection gefunden und kein Router ausgewählt");
         }
     }
 
     const handleAddRouter = () => {
-        // Überprüfe, ob die IP-Adresse gültig ist
+
         if (IpRef.current && (validateIPv4(IpRef.current.value) || IpRef.current.value !== '')) {
-            // Die IP ist gültig oder leer, füge den Router hinzu
+
             console.log(IpRef.current.value);
             if (SubnetRef.current && (validateSubnet(SubnetRef.current.value) || SubnetRef.current.value !== '')) {
-                // Das Subnetz ist gültig oder leer, füge den Router hinzu
+
                 console.log(SubnetRef.current.value);
                 if (NameRef.current && (validateName(NameRef.current.value) || NameRef.current.value !== '')) {
                     console.log(NameRef.current.value);
@@ -317,18 +315,18 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                     console.log('ungültiger Name');
                 }
             } else {
-                // Das Subnetz ist ungültig, zeige eine Fehlermeldung an oder führe andere Aktionen durch
+
                 console.log('Ungültiges Subnetz');
             }
-            //props.addRouter();
+
         } else {
-            // Die IP ist ungültig, zeige eine Fehlermeldung an oder führe andere Aktionen durch
+
             console.log('Ungültige IPv4-Adresse und Subnet');
         }
     }
 
     const validateIPv4 = (ip) => {
-        // Regulärer Ausdruck für eine gültige IPv4-Adresse
+
         const ipv4Regex = /^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
         const isValid = ipv4Regex.test(ip);
         setIpInputColor(isValid ? 'white' : '#FFCCCB');
@@ -336,16 +334,16 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
 
     }
     const validateSubnet = (subnet) => {
-        // Regulärer Ausdruck für ein gültiges Subnetz (Beispiel: 255.255.255.0)
+
         const subnetRegex = /^(\d{1,3}\.){3}\d{1,3}$/;
         const isValid = subnetRegex.test(subnet);
         setSubnetInputColor(isValid ? 'white' : '#FFCCCB');
         return isValid;
     }
     const validateName = (name) => {
-        // Regulärer Ausdruck für einen gültigen Namen
+
         const nameRegex = /^[a-zA-Z0-9]+$/;
-        const isValid = nameRegex.test(name.trim()); // Trim, um führende und endende Leerzeichen zu entfernen
+        const isValid = nameRegex.test(name.trim()); 
         setNameInputColor(isValid ? 'white' : '#FFCCCB');
         return isValid;
     }
