@@ -521,12 +521,13 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                                                     }
                                                 })
                                             ) : (
-                                                RouterArray
+                                                
+                                                RouterArray && RouterArray.length > 0 && RouterArray
                                                 .filter(router => router.id !== EditRouter.id)
                                                 .map((router, index) => (
                                                     <option key={index} value={router.id}>{router.name}</option>
                                                 ))
-                                            )}
+                                                )}
                                         </Select>
                                     </div>
                                 ) : null}
