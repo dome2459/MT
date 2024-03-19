@@ -103,6 +103,8 @@ export default function NavBar(props) {
       console.log(TimerRef.current);
       if (TimerRef.current && !timerButtonClicked) {
         console.log('Timer gestartet');
+        props.callBack('getRouterArrayFromApi');
+        props.callBack('getConnectionFromApi');
         setIsTimerRunning(true);
         setTimerButtonClicked(true);
         TimerRef.current.startTimer();
@@ -115,8 +117,7 @@ export default function NavBar(props) {
   const stopTimer = useCallback(() => {
     try {
       console.log(TimerRef.current);
-      props.callBack('getRouterArrayFromApi');
-      props.callBack('getConnectionFromApi');
+      
       
       if (TimerRef.current && timerButtonClicked) {
         console.log('Timer gestoppt');
