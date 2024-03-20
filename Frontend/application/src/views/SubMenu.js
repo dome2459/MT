@@ -235,8 +235,6 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
 
             console.log('selected Router (handleConnectRouter) ', SelectedRouterId);
 
-
-
             const foundRouter = RouterArray.find(router => router.id === SelectedRouterId);
 
             if (foundRouter !== null) {
@@ -304,13 +302,13 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
 
     const handleAddRouter = () => {
 
-        if (IpRef.current && (validateIPv4(IpRef.current.value) || IpRef.current.value !== '')) {
+        if (IpRef.current && (validateIPv4(IpRef.current.value) && IpRef.current.value !== '')) {
 
             console.log(IpRef.current.value);
-            if (SubnetRef.current && (validateSubnet(SubnetRef.current.value) || SubnetRef.current.value !== '')) {
+            if (SubnetRef.current && (validateSubnet(SubnetRef.current.value) && SubnetRef.current.value !== '')) {
 
                 console.log(SubnetRef.current.value);
-                if (NameRef.current && (validateName(NameRef.current.value) || NameRef.current.value !== '')) {
+                if (NameRef.current && (validateName(NameRef.current.value) && NameRef.current.value !== '')) {
                     console.log(NameRef.current.value);
 
                     var newRouter = { ip: IpRef.current.value, name: NameRef.current.value, routingTableId: 1, networkmask: SubnetRef.current.value, posX: 500, posy: 300, activ: true };
@@ -516,7 +514,7 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                                             {ConnectionArray.some(connection => {
                                                 return connection.routerA === EditRouter.name && connection.routerAIp === EditRouter.ip;
                                             }) ? (                    
-                                                RouterArray.map((router, index) => {
+                                                RouterArray && RouterArray.length > 0 && RouterArray.map((router, index) => {
                                                     const isConnected = ConnectionArray.some(connection => {
                                                         return connection.routerA === EditRouter.name && connection.routerAIp === EditRouter.ip && connection.routerB === router.name;
                                                     });
