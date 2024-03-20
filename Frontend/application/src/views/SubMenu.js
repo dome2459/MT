@@ -77,7 +77,8 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
     const [ospfMetricRef, setOspfMetricRef] = useState(null);
     const { RouterArray, updateRouterArray } = useContext(GlobalContext);
     const { EditRouter, updateEditRouter } = useContext(GlobalContext);
-    const { ConnectionArray = [], updateConnectionArray } = useContext(GlobalContext);
+    //const { ConnectionArray = [], updateConnectionArray } = useContext(GlobalContext);
+    let { ConnectionArray = [], updateConnectionArray } = useContext(GlobalContext);
     const { CableArray, setCableArray } = useContext(GlobalContext);
     const [SelectedRouterId, setSelectedRouterId] = useState(null);
 
@@ -90,8 +91,10 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
     let routerB = null;
 
     const handleRouterSelection = (event) => {
+
+        console.log('event.target.value: ', event)
         // Wert der ausgewählten Option extrahieren
-        const selectedRouterId = parseInt(event.target.value);
+        const selectedRouterId = parseInt(event);
         console.log('selectedRouterId von handleRouterSelection: ', selectedRouterId);
         // Hier können Sie den ausgewählten Router anhand seiner ID finden und speichern
         const selectedRouter = RouterArray.find(router => router.id === selectedRouterId);
@@ -104,12 +107,23 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
 
 
     const handleConnectionArrayUpdate = () => {
-        if (ConnectionArray && EditRouter.id !== undefined) {
+        if (EditRouter.id !== undefined) {
             console.log('USEEFFECT ConnectionArray(Global) ', ConnectionArray);
             console.log('Ausgewählter Router im UseEffect: ', EditRouter)
 
-            const foundConnection = ConnectionArray && ConnectionArray.length > 0 && ConnectionArray.find(connection =>
-                connection.routerA === EditRouter.name && connection.routerAIp === EditRouter.ip);
+            // let foundConnection = ConnectionArray.find(connection =>
+            //     connection.routerA === EditRouter.name && connection.routerAIp === EditRouter.ip);
+
+
+            let foundConnection = null;
+            for (let i = 0; i < ConnectionArray.length; i++) {
+                const connection = ConnectionArray[i];
+                if (connection.routerA === EditRouter.name && connection.routerAIp === EditRouter.ip) {
+                    foundConnection = connection;
+                    break;
+                }
+            }
+
             if (foundConnection) {
                 console.log("Connection gefunden ", foundConnection);
                 if (RouterRef.current) {
@@ -198,10 +212,6 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
 
         var Subnet = SubnetRef.current.value;
 
-        var Ospf = switchOnOspf;
-
-        var Rip = switchOnRip;
-
         console.log('Name: ' + Name + ' IP: ' + Ip + ' Subnet: ' + Subnet)
 
         EditRouter.ip = IpRef.current.value;
@@ -236,8 +246,9 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
 
             console.log('selected Router (handleConnectRouter) ', SelectedRouterId);
 
-            if (validateMetric(ospfMetric)) {
+            if (switchOnOspf && validateMetric(ospfMetric) || switchOnRip) {
                 console.log('validierung der Metrik: ', ospfMetric);
+                console.log('validierung RIP : ', switchOnRip);
 
                 const foundRouter = RouterArray.find(router => router.id === SelectedRouterId);
 
@@ -245,7 +256,7 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
 
                     console.log("Gefundenes Router-Objekt: ", foundRouter);
                     console.log("Selctiertes Router-Objekt: ", EditRouter);
-                    if (foundRouter.name !== EditRouter.name || foundRouter.ip !== EditRouter.ip && foundRouter !== null && foundRouter.ip !== null) {
+                    if (foundRouter.name !== EditRouter.name && foundRouter.ip !== EditRouter.ip && foundRouter !== null && foundRouter.ip !== null) {
                         var Connection = {
                             routerA: EditRouter.name,
                             routerAInterface: 'fa01',
@@ -263,6 +274,7 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
 
                         props.callBack('getRouterArrayFromApi');
                         updateConnectionArray(Connection);
+                        ConnectionArray.push(Connection);
                         console.log('ConnectionArray from SubMenu', ConnectionArray);
                     } else {
                         console.log("Es waren 2 gleiche Router Objekte.... soo gehts nicht! ")
@@ -283,19 +295,20 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
     }
 
     const handleDeleteConnection = () => {
-        console.log("handleDeleteConnection RouterArray:", RouterArray);
         console.log("handleDeleteConnection ConnectionArray:", ConnectionArray);
+        if (ConnectionArray && ConnectionArray.length > 0 && EditRouter.id !== undefined) {
+            console.log("handleDeleteConnection RouterArray:", RouterArray);
 
-        if (ConnectionArray && EditRouter.id !== undefined) {
-            const foundConnection = ConnectionArray.find(connection =>
+
+            let foundConnection = ConnectionArray.find(connection =>
                 connection.routerA === EditRouter.name && connection.routerAIp === EditRouter.ip &&
-                connection.metrik === metricValueRef.current.value && connection.ospf === switchOnOspf
-                && connection.rip === switchOnRip);
+                (connection.ospf === switchOnOspf
+                    || connection.rip === switchOnRip));
             if (foundConnection) {
 
                 console.log('handleDeleteConnection (foundConnection): ', foundConnection);
-
                 props.callBack('deleteConnection', foundConnection);
+                ConnectionArray = ConnectionArray.filter(connection => connection !== foundConnection);
                 props.callBack('getRouterArrayFromApi');
                 props.callBack('getConnectionFromApi');
                 console.log('ConnectionArray nach dem löschen: ', ConnectionArray);
@@ -363,8 +376,8 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
     }
 
     const validateMetric = (value) => {
-        const isValid = /^\d{1,4}$/.test(value); 
-        setMetrikInputColor(isValid ? 'white': '#FFCCCB')
+        const isValid = /^\d{1,4}$/.test(value);
+        setMetrikInputColor(isValid ? 'white' : '#FFCCCB')
         return isValid;
     };
 
@@ -519,41 +532,41 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                                         Verbinden
                                     </button>
                                 ) : null}
-
                                 {item.title === 'ConnectionList' ? (
                                     <div>
                                         <label>Zielrouter</label>
                                         <Select
                                             bgColor={nameInputColor}
                                             color={"black"}
-                                            onChange={handleRouterSelection}
+                                            //value={selectedRouter ? selectedRouter.id : ''}
+                                            onChange={(e) => handleRouterSelection(e.target.value)}
                                         >
-                                            {ConnectionArray.some(connection => {
+                                            {ConnectionArray && ConnectionArray.length > 0 && ConnectionArray.some(connection => {
                                                 return connection.routerA === EditRouter.name && connection.routerAIp === EditRouter.ip;
                                             }) ? (
                                                 RouterArray && RouterArray.length > 0 && RouterArray.map((router, index) => {
-                                                    const isConnected = ConnectionArray.some(connection => {
+                                                    const isConnected = ConnectionArray && ConnectionArray.length > 0 && ConnectionArray.some(connection => {
                                                         return connection.routerA === EditRouter.name && connection.routerAIp === EditRouter.ip && connection.routerB === router.name;
                                                     });
 
                                                     if (isConnected) {
-                                                        return <option key={index} value={router.id}>{router.name}</option>;
+                                                        return <option key={index} value={router.id}>{router.name}</option>
+
                                                     } else {
                                                         return null;
                                                     }
                                                 })
                                             ) : (
-
                                                 RouterArray && RouterArray.length > 0 && RouterArray
                                                     .filter(router => router.id !== EditRouter.id)
                                                     .map((router, index) => (
                                                         <option key={index} value={router.id}>{router.name}</option>
+
                                                     ))
                                             )}
                                         </Select>
                                     </div>
                                 ) : null}
-
                                 {item.title === 'Router' ? (
                                     <div>
                                         {item.title}

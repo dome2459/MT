@@ -113,7 +113,7 @@ export default function DragArea(props) {
     */
     <Box className="target" h={parentHeight} w={parentWidth} flex={1} borderWidth={1} borderColor='#000' position="relative" padding={2.5} overflow='auto' ref = { AreaRef }>
 
-      {RouterArray.map((item, i) => {
+      {  RouterArray && RouterArray.length > 0 && RouterArray.map((item, i) => {
 
         return RouterObj(item, i)
 
@@ -121,7 +121,7 @@ export default function DragArea(props) {
       <svg style={{ width: '100%', height: '100%' }}>
 
         
-        {RouterArray.length !== 0 ?( CableArray.map((item, i) => {
+        {RouterArray.length !== 0 ?( CableArray && CableArray.length > 0 && CableArray.map((item, i) => {
 
           return (
             <PathLine

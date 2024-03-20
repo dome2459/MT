@@ -24,6 +24,7 @@ const [CableArray, setCableArray] = useState([])
 
 // soll wohl den Rotz aktualisieren oder was
 const updateCableArray = (newValue) => {
+  console.log('update CableArray: ', newValue);
     setRouterArray(newValue);
   };
 
