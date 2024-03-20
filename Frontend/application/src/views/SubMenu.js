@@ -65,6 +65,7 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
     const [subnav, setSubnav] = useState(true);
     //const [EditScreen, setEditScreen] = useState(false);
     const [ipInputColor, setIpInputColor] = useState('white');
+    const [metrikInputColor, setMetrikInputColor] = useState('white');
     const [subnetInputColor, setSubnetInputColor] = useState('white');
     const [nameInputColor, setNameInputColor] = useState('white');
     const showSubnav = () => setSubnav(!subnav);
@@ -200,7 +201,7 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
         var Ospf = switchOnOspf;
 
         var Rip = switchOnRip;
-       
+
         console.log('Name: ' + Name + ' IP: ' + Ip + ' Subnet: ' + Subnet)
 
         EditRouter.ip = IpRef.current.value;
@@ -209,7 +210,7 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
         props.callBack('updateRouterOnDB', EditRouter);
         var RouterArr = [...RouterArray];
         updateRouterArray(RouterArr);
-        
+
     }
     const handleDeleteRouter = () => {
 
@@ -235,38 +236,46 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
 
             console.log('selected Router (handleConnectRouter) ', SelectedRouterId);
 
-            const foundRouter = RouterArray.find(router => router.id === SelectedRouterId);
+            if (validateMetric(ospfMetric)) {
+                console.log('validierung der Metrik: ', ospfMetric);
 
-            if (foundRouter !== null) {
+                const foundRouter = RouterArray.find(router => router.id === SelectedRouterId);
 
-                console.log("Gefundenes Router-Objekt: ", foundRouter);
-                console.log("Selctiertes Router-Objekt: ", EditRouter);
-                if (foundRouter.name !== EditRouter.name || foundRouter.ip !== EditRouter.ip && foundRouter !== null && foundRouter.ip !== null) {
-                    var Connection = {
-                        routerA: EditRouter.name,
-                        routerAInterface: 'fa01',
-                        routerB: foundRouter.name,
-                        routerBInterface: 'fb01',
-                        ospf: switchOnOspf,
-                        metrik: ospfMetric,
-                        rip: switchOnRip,
-                        routerAIp: EditRouter.ip,
-                        routerBIp: foundRouter.ip,
-                    };
+                if (foundRouter !== null) {
 
-                    props.callBack('postConnection', Connection);
-                    console.log('postConnection: ', Connection);
+                    console.log("Gefundenes Router-Objekt: ", foundRouter);
+                    console.log("Selctiertes Router-Objekt: ", EditRouter);
+                    if (foundRouter.name !== EditRouter.name || foundRouter.ip !== EditRouter.ip && foundRouter !== null && foundRouter.ip !== null) {
+                        var Connection = {
+                            routerA: EditRouter.name,
+                            routerAInterface: 'fa01',
+                            routerB: foundRouter.name,
+                            routerBInterface: 'fb01',
+                            ospf: switchOnOspf,
+                            metrik: ospfMetric,
+                            rip: switchOnRip,
+                            routerAIp: EditRouter.ip,
+                            routerBIp: foundRouter.ip,
+                        };
 
-                    props.callBack('getRouterArrayFromApi');
-                    updateConnectionArray(Connection);
-                    console.log('ConnectionArray from SubMenu', ConnectionArray);
+                        props.callBack('postConnection', Connection);
+                        console.log('postConnection: ', Connection);
+
+                        props.callBack('getRouterArrayFromApi');
+                        updateConnectionArray(Connection);
+                        console.log('ConnectionArray from SubMenu', ConnectionArray);
+                    } else {
+                        console.log("Es waren 2 gleiche Router Objekte.... soo gehts nicht! ")
+                    }
+
                 } else {
-                    console.log("Es waren 2 gleiche Router Objekte.... soo gehts nicht! ")
+
+                    console.log("Router mit der angegebenen ID nicht gefunden.");
                 }
             } else {
-
-                console.log("Router mit der angegebenen ID nicht gefunden.");
+                console.log('Validierung der Metrik hat nicht geklappt')
             }
+
         } else {
 
             console.log("Kein Router ausgewählt.");
@@ -348,10 +357,18 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
     const validateName = (name) => {
 
         const nameRegex = /^[a-zA-Z0-9]+$/;
-        const isValid = nameRegex.test(name.trim()); 
+        const isValid = nameRegex.test(name.trim());
         setNameInputColor(isValid ? 'white' : '#FFCCCB');
         return isValid;
     }
+
+    const validateMetric = (value) => {
+        const isValid = /^\d{1,4}$/.test(value); 
+        setMetrikInputColor(isValid ? 'white': '#FFCCCB')
+        return isValid;
+    };
+
+
 
 
     return (
@@ -469,7 +486,7 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                                                         <Input
                                                             type="number"
                                                             placeholder="Metrik"
-                                                            bgColor={"white"}
+                                                            bgColor={metrikInputColor}
                                                             value={ospfMetric}
                                                             ref={metricValueRef}
                                                             onChange={(e) => setOspfMetric(e.target.value)}
@@ -513,7 +530,7 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                                         >
                                             {ConnectionArray.some(connection => {
                                                 return connection.routerA === EditRouter.name && connection.routerAIp === EditRouter.ip;
-                                            }) ? (                    
+                                            }) ? (
                                                 RouterArray && RouterArray.length > 0 && RouterArray.map((router, index) => {
                                                     const isConnected = ConnectionArray.some(connection => {
                                                         return connection.routerA === EditRouter.name && connection.routerAIp === EditRouter.ip && connection.routerB === router.name;
@@ -526,13 +543,13 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                                                     }
                                                 })
                                             ) : (
-                                                
+
                                                 RouterArray && RouterArray.length > 0 && RouterArray
-                                                .filter(router => router.id !== EditRouter.id)
-                                                .map((router, index) => (
-                                                    <option key={index} value={router.id}>{router.name}</option>
-                                                ))
-                                                )}
+                                                    .filter(router => router.id !== EditRouter.id)
+                                                    .map((router, index) => (
+                                                        <option key={index} value={router.id}>{router.name}</option>
+                                                    ))
+                                            )}
                                         </Select>
                                     </div>
                                 ) : null}
