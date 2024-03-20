@@ -7,9 +7,19 @@ import RoutingTable from '../components/RoutingTable';
 
 export default function MainEnviroment(props) {
 
+  useEffect(() => {
+    
+    if (typeof props.callBack === 'function') {
+      props.callBack('getRouterArrayFromApi');
+      props.callBack('getConnectionFromApi');
+    }
+  }, []);
+
+
           //https://react.dev/reference/react/useContext
 
     return (
+
 
 
       <Flex flex={1} flexDirection='column'>

@@ -1,5 +1,5 @@
 
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import MainEnviroment from '../views/MainEnviroment';
 import GlobalContext from './InitStateContext';
 
@@ -10,55 +10,6 @@ export default function MainController() {
 
 
   var apiEndpoint = "http://localhost:8080/api/v1/";
-  // const callBack = async(Controller, Function, value1, value2, value3) => {
-
-  //   switch (Controller) {
-  //     case 'RouterController':
-  //       return RutConRef.current.Reciever(Function, value1, value2, value3);
-  //       break;
-  //     case 'RoutingTableController':
-  //       return RtaConRef.current.Reciever(Function, value1, value2, value3);
-  //       break;
-  //     case 'ConnectionController':
-  //       return ConConRef.current.Reciever(Function, value1, value2, value3);
-  //       break;
-  //   }
-  //}
-  /*
-    const addRouter = () => {
-
-const {RouterArray, updateRouterArray} = useContext(GlobalContext);
-const {EditRouter, updateEditRouter} = useContext(GlobalContext);
-
-const ref = useRef()
-const ConConRef = React.createRef();
-const RutConRef = React.createRef();
-const RtaConRef = React.createRef();
-
- 
-var apiEndpoint = "http://localhost:8080/api/v1/";
-
-useEffect(() => {
- 
-}, []);
-
-/*
-const callBack = async(Controller, Function, value1, value2, value3) => {
-
-switch (Controller) {
-case 'RouterController':
-  //return RutConRef.current.Reciever(Function, value1, value2, value3);
-  break;
-case 'RoutingTableController':
-  //return RtaConRef.current.Reciever(Function, value1, value2, value3);
-  break;
-case 'ConnectionController':
-  //return ConConRef.current.Reciever(Function, value1, value2, value3);
-  break;
-}
-}
-*/
-
 
 
   async function callBack(Function, value1, value2, value3) {
@@ -202,7 +153,7 @@ case 'ConnectionController':
   
 
   //controller Function
-  async function getRouterArrayFromApi() {
+   async function getRouterArrayFromApi() {
     console.log('getRouterArrayFromApi');
     return fetch(apiEndpoint + 'router/list', {
       mode: 'cors',
@@ -337,6 +288,9 @@ case 'ConnectionController':
       })
     })
   }
+
+
+
   return (
 
     <MainEnviroment callBack={callBack} />
