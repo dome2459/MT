@@ -18,17 +18,18 @@ export default function DragArea(props) {
   const AreaRef = useRef(null);
 
   //useEffect(() => {
-    
+
   //}, [RouterArray]);
 
   // die bounds -Werte hätte man locker durch 1min probieren anpassen können !!! 
   const maxX = parentWidth - 350; // Assuming draggable elements are 100x100 okay
   const maxY = parentHeight - 140;
 
-  const {RouterArray, updateRouterArray} = useContext(GlobalContext);
-  const {EditRouter, updateEditRouter} = useContext(GlobalContext);
+  const { RouterArray, updateRouterArray } = useContext(GlobalContext);
+  const { EditRouter, updateEditRouter } = useContext(GlobalContext);
   const [CurrendDrag, setCurrendDrag] = useState(false);
-  const {CableArray, updateCableArray} = useContext(GlobalContext);
+  const { CableArray, updateCableArray } = useContext(GlobalContext);
+  const { ConnectionArray } = useContext(GlobalContext);
 
 
 
@@ -44,21 +45,20 @@ export default function DragArea(props) {
   };
 
   const handleClick = (item) => {
-    if(CurrendDrag === false){
-     
-      if(EditRouter.id === item.id)
-      {
+    if (CurrendDrag === false) {
+
+      if (EditRouter.id === item.id) {
         updateEditRouter({});
       }
-      else{
+      else {
         updateEditRouter(item);
       }
     }
-    
+
   };
-  function updatePosition(values, id){
+  function updatePosition(values, id) {
     props.callBack('updateRouterOnDB', values, id);
-    
+
   }
 
   const RouterObj = (item, index) => {
@@ -67,18 +67,18 @@ export default function DragArea(props) {
         bounds={{ left: 0, top: 0, right: maxX, bottom: maxY }}
         position={{ x: item.posx, y: item.posy }}
         onDrag={handleDrag(index)}
-        style={theme}  
+        style={theme}
         IsEdit={false}
-        onStart={() => setCurrendDrag(true)} 
-        onStop={() => [updatePosition(item, item.id),setCurrendDrag(false),console.log(item, item.id)] }
-        >
-        
+        onStart={() => setCurrendDrag(true)}
+        onStop={() => [updatePosition(item, item.id), setCurrendDrag(false), console.log(item, item.id)]}
+      >
+
         <Center flexDirection={'column'} width={100} className="draggable" //borderWidth={1} borderColor='#000' 
           position="absolute" cursor="grab" w="100px" h="100px"
           onDoubleClick={() => handleClick(item)}
         >
-          
-          <Image src={((EditRouter.id === item.id ) ? RouterEditSvg : RouterSvg)} height={100} width={100} draggable={false} onmousedown={false} />
+
+          <Image src={((EditRouter.id === item.id) ? RouterEditSvg : RouterSvg)} height={100} width={100} draggable={false} onmousedown={false} />
 
           <Text marginBottom={-6} backgroundColor='#fff' borderRadius='3' paddingX={2} >{item.name}</Text>
 
@@ -111,29 +111,44 @@ export default function DragArea(props) {
     * Das ganze Geraffel hier unten auch noch automatisch an die Fenstergöße anpassen  
     * gerade was die X und Y Werte betrifft !!!
     */
-    <Box className="target" h={parentHeight} w={parentWidth} flex={1} borderWidth={1} borderColor='#000' position="relative" padding={2.5} overflow='auto' ref = { AreaRef }>
+    <Box className="target" h={parentHeight} w={parentWidth} flex={1} borderWidth={1} borderColor='#000' position="relative" padding={2.5} overflow='auto' ref={AreaRef}>
 
-      {  RouterArray && RouterArray.length > 0 && RouterArray.map((item, i) => {
-
+      {RouterArray && RouterArray.length > 0 && RouterArray.map((item, i) => {
+        //console.log('RouterArray DragArea:  ', item, i);
         return RouterObj(item, i)
 
       })}
       <svg style={{ width: '100%', height: '100%' }}>
+        {RouterArray.length !== 0 && ConnectionArray && ConnectionArray.length > 0 && ConnectionArray.map((item, i) => {
+          console.log('ConnectionArray DragArea: ', item, i);
+          console.log('RouterArray DragArea: ', RouterArray)
+          console.log('RouterArray[item.routerA]: ', RouterArray[item.routerA], ' RouterArray[item.routerA] ', RouterArray[item.routerB])
 
-        
-        {RouterArray.length !== 0 ?( CableArray && CableArray.length > 0 && CableArray.map((item, i) => {
 
-          return (
-            <PathLine
-              points={[{ x: RouterArray[item.routerA].x + 50, y: RouterArray[item.routerA].y + 50 }, { x: RouterArray[item.routerB].x + 50, y: RouterArray[item.routerB].y + 50 }]}
-              stroke="black"
-              strokeWidth="3"
-              fill="none"
-              r={10}
-            />
-          )
-        })): (null)}
+          const routerA = RouterArray.find(router => router.name === item.routerA);
+          const routerB = RouterArray.find(router => router.name === item.routerB);
+
+          if (routerA && routerB) {
+            return (
+              <PathLine
+                // key={i}
+                points={[
+                  { x: routerA.posx + 50, y: routerA.posy + 50 },
+                  { x: routerB.posx + 50, y: routerB.posy + 50 },
+                ]}
+                stroke="black"
+                strokeWidth="3"
+                fill="none"
+                r={10}
+              />
+            );
+          } else {
+            console.log('Im RouterArray wurden keine wurden keine Items gefunden');
+            return null;
+          }
+        })}
       </svg>
+
     </Box>
   );
 }
