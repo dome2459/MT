@@ -78,10 +78,11 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
     const { RouterArray, updateRouterArray } = useContext(GlobalContext);
     const { EditRouter, updateEditRouter } = useContext(GlobalContext);
     //const { ConnectionArray = [], updateConnectionArray } = useContext(GlobalContext);
-    let { ConnectionArray = [], updateConnectionArray } = useContext(GlobalContext);
+    const { ConnectionArray, updateConnectionArray } = useContext(GlobalContext);
     //const { CableArray, setCableArray } = useContext(GlobalContext);
     const [SelectedRouterId, setSelectedRouterId] = useState(null);
     const { CableArray, updateCableArray } = useContext(GlobalContext);
+    let callbackCounter = 0;
 
 
     const NameRef = useRef(null);
@@ -174,25 +175,31 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
 
     // };
 
+
+
     const handleConnectionArrayUpdate = () => {
+
         let foundConnection = null;
-    
         if (EditRouter.id !== undefined) {
             console.log('USEEFFECT ConnectionArray(Global) ', ConnectionArray);
             console.log('Ausgewählter Router im UseEffect: ', EditRouter);
-    
-            if (ConnectionArray.length !== 0) {
+
+            if (ConnectionArray.length === 0) {
                 for (let i = 0; i < ConnectionArray.length; i++) {
                     const connection = ConnectionArray[i];
+                    console.log('Verbindung in Array: ', connection);
+                    console.log('Vergleiche:', connection.routerA, EditRouter.name, connection.routerAIp, EditRouter.ip);
                     if (connection.routerA === EditRouter.name && connection.routerAIp === EditRouter.ip) {
                         foundConnection = connection;
                         break;
                     }
                 }
             }
-    
+
             if (foundConnection) {
                 console.log("Connection gefunden ", foundConnection);
+                console.log("Kabel-Array:  ", CableArray);
+
                 if (RouterRef.current) {
                     RouterRef.current.value = EditRouter.name;
                 }
@@ -201,24 +208,50 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                 setOspfMetric(foundConnection.metrik);
                 setSwitchOnRip(foundConnection.rip);
                 setSelectedRouter(foundConnection.routerB);
+            } else if (!foundConnection) {
+
+                try {
+                    foundConnection = ConnectionArray.find(connection =>
+                        connection.routerA === EditRouter.name && connection.routerAIp === EditRouter.ip);
+                    if (foundConnection) {
+                        console.log("Connection gefunden ", foundConnection);
+                        if (RouterRef.current) {
+                            RouterRef.current.value = EditRouter.name;
+                        }
+                        setSwitchOnOspf(foundConnection.ospf);
+                        console.log('foundConnection- Metrik: ', foundConnection.metrik);
+                        setOspfMetric(foundConnection.metrik);
+                        setSwitchOnRip(foundConnection.rip);
+                        setSelectedRouter(foundConnection.routerB);
+                    } else {
+                        console.log("Keine Verbindung gefunden");
+                        if (metricValueRef.current) {
+                            metricValueRef.current.value = ''
+                        }
+                        setSwitchOnOspf(false);
+                        setSwitchOnRip(false);
+                    }
+                } catch (e) {
+                    console.error(e);
+                    props.callBack('getConnectionFromApi');
+                    console.log('props.callBack(getConnectionFromApi)');
+                }
             } else {
-                console.log("keine Connection gefunden");
+                console.log('EditRouter.id ist nicht definiert');
                 if (metricValueRef.current) {
                     metricValueRef.current.value = ''
                 }
                 setSwitchOnOspf(false);
                 setSwitchOnRip(false);
             }
-        } else {
-            console.log('EditRouter.id ist nicht definiert');
-            if (metricValueRef.current) {
-                metricValueRef.current.value = ''
+
+            if (callbackCounter === 1) {
+                props.callBack('getConnectionFromApi');
+                console.log('props.callBack(getConnectionFromApi)')
+                callbackCounter++;
             }
-            setSwitchOnOspf(false);
-            setSwitchOnRip(false);
         }
     };
-
 
 
 
@@ -232,6 +265,9 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
             }
             if (RouterRef.current) {
                 RouterRef.current.value = EditRouter.name;
+            }
+            if (SubnetRef.current) {
+                SubnetRef.current.value = EditRouter.networkmask;
             }
         } else {
             if (NameRef.current) {
@@ -294,6 +330,7 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                 updateEditRouter({});
                 props.callBack('deleteRouter', EditRouter);
                 props.callBack('getRouterArrayFromApi');
+                props.callBack('getConnectionFromApi');
             }
         }
     }
@@ -331,11 +368,15 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
 
                         props.callBack('postConnection', Connection);
                         console.log('postConnection: ', Connection);
-
                         props.callBack('getRouterArrayFromApi');
                         updateConnectionArray(Connection);
                         updateCableArray(Connection);
+                        props.callBack('getConnectionArrayFromApi');
+                        callbackCounter++;
+                        ConnectionArray && ConnectionArray.length > 0 && ConnectionArray.push(Connection);
+
                         console.log('ConnectionArray from SubMenu', ConnectionArray);
+
                     } else {
                         console.log("Es waren 2 gleiche Router Objekte.... soo gehts nicht! ")
                     }
@@ -389,6 +430,7 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
 
                     props.callBack('createRouter', newRouter);
                     props.callBack('getRouterArrayFromApi');
+                    props.callBack('getConnectionFromApi');
                 } else {
                     console.log('ungültiger Name');
                 }
@@ -428,9 +470,6 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
         setMetrikInputColor(isValid ? 'white' : '#FFCCCB')
         return isValid;
     };
-
-
-
 
     return (
         <>
