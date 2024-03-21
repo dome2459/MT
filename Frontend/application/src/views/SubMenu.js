@@ -103,45 +103,53 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
         setSelectedRouterId(selectedRouterId);
     };
 
+    useEffect(() => {
+        handleConnectionArrayUpdate();
+    }, [EditRouter, ConnectionArray]);
+
     const handleConnectionArrayUpdate = () => {
         if (EditRouter.id !== undefined) {
             console.log('USEEFFECT ConnectionArray(Global) ', ConnectionArray);
             console.log('Ausgewählter Router im UseEffect: ', EditRouter)
-            if(ConnectionArray.length > 0){
+            if (ConnectionArray.length > 0) {
                 let foundConnection = ConnectionArray.find(connection =>
                     connection.routerA === EditRouter.name && connection.routerAIp === EditRouter.ip);
-                    if (foundConnection) {
-                        console.log("Connection gefunden ", foundConnection);
-                        if (RouterRef.current) {
-                            RouterRef.current.value = EditRouter.name;
-                        }
-                        setSwitchOnOspf(foundConnection.ospf);
-                        console.log('foundConnection- Metrik: ', foundConnection.metrik);
-                        setOspfMetric(foundConnection.metrik);
-                        setSwitchOnRip(foundConnection.rip);
-                        setSelectedRouter(foundConnection.routerB);
-                    } else {
-                        console.log("keine Connection gefunden")
-                        if (metricValueRef.current) {
-                            metricValueRef.current.value = ''
-                        }
-                        setSwitchOnOspf(false);
-                        setSwitchOnRip(false);
+                if (foundConnection) {
+                    console.log("Connection gefunden ", foundConnection);
+                    if (RouterRef.current) {
+                        RouterRef.current.value = EditRouter.name;
                     }
+                    setSwitchOnOspf(foundConnection.ospf);
+                    console.log('foundConnection- Metrik: ', foundConnection.metrik);
+                    setOspfMetric(foundConnection.metrik);
+                    setSwitchOnRip(foundConnection.rip);
+                    setSelectedRouter(foundConnection.routerB);
+                } else {
+                    console.log("keine Connection gefunden")
+                    if (metricValueRef.current) {
+                        metricValueRef.current.value = ''
+                    }
+                    setSwitchOnOspf(false);
+                    setSwitchOnRip(false);
+                }
             } else {
-                console.log('ConnectionArray = 0', ConnectionArray );
+                console.log('ConnectionArray = 0', ConnectionArray);
                 if (metricValueRef.current) {
                     metricValueRef.current.value = ''
                 }
                 setSwitchOnOspf(false);
                 setSwitchOnRip(false);
             }
+        } else {
+            if (RouterRef.current) {
+                RouterRef.current.value = '';
+            }
+            setSwitchOnOspf(false);
+            setSwitchOnRip(false);
         }
+
     };
 
-    useEffect(() => {
-        handleConnectionArrayUpdate();
-    }, [EditRouter, ConnectionArray]);
 
     useEffect(() => {
         if (EditRouter.id !== undefined) {
@@ -160,6 +168,9 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
             }
             if (IpRef.current) {
                 IpRef.current.value = '';
+            }
+            if (RouterRef.current) {
+                RouterRef.current.value = '';
             }
         }
     }, [EditRouter]);
@@ -256,7 +267,7 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                         console.log('ConnectionArray from SubMenu', ConnectionArray);
                     } else {
                         console.log("Es waren 2 gleiche Router Objekte.... soo gehts nicht! ")
-                     }
+                    }
                 } else {
                     console.log("Router mit der angegebenen ID nicht gefunden.");
                 }
