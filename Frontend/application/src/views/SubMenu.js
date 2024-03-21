@@ -441,12 +441,9 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                     console.log('ungültiger Name');
                 }
             } else {
-
                 console.log('Ungültiges Subnetz');
             }
-
         } else {
-
             console.log('Ungültige IPv4-Adresse und Subnet');
         }
     }
