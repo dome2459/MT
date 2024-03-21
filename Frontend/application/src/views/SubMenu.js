@@ -183,6 +183,7 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
         if (EditRouter.id !== undefined) {
             console.log('USEEFFECT ConnectionArray(Global) ', ConnectionArray);
             console.log('Ausgewählter Router im UseEffect: ', EditRouter);
+            console.log('USEEFFECT CableArray(Global) ', CableArray);
 
             if (ConnectionArray.length === 0) {
                 for (let i = 0; i < ConnectionArray.length; i++) {
@@ -270,6 +271,8 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                 SubnetRef.current.value = EditRouter.networkmask;
             }
         } else {
+            setSwitchOnOspf(false);
+            setSwitchOnRip(false);
             if (NameRef.current) {
                 NameRef.current.value = '';
             }
@@ -278,6 +281,9 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
             }
             if (RouterRef.current) {
                 RouterRef.current.value = '';
+            }
+            if (SubnetRef.current) {
+                SubnetRef.current.value = '';
             }
         }
     }, [EditRouter]);
