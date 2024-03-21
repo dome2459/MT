@@ -79,8 +79,9 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
     const { EditRouter, updateEditRouter } = useContext(GlobalContext);
     //const { ConnectionArray = [], updateConnectionArray } = useContext(GlobalContext);
     let { ConnectionArray = [], updateConnectionArray } = useContext(GlobalContext);
-    const { CableArray, setCableArray } = useContext(GlobalContext);
+    //const { CableArray, setCableArray } = useContext(GlobalContext);
     const [SelectedRouterId, setSelectedRouterId] = useState(null);
+    const { CableArray, updateCableArray } = useContext(GlobalContext);
 
 
     const NameRef = useRef(null);
@@ -107,33 +108,101 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
         handleConnectionArrayUpdate();
     }, [EditRouter, ConnectionArray]);
 
+    // const handleConnectionArrayUpdate = () => {
+    //     let foundConnection = null;
+    //     if (EditRouter.id !== undefined) {
+    //         console.log('USEEFFECT ConnectionArray(Global) ', ConnectionArray);
+    //         console.log('Ausgewählter Router im UseEffect: ', EditRouter)
+    //         if (ConnectionArray.length !== 0) {
+    //             for (let i = 0; i < ConnectionArray.length; i++) {
+    //                 const connection = ConnectionArray[i];
+    //                 if (connection.routerA === EditRouter.name && connection.routerAIp === EditRouter.ip) {
+    //                     foundConnection = connection;
+    //                     break;
+    //                 }
+    //             }
+    //             if (foundConnection) {
+    //                 console.log("Connection gefunden ", foundConnection);
+    //                 if (RouterRef.current) {
+    //                     RouterRef.current.value = EditRouter.name;
+    //                 }
+    //                 setSwitchOnOspf(foundConnection.ospf);
+    //                 console.log('foundConnection- Metrik: ', foundConnection.metrik);
+    //                 setOspfMetric(foundConnection.metrik);
+    //                 setSwitchOnRip(foundConnection.rip);
+    //                 setSelectedRouter(foundConnection.routerB);
+    //             } else {
+    //                 if (metricValueRef.current) {
+    //                     metricValueRef.current.value = ''
+    //                 }
+    //                 setSwitchOnOspf(false);
+    //                 setSwitchOnRip(false);
+    //             }
+    //         }
+    //     } else if (ConnectionArray.length > 0) {
+    //         foundConnection = null;
+    //         foundConnection = ConnectionArray.find(connection =>
+    //             connection.routerA === EditRouter.name && connection.routerAIp === EditRouter.ip);
+    //         if (foundConnection) {
+    //             console.log("Connection gefunden ", foundConnection);
+    //             if (RouterRef.current) {
+    //                 RouterRef.current.value = EditRouter.name;
+    //             }
+    //             setSwitchOnOspf(foundConnection.ospf);
+    //             console.log('foundConnection- Metrik: ', foundConnection.metrik);
+    //             setOspfMetric(foundConnection.metrik);
+    //             setSwitchOnRip(foundConnection.rip);
+    //             setSelectedRouter(foundConnection.routerB);
+    //         } else {
+    //             console.log("keine Connection gefunden")
+    //             if (metricValueRef.current) {
+    //                 metricValueRef.current.value = ''
+    //             }
+    //             setSwitchOnOspf(false);
+    //             setSwitchOnRip(false);
+    //         }
+    //     }
+
+    //     else {
+    //         console.log('ConnectionArray = 0', ConnectionArray);
+    //         if (metricValueRef.current) {
+    //             metricValueRef.current.value = ''
+    //         }
+    //         setSwitchOnOspf(false);
+    //         setSwitchOnRip(false);
+    //     }
+
+    // };
+
     const handleConnectionArrayUpdate = () => {
+        let foundConnection = null;
+    
         if (EditRouter.id !== undefined) {
             console.log('USEEFFECT ConnectionArray(Global) ', ConnectionArray);
-            console.log('Ausgewählter Router im UseEffect: ', EditRouter)
-            if (ConnectionArray.length > 0) {
-                let foundConnection = ConnectionArray.find(connection =>
-                    connection.routerA === EditRouter.name && connection.routerAIp === EditRouter.ip);
-                if (foundConnection) {
-                    console.log("Connection gefunden ", foundConnection);
-                    if (RouterRef.current) {
-                        RouterRef.current.value = EditRouter.name;
+            console.log('Ausgewählter Router im UseEffect: ', EditRouter);
+    
+            if (ConnectionArray.length !== 0) {
+                for (let i = 0; i < ConnectionArray.length; i++) {
+                    const connection = ConnectionArray[i];
+                    if (connection.routerA === EditRouter.name && connection.routerAIp === EditRouter.ip) {
+                        foundConnection = connection;
+                        break;
                     }
-                    setSwitchOnOspf(foundConnection.ospf);
-                    console.log('foundConnection- Metrik: ', foundConnection.metrik);
-                    setOspfMetric(foundConnection.metrik);
-                    setSwitchOnRip(foundConnection.rip);
-                    setSelectedRouter(foundConnection.routerB);
-                } else {
-                    console.log("keine Connection gefunden")
-                    if (metricValueRef.current) {
-                        metricValueRef.current.value = ''
-                    }
-                    setSwitchOnOspf(false);
-                    setSwitchOnRip(false);
                 }
+            }
+    
+            if (foundConnection) {
+                console.log("Connection gefunden ", foundConnection);
+                if (RouterRef.current) {
+                    RouterRef.current.value = EditRouter.name;
+                }
+                setSwitchOnOspf(foundConnection.ospf);
+                console.log('foundConnection- Metrik: ', foundConnection.metrik);
+                setOspfMetric(foundConnection.metrik);
+                setSwitchOnRip(foundConnection.rip);
+                setSelectedRouter(foundConnection.routerB);
             } else {
-                console.log('ConnectionArray = 0', ConnectionArray);
+                console.log("keine Connection gefunden");
                 if (metricValueRef.current) {
                     metricValueRef.current.value = ''
                 }
@@ -141,14 +210,16 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                 setSwitchOnRip(false);
             }
         } else {
-            if (RouterRef.current) {
-                RouterRef.current.value = '';
+            console.log('EditRouter.id ist nicht definiert');
+            if (metricValueRef.current) {
+                metricValueRef.current.value = ''
             }
             setSwitchOnOspf(false);
             setSwitchOnRip(false);
         }
-
     };
+
+
 
 
     useEffect(() => {
@@ -263,7 +334,7 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
 
                         props.callBack('getRouterArrayFromApi');
                         updateConnectionArray(Connection);
-                        //ConnectionArray.push(Connection);
+                        updateCableArray(Connection);
                         console.log('ConnectionArray from SubMenu', ConnectionArray);
                     } else {
                         console.log("Es waren 2 gleiche Router Objekte.... soo gehts nicht! ")
