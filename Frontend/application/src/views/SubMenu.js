@@ -91,7 +91,6 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
     let routerB = null;
 
     const handleRouterSelection = (event) => {
-
         console.log('event.target.value: ', event)
         // Wert der ausgewählten Option extrahieren
         const selectedRouterId = parseInt(event);
@@ -101,42 +100,36 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
         // Jetzt haben Sie den ausgewählten Router in der Variable selectedRouter
         // Sie können damit machen, was auch immer Sie brauchen
         console.log("(handleRouterSelection) Ausgewählter Router:", selectedRouter);
-
         setSelectedRouterId(selectedRouterId);
     };
-
 
     const handleConnectionArrayUpdate = () => {
         if (EditRouter.id !== undefined) {
             console.log('USEEFFECT ConnectionArray(Global) ', ConnectionArray);
             console.log('Ausgewählter Router im UseEffect: ', EditRouter)
-
-            // let foundConnection = ConnectionArray.find(connection =>
-            //     connection.routerA === EditRouter.name && connection.routerAIp === EditRouter.ip);
-
-
-            let foundConnection = null;
-            for (let i = 0; i < ConnectionArray.length; i++) {
-                const connection = ConnectionArray[i];
-                if (connection.routerA === EditRouter.name && connection.routerAIp === EditRouter.ip) {
-                    foundConnection = connection;
-                    break;
-                }
-            }
-
-            if (foundConnection) {
-                console.log("Connection gefunden ", foundConnection);
-                if (RouterRef.current) {
-                    RouterRef.current.value = EditRouter.name;
-                }
-                setSwitchOnOspf(foundConnection.ospf);
-                console.log('foundConnection- Metrik: ', foundConnection.metrik);
-                setOspfMetric(foundConnection.metrik);
-                setSwitchOnRip(foundConnection.rip);
-                setSelectedRouter(foundConnection.routerB);
-
+            if(ConnectionArray.length > 0){
+                let foundConnection = ConnectionArray.find(connection =>
+                    connection.routerA === EditRouter.name && connection.routerAIp === EditRouter.ip);
+                    if (foundConnection) {
+                        console.log("Connection gefunden ", foundConnection);
+                        if (RouterRef.current) {
+                            RouterRef.current.value = EditRouter.name;
+                        }
+                        setSwitchOnOspf(foundConnection.ospf);
+                        console.log('foundConnection- Metrik: ', foundConnection.metrik);
+                        setOspfMetric(foundConnection.metrik);
+                        setSwitchOnRip(foundConnection.rip);
+                        setSelectedRouter(foundConnection.routerB);
+                    } else {
+                        console.log("keine Connection gefunden")
+                        if (metricValueRef.current) {
+                            metricValueRef.current.value = ''
+                        }
+                        setSwitchOnOspf(false);
+                        setSwitchOnRip(false);
+                    }
             } else {
-                console.log("keine Connection gefunden")
+                console.log('ConnectionArray = 0', ConnectionArray );
                 if (metricValueRef.current) {
                     metricValueRef.current.value = ''
                 }
@@ -145,7 +138,6 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
             }
         }
     };
-
 
     useEffect(() => {
         handleConnectionArrayUpdate();
@@ -173,55 +165,41 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
     }, [EditRouter]);
 
 
-
-
     const handleChangeOspf = (checked) => {
         setSwitchOnOspf(checked);
 
         if (checked) {
-
             setSwitchOnRip(false);
-
             setOspfMetricInputVisible(true);
         } else {
-
             setOspfMetricInputVisible(false);
-
             setOspfMetric('');
         }
     };
 
     const handleChangeRip = (checked) => {
         setSwitchOnRip(checked);
-
         if (checked) {
             setSwitchOnOspf(false);
-
             setOspfMetricInputVisible(false);
-
             setOspfMetric('');
         }
     };
 
     const saveEditSettings = (EditRouter) => {
-
         //var newEditRouter = EditRouter; 
         var Name = NameRef.current.value;
-
         var Ip = IpRef.current.value;
-
         var Subnet = SubnetRef.current.value;
-
         console.log('Name: ' + Name + ' IP: ' + Ip + ' Subnet: ' + Subnet)
-
         EditRouter.ip = IpRef.current.value;
         EditRouter.name = NameRef.current.value;
         EditRouter.networkmask = SubnetRef.current.value;
         props.callBack('updateRouterOnDB', EditRouter);
         var RouterArr = [...RouterArray];
         updateRouterArray(RouterArr);
-
     }
+
     const handleDeleteRouter = () => {
 
         if (EditRouter.id !== undefined) {
@@ -274,22 +252,18 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
 
                         props.callBack('getRouterArrayFromApi');
                         updateConnectionArray(Connection);
-                        ConnectionArray.push(Connection);
+                        //ConnectionArray.push(Connection);
                         console.log('ConnectionArray from SubMenu', ConnectionArray);
                     } else {
                         console.log("Es waren 2 gleiche Router Objekte.... soo gehts nicht! ")
-                    }
-
+                     }
                 } else {
-
                     console.log("Router mit der angegebenen ID nicht gefunden.");
                 }
             } else {
                 console.log('Validierung der Metrik hat nicht geklappt')
             }
-
         } else {
-
             console.log("Kein Router ausgewählt.");
         }
     }
@@ -298,14 +272,11 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
         console.log("handleDeleteConnection ConnectionArray:", ConnectionArray);
         if (ConnectionArray && ConnectionArray.length > 0 && EditRouter.id !== undefined) {
             console.log("handleDeleteConnection RouterArray:", RouterArray);
-
-
             let foundConnection = ConnectionArray.find(connection =>
                 connection.routerA === EditRouter.name && connection.routerAIp === EditRouter.ip &&
                 (connection.ospf === switchOnOspf
                     || connection.rip === switchOnRip));
             if (foundConnection) {
-
                 console.log('handleDeleteConnection (foundConnection): ', foundConnection);
                 props.callBack('deleteConnection', foundConnection);
                 ConnectionArray = ConnectionArray.filter(connection => connection !== foundConnection);
@@ -313,11 +284,9 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                 props.callBack('getConnectionFromApi');
                 console.log('ConnectionArray nach dem löschen: ', ConnectionArray);
             } else {
-
                 console.log("Keine Connection gefunden.");
             }
         } else {
-
             console.log("Keine Connection gefunden und kein Router ausgewählt");
         }
     }
@@ -353,7 +322,6 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
     }
 
     const validateIPv4 = (ip) => {
-
         const ipv4Regex = /^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
         const isValid = ipv4Regex.test(ip);
         setIpInputColor(isValid ? 'white' : '#FFCCCB');
@@ -361,14 +329,12 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
 
     }
     const validateSubnet = (subnet) => {
-
         const subnetRegex = /^(\d{1,3}\.){3}\d{1,3}$/;
         const isValid = subnetRegex.test(subnet);
         setSubnetInputColor(isValid ? 'white' : '#FFCCCB');
         return isValid;
     }
     const validateName = (name) => {
-
         const nameRegex = /^[a-zA-Z0-9]+$/;
         const isValid = nameRegex.test(name.trim());
         setNameInputColor(isValid ? 'white' : '#FFCCCB');
