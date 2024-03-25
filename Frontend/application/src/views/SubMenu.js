@@ -350,7 +350,7 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                 if (NameRef.current && (validateName(NameRef.current.value) && NameRef.current.value !== '')) {
                     console.log(NameRef.current.value);
 
-                    var newRouter = { ip: IpRef.current.value, name: NameRef.current.value, routingTableId: 1, networkmask: SubnetRef.current.value, posX: 500, posy: 300, activ: true };
+                    var newRouter = { ip: IpRef.current.value, name: NameRef.current.value, routingTableId: 1, networkmask: SubnetRef.current.value, posx: 500, posy: 300, activ: true };
                     console.log(newRouter);
 
                     props.callBack('createRouter', newRouter);

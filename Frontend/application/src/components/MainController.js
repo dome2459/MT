@@ -5,7 +5,7 @@ import GlobalContext from './InitStateContext';
 
 
 export default function MainController() {
-  const { updateRouterArray } = useContext(GlobalContext);
+  const { RouterArray, updateRouterArray } = useContext(GlobalContext);
   const { ConnectionArray, updateConnectionArray } = useContext(GlobalContext);
 
 
@@ -171,6 +171,10 @@ export default function MainController() {
       .then(response => response.json())
       .then(json => {
         console.log("RouterArray response ", json);
+
+        const newArray = [...RouterArray]
+        newArray.push(json)
+
         updateRouterArray(json);
         return json;
       })

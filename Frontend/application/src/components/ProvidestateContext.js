@@ -10,7 +10,7 @@ const [RouterArray, setRouterArray] = useState([]);
 // aktualisiert den RouterArray mit neuen Router
 const updateRouterArray = (newValue) => {
 
-    console.log('updateRouterArray: ', newValue)
+    //console.log('updateRouterArray: ', newValue)
     setRouterArray(newValue);
   };
 
@@ -24,7 +24,7 @@ const [CableArray, setCableArray] = useState([])
 
 // soll wohl den Rotz aktualisieren oder was
 const updateCableArray = (newValue) => {
-  console.log('update CableArray: ', newValue);
+  //console.log('update CableArray: ', newValue);
     setRouterArray(newValue);
   };
 
@@ -44,7 +44,7 @@ const updateRoutingTableData = (newValue) => {
 const [ConnectionArray, setConnectionArray] = useState([]);
 // aktualisiert den RouterArray mit neuen Router
 const updateConnectionArray = (newValue) => {
-  console.log('updateConnectionArray: ', newValue);
+  //console.log('updateConnectionArray: ', newValue);
   setConnectionArray(newValue);
   };
 
