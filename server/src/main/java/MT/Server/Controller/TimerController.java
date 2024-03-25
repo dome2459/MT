@@ -45,6 +45,8 @@ public class TimerController {
         StartResponse response = new StartResponse(connectionFromFrontend, routerFromFrontend, time);
         for(int i = 0; i <= connectionFromFrontend.getConnectionId().intValue(); i++) {
             System.out.println("TWIEUGHEUIG" + routerFromFrontend);
+            System.out.println("TWIEUGHEUIG" + time);
+            System.out.println("TWIEUGHEUIG" + connectionFromFrontend);
             pruefen(response.getConnection(), response.getRouter());
            if(geprueft){
                return ResponseEntity.ok(response);
