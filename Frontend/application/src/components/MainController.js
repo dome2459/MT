@@ -145,7 +145,7 @@ export default function MainController() {
         try {
           const json = JSON.parse(text); // Versuch, die Antwort zu JSON zu parsen
           console.log('DeleteConnection responsejson', json);
-          updateConnectionArray(json);
+          //updateConnectionArray(json); 
           return json;
         } catch (error) {
           console.error('Fehler beim Parsen der Antwort:', error);

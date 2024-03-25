@@ -251,7 +251,7 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
             if (i >= 0) {
                 var RouterArr = [...RouterArray];
                 RouterArr.splice(i, 1);
-                updateRouterArray(RouterArr);
+                //updateRouterArray(RouterArr);
                 updateEditRouter({});
                 props.callBack('deleteRouter', EditRouter);
                 props.callBack('getRouterArrayFromApi');
@@ -278,6 +278,11 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
 
                     console.log("Gefundenes Router-Objekt: ", foundRouter);
                     console.log("Selctiertes Router-Objekt: ", EditRouter);
+
+                    // ConnectionArray
+
+                    //(if foundRouter.id === routerA && EditRouter.id === routerB) || (if EditRouter.id === routrA && foundRouter.id === routerB)
+
                     if (foundRouter.id !== EditRouter.id ) {
                         var Connection = {
                             routerA: EditRouter.name,
@@ -298,7 +303,6 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                         updateCableArray(Connection);
                         props.callBack('getConnectionArrayFromApi');
                         callbackCounter++;
-                        ConnectionArray && ConnectionArray.length > 0 && ConnectionArray.push(Connection);
 
                         console.log('ConnectionArray from SubMenu', ConnectionArray);
 
@@ -327,7 +331,8 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
             if (foundConnection) {
                 console.log('handleDeleteConnection (foundConnection): ', foundConnection);
                 props.callBack('deleteConnection', foundConnection);
-                ConnectionArray = ConnectionArray.filter(connection => connection !== foundConnection);
+                //ConnectionArray = ConnectionArray.filter(connection => connection !== foundConnection);
+                //cannot asign new value to const
                 props.callBack('getRouterArrayFromApi');
                 props.callBack('getConnectionFromApi');
                 console.log('ConnectionArray nach dem löschen: ', ConnectionArray);
