@@ -39,14 +39,17 @@ public class TimerController {
     private MT.Server.Repos.connectionRepo connectionRepo;
 
     @PostMapping("/start")
-    public ResponseEntity<StartResponse> startTimer(@RequestBody Connection connectionFromFrontend,
-                                                    @RequestBody Router routerFromFrontend,
-                                                    @RequestBody Timestamp time) {
+    public ResponseEntity<StartResponse> startTimer(@RequestBody StartRequest request) {
+        Connection connectionFromFrontend = request.getConnection();
+        Router routerFromFrontend = request.getRouter();
+        Timestamp time = request.getTime();
+
         StartResponse response = new StartResponse(connectionFromFrontend, routerFromFrontend, time);
+        System.out.println("TWIEUGHEUIG" + routerFromFrontend);
+        System.out.println("TWIEUGHEUIG" + time);
+        System.out.println("TWIEUGHEUIG" + connectionFromFrontend);
+
         for(int i = 0; i <= connectionFromFrontend.getConnectionId().intValue(); i++) {
-            System.out.println("TWIEUGHEUIG" + routerFromFrontend);
-            System.out.println("TWIEUGHEUIG" + time);
-            System.out.println("TWIEUGHEUIG" + connectionFromFrontend);
             pruefen(response.getConnection(), response.getRouter());
            if(geprueft){
                return ResponseEntity.ok(response);
