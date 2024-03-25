@@ -73,7 +73,7 @@ export default function DragArea(props) {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [RouterArray]);
+  }, [RouterArray, ConnectionArray]);
 
   function handleResize() {
     setParentWidth(AreaRef.current.offsetWidth);

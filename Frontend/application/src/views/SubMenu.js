@@ -254,9 +254,9 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                 //updateRouterArray(RouterArr);
                 updateEditRouter({});
                 props.callBack('deleteRouter', EditRouter);
-                props.callBack('getRouterArrayFromApi');
-                props.callBack('getConnectionFromApi');
             }
+            props.callBack('getRouterArrayFromApi');
+            props.callBack('getConnectionFromApi');
         }
     }
 
@@ -303,6 +303,7 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                         updateCableArray(Connection);
                         props.callBack('getConnectionArrayFromApi');
                         callbackCounter++;
+                        ConnectionArray && ConnectionArray.length > 0 && ConnectionArray.push(Connection);
 
                         console.log('ConnectionArray from SubMenu', ConnectionArray);
 
