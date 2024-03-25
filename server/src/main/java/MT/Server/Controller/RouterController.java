@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,6 @@ public class RouterController {
 
   @GetMapping("/router/list")
   public List<Router> getAllRouter() {
-
     System.out.println(repo.findAll());
     return repo.findAll();
   }
@@ -67,10 +67,14 @@ public class RouterController {
   @DeleteMapping("/router/delete/{id}")
   public ResponseEntity<Map<String, Boolean>> deleteRouter(@PathVariable Long id){
     Router router = repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Router mit Id: "+ id+" existiert nicht"));
-    Connection connection = connectionrepo.findById(id).orElseThrow(() ->new ResourceNotFoundException("Router mit Id: "+ id+" existiert nicht") );
-    System.out.println(connection.getRouterA());
-    System.out.println(router.getName());
-    //connectionrepo.delete(connection);
+List<Connection> connectionsToDelete = new ArrayList<>();
+for(Connection connection:connectionrepo.findAll()){
+  if(connection.getRouterA().equals(router.getName())| connection.getRouterB().equals(router.getName())){
+    connectionsToDelete.add(connection);
+  }
+}
+connectionrepo.deleteAll(connectionsToDelete);
+
     repo.delete(router);
     Map<String, Boolean> response = new HashMap<>();
     response.put("deleted", Boolean.TRUE);
