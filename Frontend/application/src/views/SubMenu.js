@@ -382,7 +382,8 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
     }
     const validateName = (name) => {
         const nameRegex = /^[a-zA-Z0-9]+$/;
-        const isValid = nameRegex.test(name.trim());
+        const isValid = nameRegex.test(name.trim()) && !RouterArray.some(router => router.name === name.trim());
+        
         setNameInputColor(isValid ? 'white' : '#FFCCCB');
         return isValid;
     }
