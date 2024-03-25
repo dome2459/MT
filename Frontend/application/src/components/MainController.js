@@ -255,19 +255,23 @@ export default function MainController() {
       body: JSON.stringify(values),
     });
 }
-   async function start(Router, Connection, Timestamp) {
-     console.log(Router, Connection, Timestamp);
-
-     return fetch(apiEndpoint + 'start/', {
-       mode: 'cors',
-       method: 'POST',
-       headers: {
-         Accept: 'application/json',
-         'Content-Type': 'application/json',
-       },
-       body: JSON.stringify({ Router, Connection, Timestamp })
-     });
-   };
+async function start(value1, value2, value3) {
+  console.log(value1, value2, value3);
+  const requestData = {
+    value1: value1,
+    value2: value2,
+    value3: value3
+  };
+  return fetch(apiEndpoint + 'start', {
+    mode: 'cors',
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(requestData)
+  });
+}
   // holen aller Routing Tables
   async function getRouterTableFromApi() {
     return fetch(apiEndpoint + '/getRoutingTable', {
