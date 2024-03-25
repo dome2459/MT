@@ -41,6 +41,8 @@ export default function MainController() {
         return postConnection(value1, value2, value3)
       case 'updatePosition':
         return updatePosition(value1, value2)
+      case 'start':
+        return start(value1, value2, value3)
       default:
         break
       //add other function cases here
@@ -252,7 +254,18 @@ export default function MainController() {
       },
       body: JSON.stringify(values),
     });
-
+}
+  async function start(value1, value2, value3) {
+  console.log(value1, value2, value3)
+    return fetch(apiEndpoint + 'start/', {
+      mode: 'cors',
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(value1, value2, value3)
+    });
   };
   // holen aller Routing Tables
   async function getRouterTableFromApi() {

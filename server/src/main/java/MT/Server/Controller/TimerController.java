@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @CrossOrigin(origins = "*")
@@ -43,6 +44,7 @@ public class TimerController {
                                                     @RequestBody Timestamp time) {
         StartResponse response = new StartResponse(connectionFromFrontend, routerFromFrontend, time);
         for(int i = 0; i <= connectionFromFrontend.getConnectionId().intValue(); i++) {
+            System.out.println("TWIEUGHEUIG" + routerFromFrontend);
             pruefen(response.getConnection(), response.getRouter());
            if(geprueft){
                return ResponseEntity.ok(response);
@@ -50,7 +52,6 @@ public class TimerController {
         }
         LocalDateTime rip = time.toLocalDateTime().plusSeconds(20);
         Timestamp ts = Timestamp.valueOf(rip);
-
         if(connectionFromFrontend.isRIP()){
             if(ts.after(time)){
                 ripProtokoll(connectionFromFrontend);
@@ -144,21 +145,17 @@ public class TimerController {
             System.out.println("Ungültige Verbindung.");
             return;
         }
+        System.out.println(routers);
+        //routers.forEach(Router::getPosx);
+
+
+
             String routerAId = connection.getRouterA();
             String routerBId = connection.getRouterB();
 
             Router routerA = findRouterById(routerAId, routers);
             Router routerB = findRouterById(routerBId, routers);
 
-            if (routerA != null && routerB != null) {
-                if (routerA.getNetworkmask().equals(routerB.getNetworkmask())) {
-                    // Die Router haben dieselbe Subnetzmaske
-                    System.out.println("OSPF ist aktiviert und die Router haben dieselbe Subnetzmaske.");
-                } else {
-                    // Die Router haben unterschiedliche Subnetzmasken
-                    System.out.println("OSPF ist aktiviert, aber die Router haben unterschiedliche Subnetzmasken.");
-                }
-            }
         }
 
 

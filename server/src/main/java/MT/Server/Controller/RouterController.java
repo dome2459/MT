@@ -1,8 +1,10 @@
 package MT.Server.Controller;
 
 
+import MT.Server.Repos.connectionRepo;
 import MT.Server.Repos.routerRepo;
 import MT.Server.ResourceNotFoundException;
+import MT.Server.Tables.Connection;
 import MT.Server.Tables.Router;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,8 @@ public class RouterController {
 
   @Autowired
   private routerRepo repo;
+  @Autowired
+  private connectionRepo connectionrepo;
 
   @GetMapping("/router/list")
   public List<Router> getAllRouter() {
@@ -63,7 +67,10 @@ public class RouterController {
   @DeleteMapping("/router/delete/{id}")
   public ResponseEntity<Map<String, Boolean>> deleteRouter(@PathVariable Long id){
     Router router = repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Router mit Id: "+ id+" existiert nicht"));
-
+    Connection connection = connectionrepo.findById(id).orElseThrow(() ->new ResourceNotFoundException("Router mit Id: "+ id+" existiert nicht") );
+    System.out.println(connection.getRouterA());
+    System.out.println(router.getName());
+    //connectionrepo.delete(connection);
     repo.delete(router);
     Map<String, Boolean> response = new HashMap<>();
     response.put("deleted", Boolean.TRUE);

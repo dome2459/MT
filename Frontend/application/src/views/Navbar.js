@@ -82,7 +82,8 @@ export default function NavBar(props) {
   const [timerButtonClicked, setTimerButtonClicked] = useState(false);
 
   const {EditRouter, updateEditRouter} = useContext(GlobalContext);
-
+  const {ConnectionArray}  = useContext(GlobalContext);
+  const {RouterArray}  = useContext(GlobalContext);
   useEffect(() => {
     
     setEditMode();
@@ -105,6 +106,8 @@ export default function NavBar(props) {
         console.log('Timer gestartet');
         props.callBack('getRouterArrayFromApi');
         props.callBack('getConnectionFromApi');
+        const time = Date.now();
+        props.callBack('start',ConnectionArray, RouterArray,time)
         setIsTimerRunning(true);
         setTimerButtonClicked(true);
         TimerRef.current.startTimer();
