@@ -86,7 +86,12 @@ export default function MainController() {
       .then(json => {
         console.log('Postconnection responsejson', json);
         console.log('Bevor Updated Connection Array ', ConnectionArray);
-        updateConnectionArray(json);
+        
+        const newArray = [...ConnectionArray]
+        newArray.push(json)
+        console.log('newArray: ', newArray)
+
+        updateConnectionArray(newArray);
         console.log('Updated Connection Array ', ConnectionArray);
         return json;
       })
