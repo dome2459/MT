@@ -10,7 +10,6 @@ public class StartRequest {
   private Router router;
   private Timestamp time;
 
-  // Getter und Setter für die Felder
 
   public Connection getConnection() {
     return connection;

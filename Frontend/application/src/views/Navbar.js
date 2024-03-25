@@ -115,7 +115,7 @@ export default function NavBar(props) {
     } catch (error) {
       console.error('Fehler beim Starten des Timers in der NavBar:', error);
     }
-  }, [TimerRef,timerButtonClicked]);
+  }, [TimerRef,timerButtonClicked, props, ConnectionArray, RouterArray]);
 
   const stopTimer = useCallback(() => {
     try {
