@@ -9,7 +9,6 @@ import DragArea from "./DragArea";
 import Switch from "react-switch";
 import GlobalContext from "../components/InitStateContext";
 
-
 const SidebarLink = styled(Link)`
   display: flex;
   color: #e1e9fc;
@@ -27,9 +26,7 @@ const SidebarLink = styled(Link)`
     cursor: pointer;
   }
 `;
-
 const SidebarLabel = styled.span`
-  
   margin: auto;
   margin-right: 30px;
   margin-left: 20px;
@@ -46,24 +43,19 @@ const DropdownLink = styled(Link)`
   color: #f5f5f5;
   font-size: 20px;
   flex-direction: column;
-
   &:hover {
     background: skyblue;
     cursor: pointer;
   }
 `;
-
 const Inputfield = styled(Link)`
   color: black;
   padding-right: 15px;input {
   }
 `;
 
-
-
 const SubMenu = ({ item, updateRouter, ...props },) => {
     const [subnav, setSubnav] = useState(true);
-    //const [EditScreen, setEditScreen] = useState(false);
     const [ipInputColor, setIpInputColor] = useState('white');
     const [metrikInputColor, setMetrikInputColor] = useState('white');
     const [subnetInputColor, setSubnetInputColor] = useState('white');
@@ -77,14 +69,10 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
     const [ospfMetricRef, setOspfMetricRef] = useState(null);
     const { RouterArray, updateRouterArray } = useContext(GlobalContext);
     const { EditRouter, updateEditRouter } = useContext(GlobalContext);
-    //const { ConnectionArray = [], updateConnectionArray } = useContext(GlobalContext);
     const { ConnectionArray, updateConnectionArray } = useContext(GlobalContext);
-    //const { CableArray, setCableArray } = useContext(GlobalContext);
     const [SelectedRouterId, setSelectedRouterId] = useState(null);
     const { CableArray, updateCableArray } = useContext(GlobalContext);
     let callbackCounter = 0;
-
-
     const NameRef = useRef(null);
     const IpRef = useRef(null);
     const SubnetRef = useRef(null);
@@ -572,10 +560,11 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                                                     });
 
                                                     if (isConnected) {
-                                                        return <option key={index} value={router.id}>{router.name}</option>
+                                                        return <option  key={index} value={router.id} style={{ color:'green'}}>{router.name}</option>
 
-                                                    } else {
-                                                        return null;
+
+                                                    } else if(router.name !== EditRouter.name){
+                                                        return <option  key={index} value={router.id}>{router.name}</option>
                                                     }
                                                 })
                                             ) : (
@@ -620,6 +609,7 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                                         Löschen
                                     </Button>
                                 ) : null}
+                                
                             </SidebarLabel>
                         </DropdownLink >
                     );

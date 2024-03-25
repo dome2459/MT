@@ -7,40 +7,23 @@ import RouterEditSvg from './Router2edit.svg';
 import GlobalContext from '../components/InitStateContext';
 
 export default function DragArea(props) {
-
-
-  // statische Werte im Code zu schreiben ist immer schlecht!!! 
-  // const parentWidth = 1800;
-  // const parentHeight = 600;
   const [parentWidth, setParentWidth] = useState(1900);
   const [parentHeight, setParentHeight] = useState(600);
-
   const AreaRef = useRef(null);
-
-  //useEffect(() => {
-
-  //}, [RouterArray]);
-
-  // die bounds -Werte hätte man locker durch 1min probieren anpassen können !!! 
-  const maxX = parentWidth - 350; // Assuming draggable elements are 100x100 okay
-  const maxY = parentHeight - 140;
-
   const { RouterArray, updateRouterArray } = useContext(GlobalContext);
   const { EditRouter, updateEditRouter } = useContext(GlobalContext);
   const [CurrendDrag, setCurrendDrag] = useState(false);
   const { CableArray, updateCableArray } = useContext(GlobalContext);
   const { ConnectionArray } = useContext(GlobalContext);
-
-
+  const maxY = parentHeight - 180;
+  const maxX = parentWidth - 125;
 
   const handleDrag = (index) => (e, data) => {
 
     const { x, y } = data;
     var RouterArr = [...RouterArray]
-
     RouterArr[index].posx = x
     RouterArr[index].posy = y
-
     updateRouterArray(RouterArr);
   };
 
@@ -72,23 +55,16 @@ export default function DragArea(props) {
         onStart={() => setCurrendDrag(true)}
         onStop={() => [updatePosition(item, item.id), setCurrendDrag(false), console.log(item, item.id)]}
       >
-
         <Center flexDirection={'column'} width={100} className="draggable" //borderWidth={1} borderColor='#000' 
           position="absolute" cursor="grab" w="100px" h="100px"
           onDoubleClick={() => handleClick(item)}
         >
-
           <Image src={((EditRouter.id === item.id) ? RouterEditSvg : RouterSvg)} height={100} width={100} draggable={false} onmousedown={false} />
-
           <Text marginBottom={-6} backgroundColor='#fff' borderRadius='3' paddingX={2} >{item.name}</Text>
-
         </Center>
-
       </Draggable>
     )
   };
-
-
   // Fenstergröße wird nun automatisch angepasst 
   useEffect(() => {
 
@@ -105,8 +81,6 @@ export default function DragArea(props) {
   }
 
   return (
-
-
     /*
     * Das ganze Geraffel hier unten auch noch automatisch an die Fenstergöße anpassen  
     * gerade was die X und Y Werte betrifft !!!
@@ -123,15 +97,12 @@ export default function DragArea(props) {
           console.log('ConnectionArray DragArea: ', item, i);
           console.log('RouterArray DragArea: ', RouterArray)
           console.log('RouterArray[item.routerA]: ', RouterArray[item.routerA], ' RouterArray[item.routerA] ', RouterArray[item.routerB])
-
-
-          const routerA = RouterArray.find(router => router.name === item.routerA);
-          const routerB = RouterArray.find(router => router.name === item.routerB);
+          const routerA = RouterArray && RouterArray.length > 0 ? RouterArray.find(router => router.name === item.routerA) : null;
+          const routerB = RouterArray && RouterArray.length > 0 ? RouterArray.find(router => router.name === item.routerB) : null;
 
           if (routerA && routerB) {
             return (
               <PathLine
-                // key={i}
                 points={[
                   { x: routerA.posx + 50, y: routerA.posy + 50 },
                   { x: routerB.posx + 50, y: routerB.posy + 50 },
@@ -148,11 +119,9 @@ export default function DragArea(props) {
           }
         })}
       </svg>
-
     </Box>
   );
 }
-
 
 const theme = {
   position: "absolute",

@@ -11,7 +11,9 @@ export default class App extends Component {
   return (
     <GlobalProvider>
       <ChakraProvider>
-        <MainController />
+      <div className="app-container">
+            <MainController />
+          </div>
       </ChakraProvider>
     </GlobalProvider>
   );

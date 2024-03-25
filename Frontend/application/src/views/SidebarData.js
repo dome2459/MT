@@ -4,6 +4,7 @@ import * as RiIcons from 'react-icons/ri';
 import * as BsFill from "react-icons/bs";
 
 
+
 export const SidebarData = [
   {
     title: 'Router',
@@ -49,7 +50,7 @@ export const SidebarData = [
         title: 'OSPF',
       },
       {
-        combinedTitle: 'Metrik & RIP', // Neuer Eintrag für das kombinierte Feld
+        combinedTitle: 'Metrik & RIP',
         subItems: [
             {
                 title: 'Metrik'
