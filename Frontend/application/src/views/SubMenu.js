@@ -294,7 +294,7 @@ const SubMenu = ({ item, updateRouter, ...props },) => {
                         props.callBack('postConnection', Connection);
                         console.log('postConnection: ', Connection);
                         props.callBack('getRouterArrayFromApi');
-                        updateConnectionArray(Connection);
+                        updateConnectionArray(ConnectionArray.push(Connection));
                         updateCableArray(Connection);
                         props.callBack('getConnectionArrayFromApi');
                         callbackCounter++;

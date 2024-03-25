@@ -8,7 +8,8 @@ export default function RoutingTable() {
   const { ConnectionArray } = useContext(GlobalContext);
   const noConnectionMessageDisplayed = useMemo(() => {
     if (EditRouter && ConnectionArray) {
-      return ConnectionArray.map(item => item.routerA !== EditRouter.name && item.routerAIp !== EditRouter.ip);
+      console.log(ConnectionArray)
+      return ConnectionArray.map((item) =>( item.routerA !== EditRouter.name && item.routerAIp !== EditRouter.ip));
     }
     return false;
   }, [EditRouter, ConnectionArray]);
