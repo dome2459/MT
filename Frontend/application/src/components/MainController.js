@@ -255,7 +255,7 @@ export default function MainController() {
       body: JSON.stringify(values),
     });
 }
-   async function startTimer(Router, Connection, Timestamp) {
+   async function start(Router, Connection, Timestamp) {
      console.log(Router, Connection, Timestamp);
 
      return fetch(apiEndpoint + 'start/', {
